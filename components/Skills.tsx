@@ -14,7 +14,7 @@ export function Skills() {
           <div
             key={index}
             className={`skill-item bg-gray-100 rounded-full px-4 py-2 font-roboto text-sm`}
-            style={{ animationDelay: `${index * 0.1}s` }}
+            style={{ animationDelay: `${index * 0.5}s` }}
           >
             {skill}
           </div>
