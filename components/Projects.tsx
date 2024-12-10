@@ -45,7 +45,15 @@ export function Projects() {
   );
 }
 
-function ProjectCard({ project, index }: { project: any; index: number }) {
+
+interface Project {
+  title: string;
+  description: string;
+  liveLink: string;
+  githubLink: string;
+  techStack: string;
+}
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <div
       className="bg-white p-6 rounded-lg shadow-md project-card"
