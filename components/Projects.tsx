@@ -57,7 +57,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <div
       className="bg-white p-6 rounded-lg shadow-md project-card"
-      style={{ animationDelay: `${index * 0.2}s` }}
+      style={{ animationDelay: `${index * 0.5}s` }}
     >
       <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
       <p className="mb-4 text-sm">{project.description}</p>

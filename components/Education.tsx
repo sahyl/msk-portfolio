@@ -27,7 +27,7 @@ export function Education() {
           <div
             key={index}
             className="border-l-2 border-black pl-4 edu-item"
-            style={{ animationDelay: `${index * 0.2}s` }}
+            style={{ animationDelay: `${index * 0.5}s` }}
           >
             <h3 className="text-xl font-roboto">{edu.degree}</h3>
             <p className="font-roboto">{edu.institution}</p>
