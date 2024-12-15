@@ -1,7 +1,7 @@
 const skills = [
   'Python', 'C++', 'SQL', 'JavaScript', 'MongoDB', 'TypeScript',
-  'Numpy', 'Pandas', 'Streamlit', 'Seaborn', 'Scikit-learn', 'Tensorflow',
-  'ReactJS', 'PowerBI', 'BeautifulSoup', 'Selenium', 'MySQL', 'NodeJS',
+  'NextJS', 'Shadcn',  'Seaborn', 'Scikit-learn', 'Tensorflow',
+  'ReactJS',  'BeautifulSoup', 'Selenium', 'MySQL', 'NodeJS',
   'Git', 'Github', 'Postman API', 'Kaggle', 'Thunder Client',
 ];
 
