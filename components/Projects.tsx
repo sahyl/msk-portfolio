@@ -1,5 +1,5 @@
-'use client';
-import React, { useState } from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import { FiGithub } from "react-icons/fi";
 import { HiOutlineExternalLink } from "react-icons/hi";
@@ -90,16 +90,36 @@ function ProjectCard({ project }: { project: Project }) {
 
 export function Projects() {
   const [currentPage, setCurrentPage] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const projectsPerPage = 3;
   const pageCount = Math.ceil(projects.length / projectsPerPage);
 
   const handlePrevious = () => {
-    setCurrentPage((prev) => Math.max(0, prev - 1));
+    if (currentPage > 0 && !isAnimating) {
+      setIsAnimating(true);
+      setSlideDirection('right');
+      setTimeout(() => setCurrentPage(prev => prev - 1), 10);
+    }
   };
 
   const handleNext = () => {
-    setCurrentPage((prev) => Math.min(pageCount - 1, prev + 1));
+    if (currentPage < pageCount - 1 && !isAnimating) {
+      setIsAnimating(true);
+      setSlideDirection('left');
+      setTimeout(() => setCurrentPage(prev => prev + 1), 10);
+    }
   };
+
+  useEffect(() => {
+    if (isAnimating) {
+      const timer = setTimeout(() => {
+        setIsAnimating(false);
+        setSlideDirection(null);
+      }, 300); // Match this with the transition duration
+      return () => clearTimeout(timer);
+    }
+  }, [isAnimating]);
 
   const currentProjects = projects.slice(
     currentPage * projectsPerPage,
@@ -109,26 +129,36 @@ export function Projects() {
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <h2 className="text-4xl font-bold mb-12 text-center">PROJECTS</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-        {currentProjects.map((project, index) => (
-          <ProjectCard key={index} project={project} />
-        ))}
+      <div className="relative overflow-hidden">
+        <div 
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 transition-transform duration-300 ease-in-out ${
+            isAnimating 
+              ? slideDirection === 'left' 
+                ? '-translate-x-full' 
+                : 'translate-x-full'
+              : 'translate-x-0'
+          }`}
+        >
+          {currentProjects.map((project, index) => (
+            <ProjectCard key={`${currentPage}-${index}`} project={project} />
+          ))}
+        </div>
       </div>
       <div className="flex justify-center items-center space-x-4">
         <button
           onClick={handlePrevious}
-          disabled={currentPage === 0}
+          disabled={currentPage === 0 || isAnimating}
           className={`p-2 rounded-full ${
-            currentPage === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-black hover:bg-gray-800'
+            currentPage === 0 || isAnimating ? 'bg-gray-300 cursor-not-allowed' : 'bg-black hover:bg-gray-800'
           }`}
         >
           <FaChevronLeft className="w-6 h-6 text-white" />
         </button>
         <button
           onClick={handleNext}
-          disabled={currentPage === pageCount - 1}
+          disabled={currentPage === pageCount - 1 || isAnimating}
           className={`p-2 rounded-full ${
-            currentPage === pageCount - 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-black hover:bg-gray-800'
+            currentPage === pageCount - 1 || isAnimating ? 'bg-gray-300 cursor-not-allowed' : 'bg-black hover:bg-gray-800'
           }`}
         >
           <FaChevronRight className="w-6 h-6 text-white" />
