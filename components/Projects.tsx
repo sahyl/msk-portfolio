@@ -72,7 +72,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md project-card h-full flex flex-col justify-between">
       <div>
-        <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+        <h3 className="text-2xl font-dm-serif-text mb-2">{project.title}</h3>
         <p className="mb-4 text-sm">{project.description}</p>
         <p className="mb-4 text-xs text-gray-600">{project.techStack}</p>
       </div>
@@ -128,7 +128,7 @@ export function Projects() {
 
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <h2 className="text-4xl font-bold mb-12 text-center">PROJECTS</h2>
+      <h2 className="text-4xl font-dm-serif-text mb-12 text-center">PROJECTS</h2>
       <div className="relative overflow-hidden">
         <div 
           className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 transition-transform duration-300 ease-in-out ${

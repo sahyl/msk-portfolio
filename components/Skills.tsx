@@ -8,7 +8,7 @@ const skills = [
 export function Skills() {
   return (
     <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-4xl mb-12 text-center font-roboto">SKILLS</h2>
+      <h2 className="text-4xl mb-12 text-center font-dm-serif-text">SKILLS</h2>
       <div className="flex flex-wrap justify-center gap-4">
         {skills.map((skill, index) => (
           <div

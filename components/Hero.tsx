@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <section className="flex flex-col items-center justify-center min-h-screen px-4 pt-8">
       {/* Heading */}
-      <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold mb-6 text-center animate-fade-in">
+      <h1 className="text-6xl sm:text-7xl md:text-8xl font-dm-serif-text mb-6 text-center animate-fade-in">
         MOHAMMED SAHIL KHAN
       </h1>
 
@@ -28,7 +28,7 @@ export function Hero() {
       </div>
 
       {/* Subtitle */}
-      <p className="text-xl mb-8 max-w-2xl text-center animate-fade-in">
+      <p className="text-xl  mb-8 max-w-2xl text-center animate-fade-in">
         Software Developer | AI Enthusiast | Problem Solver
       </p>
 

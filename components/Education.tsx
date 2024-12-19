@@ -21,7 +21,7 @@ export const education = [
 export function Education() {
   return (
     <section id="education" className="py-20 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-4xl mb-12 text-center font-roboto"><b>EDUCATION</b></h2>
+      <h2 className="text-4xl mb-12 text-center font-dm-serif-text"><b>EDUCATION</b></h2>
       <div className="space-y-8">
         {education.map((edu, index) => (
           <div
@@ -29,7 +29,7 @@ export function Education() {
             className="border-l-2 border-black pl-4 edu-item"
             style={{ animationDelay: `${index * 0.5}s` }}
           >
-            <h3 className="text-xl font-roboto">{edu.degree}</h3>
+            <h3 className="text-xl font-dm-serif-text">{edu.degree}</h3>
             <p className="font-roboto">{edu.institution}</p>
             <p className="text-sm text-gray-600 font-roboto">{edu.period}</p>
           </div>
