@@ -1,56 +1,55 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { FiGithub } from "react-icons/fi";
-import { FiLinkedin } from "react-icons/fi";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { IoIosMail } from "react-icons/io";
 import { TbBrandLeetcode } from "react-icons/tb";
 import { PiReadCvLogoBold } from "react-icons/pi";
 
 export function Hero() {
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen px-4 pt-8">
+    <section className="flex flex-col items-center justify-center px-4 py-8 print:py-4">
       {/* Heading */}
-      <h1 className="text-6xl sm:text-7xl md:text-8xl font-dm-serif-text mb-6 text-center animate-fade-in">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-dm-serif-text mb-4 text-center animate-fade-in print:!opacity-100 print:!transform-none">
         MOHAMMED SAHIL KHAN
       </h1>
 
       {/* Profile Image */}
-      <div className="w-48 h-48 mb-8 rounded-full overflow-hidden animate-scale-up">
+      <div className="w-32 h-32 mb-4 rounded-full overflow-hidden animate-scale-up print:!opacity-100 print:!transform-none">
         <Image
           src="/sahil.jpg"
           alt="Mohammed Sahil Khan"
-          width={192}
-          height={192}
+          width={128}
+          height={128}
           className="object-cover"
           priority
         />
       </div>
 
       {/* Subtitle */}
-      <p className="text-xl  mb-8 max-w-2xl text-center animate-fade-in">
+      <p className="text-lg mb-4 max-w-xl text-center animate-fade-in print:!opacity-100 print:!transform-none">
         Software Developer | AI Enthusiast | Problem Solver
       </p>
 
       {/* Links and Button */}
-      <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in">
-        <div className="flex space-x-6">
-          <Link href="https://github.com/sahyl">
-            <FiGithub className="w-8 h-8 hover:text-gray-600 transition-colors" />
+      <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 animate-fade-in print:!opacity-100 print:!transform-none">
+        <div className="flex space-x-4">
+          <Link href="https://github.com/sahyl" target="_blank" rel="noopener noreferrer">
+            <FiGithub className="w-6 h-6 hover:text-gray-600 transition-colors print:text-black" />
           </Link>
-          <Link href="https://www.linkedin.com/in/saaahil/">
-            <FiLinkedin className="w-8 h-8 hover:text-gray-600 transition-colors" />
+          <Link href="https://www.linkedin.com/in/saaahil/" target="_blank" rel="noopener noreferrer">
+            <FiLinkedin className="w-6 h-6 hover:text-gray-600 transition-colors print:text-black" />
           </Link>
           <Link href="mailto:mohammedsahilkhan.msk@gmail.com">
-            <IoIosMail className="w-8 h-8 hover:text-gray-600 transition-colors" />
+            <IoIosMail className="w-6 h-6 hover:text-gray-600 transition-colors print:text-black" />
           </Link>
           <Link href="https://leetcode.com/u/saaahil/" target="_blank" rel="noopener noreferrer">
-            <TbBrandLeetcode className="w-8 h-8 hover:text-gray-600 transition-colors" />
+            <TbBrandLeetcode className="w-6 h-6 hover:text-gray-600 transition-colors print:text-black" />
           </Link>
         </div>
-        <Button asChild className="bg-black text-white hover:bg-gray-800">
+        <Button asChild className="bg-black text-white hover:bg-gray-800 print:bg-white print:text-black print:border print:border-black">
           <Link href="/Sahil_Khan_resume24.pdf" download>
-            <PiReadCvLogoBold className="w-5 h-5 mr-2" />
+            <PiReadCvLogoBold className="w-4 h-4 mr-2" />
             Download Resume
           </Link>
         </Button>
@@ -58,3 +57,4 @@ export function Hero() {
     </section>
   );
 }
+

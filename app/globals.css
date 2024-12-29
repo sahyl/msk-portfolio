@@ -34,7 +34,6 @@
   }
 }
 
-/* Add this to your global or module CSS file */
 .card {
   opacity: 0;
   transform: translateY(20px);
@@ -64,7 +63,6 @@
   }
 }
 
-/* Global or modular styles */
 .skill-item {
   opacity: 0;
   transform: scale(0.8);
@@ -78,21 +76,12 @@
   }
 }
 
-/* Add animation to the container */
 .contact-container {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease forwards;
 }
 
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animation for each education item */
 .edu-item {
   opacity: 0;
   transform: translateX(-20px);
@@ -106,19 +95,10 @@
   }
 }
 
-/* Add fade-in and slide-up animation */
 .project-card {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease forwards;
-}
-
-/* Animation keyframes */
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 :root {
@@ -130,7 +110,6 @@ body {
   font-family: var(--font-roboto);
 }
 
-/* Utility classes for applying specific fonts */
 .font-roboto {
   font-family: var(--font-roboto);
 }
@@ -139,7 +118,6 @@ body {
   font-family: var(--font-dm-serif-text);
 }
 
-/* Example usage styles */
 .heading {
   @apply font-dm-serif-text text-3xl font-normal;
 }
@@ -177,7 +155,6 @@ body {
     --chart-5: 27 87% 67%;
   }
 
-  /* Base styles */
   * {
     @apply border-border;
   }
@@ -185,3 +162,24 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* A4 specific styles */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .w-\[210mm\] {
+    width: 210mm;
+  }
+
+  .min-h-\[297mm\] {
+    min-height: 297mm;
+  }
+}
+
