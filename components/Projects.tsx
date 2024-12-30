@@ -62,21 +62,25 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <div className="bg-white p-4 rounded-lg shadow-md project-card flex flex-col justify-between border border-gray-200 print:border-0 print:shadow-none">
       <div>
-        <h3 className="text-lg font-dm-serif-text mb-1">{project.title}</h3>
+        {/* Title with icons */}
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-dm-serif-text mb-1">{project.title}</h3>
+          <div className="flex space-x-4">
+            <Link href={project.liveLink} target="_blank" rel="noopener noreferrer">
+              <HiOutlineExternalLink className="w-4 h-4 hover:text-gray-600 transition-colors" />
+            </Link>
+            <Link href={project.githubLink} target="_blank" rel="noopener noreferrer">
+              <FiGithub className="w-4 h-4 hover:text-gray-600 transition-colors" />
+            </Link>
+          </div>
+        </div>
         <p className="mb-2 text-xs">{project.description}</p>
         <p className="mb-2 text-xs text-gray-600">{project.techStack}</p>
-      </div>
-      <div className="flex space-x-4">
-        <Link href={project.liveLink} target="_blank" rel="noopener noreferrer">
-          <HiOutlineExternalLink className="w-4 h-4 hover:text-gray-600 transition-colors" />
-        </Link>
-        <Link href={project.githubLink} target="_blank" rel="noopener noreferrer">
-          <FiGithub className="w-4 h-4 hover:text-gray-600 transition-colors" />
-        </Link>
       </div>
     </div>
   );
 }
+
 
 export function Projects() {
   const [currentPage, setCurrentPage] = useState(0);
