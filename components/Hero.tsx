@@ -32,7 +32,7 @@ export function Hero() {
       </p>
 
       {/* Links and Button */}
-      <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 animate-fade-in print:!opacity-100 print:!transform-none">
+      <div className="flex flex-col items-center space-y-4 animate-fade-in print:!opacity-100 print:!transform-none">
         <div className="flex space-x-4">
           <Link href="https://github.com/sahyl" target="_blank" rel="noopener noreferrer">
             <FiGithub className="w-6 h-6 hover:text-gray-600 transition-colors print:text-black" />
