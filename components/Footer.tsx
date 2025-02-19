@@ -30,7 +30,7 @@ export function Footer() {
           </Link>
         </div>
         <p className="text-center font-roboto text-xs print:text-[10px]">
-          &copy; {new Date().getFullYear()} Mohammed Sahil Khan. All rights reserved.
+          &copy;   {new Date().getFullYear()} Mohammed Sahil Khan. All rights reserved.
         </p>
       </div>
     </footer>
