@@ -18,7 +18,7 @@ export const education = [
 
 export function Education() {
   return (
-    <section id="education" className="py-8 px-4 sm:px-6 print:px-0">
+    <section id="education" className="dark py-8 px-4 sm:px-6 print:px-0">
       <h2 className="text-3xl mb-6 text-center font-dm-serif-text"><b>EDUCATION</b></h2>
       <div className="space-y-4">
         {education.map((edu, index) => (

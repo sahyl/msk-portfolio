@@ -119,7 +119,7 @@ export function Projects() {
   );
 
   return (
-    <section id="projects" className="py-8 px-4 sm:px-6 bg-gray-50 print:bg-white print:py-4">
+    <section id="projects" className="dark py-8 px-4 sm:px-6 bg-white-50 print:bg-white print:py-4">
       <h2 className="text-3xl font-dm-serif-text mb-6 text-center print:text-2xl">PROJECTS</h2>
       <div className="relative overflow-hidden">
         <div 

@@ -1,13 +1,11 @@
 const skills = [
-  'Python', 'C++', 'SQL', 'JavaScript', 'MongoDB', 'TypeScript',
-  'NextJS', 'Shadcn',  'Seaborn', 'Scikit-learn', 'Tensorflow',
-  'ReactJS',  'BeautifulSoup', 'Selenium', 'MySQL', 'NodeJS',
-  'Git', 'Github', 'Postman API', 'Kaggle', 'Thunder Client',
+   'JavaScript', 'TypeScript','NextJS','MongoDB','Express','ReactJS', 'NodeJS',
+   'TailwindCss','Postgres','Git', 'Github','Python', 
 ];
 
 export function Skills() {
   return (
-    <section id="skills" className="py-8 px-4 sm:px-6 print:px-2 print:py-4">
+    <section id="skills" className="dark py-8 px-4 sm:px-6 print:px-2 print:py-4">
       <h2 className="text-3xl mb-6 text-center font-dm-serif-text print:text-2xl">SKILLS</h2>
       <div className="flex flex-wrap justify-center gap-2 print:gap-1">
         {skills.map((skill, index) => (

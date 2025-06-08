@@ -7,7 +7,7 @@ import { RiInstagramFill } from "react-icons/ri";
 
 export function Footer() {
   return (
-    <footer className="py-4 px-4 sm:px-6 bg-gray-100 print:bg-white print:border-t print:border-gray-200">
+    <footer className="dark py-4 px-4 sm:px-6 bg-white-100 print:bg-white print:border-t print:border-gray-200">
       <div className="flex flex-col items-center">
         <div className="flex space-x-4 mb-2">
           <Link href="https://github.com/sahyl" target="_blank" rel="noopener noreferrer">

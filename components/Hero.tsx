@@ -1,30 +1,31 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { IoIosMail } from "react-icons/io";
 import { TbBrandLeetcode } from "react-icons/tb";
 import { PiReadCvLogoBold } from "react-icons/pi";
+import FlipImage from './FlipImage';
 
 export function Hero() {
   return (
-    <section className="flex flex-col items-center justify-center px-4 py-8 print:py-4">
+    <section className="dark flex flex-col items-center justify-center px-4 py-8 print:py-4">
       {/* Heading */}
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-dm-serif-text mb-4 text-center animate-fade-in print:!opacity-100 print:!transform-none">
         MOHAMMED SAHIL KHAN
       </h1>
 
       {/* Profile Image */}
-      <div className="w-32 h-32 mb-4 rounded-full overflow-hidden animate-scale-up print:!opacity-100 print:!transform-none">
+      {/* <div className="w-32 h-32 mb-4 rounded-full overflow-hidden animate-scale-up print:!opacity-100 print:!transform-none">
         <Image
-          src="/sahil.jpg"
+          src="/msk.png"
           alt="Mohammed Sahil Khan"
           width={128}
           height={128}
           className="object-cover"
           priority
         />
-      </div>
+      </div> */}
+      <FlipImage/>
 
       {/* Subtitle */}
       <p className="text-lg mb-4 max-w-xl text-center animate-fade-in print:!opacity-100 print:!transform-none">
