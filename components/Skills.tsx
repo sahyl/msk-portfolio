@@ -1,3 +1,4 @@
+'use server'
 import {
   SiJavascript,
   SiTypescript,
@@ -28,7 +29,7 @@ const skillsWithIcons = [
   { name: "Python", icon: SiPython },
 ]
 
-export function Skills() {
+export async function Skills() {
   return (
     <section id="skills" className="dark py-8 px-4 sm:px-6 print:px-2 print:py-4">
       <h2 className="text-3xl mb-6 text-center font-dm-serif-text print:text-2xl">SKILLS</h2>

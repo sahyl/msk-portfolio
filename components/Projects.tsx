@@ -1,4 +1,4 @@
-"use client"
+'use server'
 import Link from "next/link"
 import { FiGithub } from "react-icons/fi"
 import { HiOutlineExternalLink } from "react-icons/hi"
@@ -82,7 +82,7 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 
-export function Projects() {
+export async function Projects() {
   return (
     <section id="projects" className="dark py-8 px-4 sm:px-6 bg-white-50 print:bg-white print:py-4">
       <h2 className="text-3xl font-dm-serif-text mb-6 text-center print:text-2xl">PROJECTS</h2>

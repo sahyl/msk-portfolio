@@ -1,8 +1,8 @@
-"use client"
+"use server"
 
 import Image from "next/image"
 
-export default function FlipImage() {
+export default async function FlipImage() {
   return (
     <div className="flex items-center justify-center py-8 bg-white-100">
       <div className="w-32 h-32 mb-4 rounded-full overflow-hidden animate-scale-up print:!opacity-100 print:!transform-none group perspective-1000 cursor-pointer">

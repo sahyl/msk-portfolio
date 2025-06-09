@@ -1,4 +1,5 @@
-export const education = [
+'use server'
+const education = [
   {
     degree: "B.Tech, Computer Science Engineering",
     institution: "Allenhouse Institute of Technology, Rooma, Kanpur",
@@ -16,7 +17,7 @@ export const education = [
   },
 ];
 
-export function Education() {
+export async function Education() {
   return (
     <section id="education" className="dark py-8 px-4 sm:px-6 print:px-0">
       <h2 className="text-3xl mb-6 text-center font-dm-serif-text"><b>EDUCATION</b></h2>
