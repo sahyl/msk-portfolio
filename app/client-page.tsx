@@ -17,46 +17,47 @@ export default function ClientPage() {
     setMounted(true)
   }, [])
 
-  // Apply shadow class conditionally based on theme
   const containerClass = mounted && theme === "light" ? "light-mode-shadow" : ""
 
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4 print-p-0 relative"
       style={{
-        backgroundColor: "var(--card)", // This will be white in light, #191919 in dark
+        backgroundColor: "var(--card)",
       }}
     >
-      {/* Outer Grid Background */}
+      {/* Outer Grid Background - More pronounced lines */}
       <div
         className={cn(
           "absolute inset-0",
           "[background-size:40px_40px]",
-          "[background-image:linear-gradient(to_right,#d1d5db_1px,transparent_1px),linear-gradient(to_bottom,#d1d5db_1px,transparent_1px)]",
-          "dark:[background-image:linear-gradient(to_right,#404040_1px,transparent_1px),linear-gradient(to_bottom,#404040_1px,transparent_1px)]",
+          "[background-image:linear-gradient(to_right,#7e7e7e_1.5px,transparent_1px),linear-gradient(to_bottom,#7e7e7e_1.5px,transparent_1px)]",
+          "dark:[background-image:linear-gradient(to_right,#5f5f5f_1.5px,transparent_1px),linear-gradient(to_bottom,#5f5f5f_1.5px,transparent_1px)]"
         )}
       />
-      {/* Radial gradient for the container to give a faded look */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+
+      {/* Radial gradient mask with soft blur */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_35%,black)] blur-sm"></div>
 
       <main
         className={`w-full max-w-4xl print-shadow-none overflow-hidden rounded-2xl ${containerClass} relative z-10`}
         style={{
-          backgroundColor: "var(--background)", // This will be #ffffff in light, #0a0a0a in dark
-          marginTop: "4rem", // Add margin to prevent navbar overlap
+          backgroundColor: "var(--background)",
+          marginTop: "4rem",
         }}
       >
-        {/* Inner Grid Background - Subtle and Faded */}
+        {/* Inner Grid Background - Slightly stronger */}
         <div
           className={cn(
-            "absolute inset-0 rounded-2xl opacity-40",
+            "absolute inset-0 rounded-2xl opacity-50",
             "[background-size:20px_20px]",
-            "[background-image:linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)]",
-            "dark:[background-image:linear-gradient(to_right,#374151_1px,transparent_1px),linear-gradient(to_bottom,#374151_1px,transparent_1px)]",
+            "[background-image:linear-gradient(to_right,#d4d4d4_1px,transparent_1px),linear-gradient(to_bottom,#d4d4d4_1px,transparent_1px)]",
+            "dark:[background-image:linear-gradient(to_right,#4b5563_1px,transparent_1px),linear-gradient(to_bottom,#4b5563_1px,transparent_1px)]"
           )}
         />
-        {/* Strong radial gradient for edge blur/fade effect */}
-        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_40%,black)] opacity-60"></div>
+
+        {/* Inner radial blur mask with stronger spread */}
+        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_55%,black)] opacity-70 blur-sm"></div>
 
         <div className="p-0 relative z-10">
           <Hero />
