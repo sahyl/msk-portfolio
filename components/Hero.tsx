@@ -21,10 +21,10 @@ export function Hero() {
 
   return (
     <section className="py-16 px-4 relative overflow-hidden">
-      {/* Theme toggle positioned in top right */}
+      {/* Theme toggle positioned in top right
       <div className="absolute top-4 right-4 z-20">
         <ThemeToggle />
-      </div>
+      </div> */}
 
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -55,7 +55,7 @@ export function Hero() {
             className="text-4xl sm:text-5xl md:text-6xl mt-8 mb-4 text-center hero-name"
             style={{ color: "var(--foreground)" }}
           >
-            MOHAMMED SAHIL KHAN
+            SAHIL KHAN
           </motion.h1>
 
           {/* Subtitle with increased weight */}

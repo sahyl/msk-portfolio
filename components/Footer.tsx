@@ -15,7 +15,7 @@ export function Footer() {
       <div className="max-w-4xl mx-auto">
         <div className="h-px w-16 mx-auto mb-6" style={{ backgroundColor: `var(--primary)` }}></div>
         <p className="font-mono text-xl font-bold tracking-wider" style={{ color: "var(--muted-foreground)" }}>
-          © {new Date().getFullYear()} MOHAMMED SAHIL KHAN
+          © {new Date().getFullYear()}  SAHIL KHAN
         </p>
       </div>
     </motion.footer>
