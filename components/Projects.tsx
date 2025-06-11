@@ -67,15 +67,21 @@ const projects: Project[] = [
       "TypeScript, Next.js, Vercel, NextAuth, Zod, Appwrite, ReCharts, Shadcn",
   },
 ];
-
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
+      transition={{ delay: index * 0.1, duration: 0.4, ease: "easeOut" }}
       viewport={{ once: true, amount: 0.2 }}
-      className="project-card flex flex-col justify-between group relative p-6 rounded-2xl overflow-hidden border-2"
+      whileHover={{
+        scale: 1.04,
+        transition: { duration: 0.2, ease: "easeOut" },
+      }}
+      className={cn(
+        "project-card group relative p-6 rounded-2xl overflow-hidden border-2 transition-all duration-200 ease-out hover:shadow-xl",
+        "hover:bg-white dark:hover:bg-black"
+      )}
       style={{
         backgroundColor: "var(--card)",
         borderColor: "var(--border)",
@@ -84,21 +90,22 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       {/* Dot Background */}
       <div
         className={cn(
-          "absolute inset-0",
+          "absolute inset-0 z-0",
           "[background-size:20px_20px]",
           "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-          "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]"
+          "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+          "transition-colors duration-200 ease-out"
         )}
       />
-      {/* Radial gradient for the container to give a faded look */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50"></div>
+
+      {/* Radial gradient mask */}
+      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50 transition-all duration-200 ease-out"></div>
 
       {/* Content */}
-      <div className="relative z-10">
-        {/* Title with underline - Using DM Serif */}
+      <div className="relative z-10 flex flex-col justify-between h-full">
         <div className="mb-4">
           <h3
-            className="text-xl mb-2 group-hover:text-primary transition-colors duration-300 project-text"
+            className="text-xl mb-2 group-hover:text-primary transition-colors duration-200 ease-out project-text"
             style={{
               fontFamily: "var(--font-dm-serif-text)",
               letterSpacing: "0.02em",
@@ -107,7 +114,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             {project.title}
           </h3>
           <div
-            className="h-px w-12 rounded-full group-hover:w-16 transition-all duration-300"
+            className="h-px w-12 rounded-full group-hover:w-16 transition-all duration-200 ease-out"
             style={{ backgroundColor: `var(--primary)` }}
           ></div>
         </div>
@@ -118,32 +125,29 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <p className="mb-4 text-xs font-mono tracking-wide project-tech">
           {project.techStack}
         </p>
-      </div>
 
-      <div className="flex space-x-4 mt-2 relative z-10">
-        <Link
-          href={project.liveLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center space-x-1 text-sm font-mono transition-colors tracking-wide hover:opacity-80 text-bold"
-          style={{ color: "var(--foreground)" }}
-        >
-          <HiOutlineExternalLink
-            className="w-4 h-4"
-            style={{ strokeWidth: "2.5" }}
-          />
-          <span>LIVE</span>
-        </Link>
-        <Link
-          href={project.githubLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center space-x-1 text-sm font-mono transition-colors tracking-wide hover:opacity-80 text-bold"
-          style={{ color: "var(--foreground)" }}
-        >
-          <FiGithub className="w-4 h-4" style={{ strokeWidth: "2.5" }} />
-          <span>CODE</span>
-        </Link>
+        <div className="flex space-x-4 mt-2">
+          <Link
+            href={project.liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center space-x-1 text-sm font-mono transition-colors tracking-wide hover:opacity-80 font-bold"
+            style={{ color: "var(--foreground)" }}
+          >
+            <HiOutlineExternalLink className="w-4 h-4" style={{ strokeWidth: "2.5" }} />
+            <span>LIVE</span>
+          </Link>
+          <Link
+            href={project.githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center space-x-1 text-sm font-mono transition-colors tracking-wide hover:opacity-80 font-bold"
+            style={{ color: "var(--foreground)" }}
+          >
+            <FiGithub className="w-4 h-4" style={{ strokeWidth: "2.5" }} />
+            <span>CODE</span>
+          </Link>
+        </div>
       </div>
     </motion.div>
   );
