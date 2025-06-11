@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Link from "next/link"
-import { FiGithub } from "react-icons/fi"
-import { HiOutlineExternalLink } from "react-icons/hi"
-import { SectionHeading } from "./SectionHeading"
-import { cn } from "@/lib/utils"
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { FiGithub } from "react-icons/fi";
+import { HiOutlineExternalLink } from "react-icons/hi";
+import { SectionHeading } from "./SectionHeading";
+import { cn } from "@/lib/utils";
 
 interface Project {
-  title: string
-  description: string
-  liveLink: string
-  githubLink: string
-  techStack: string
+  title: string;
+  description: string;
+  liveLink: string;
+  githubLink: string;
+  techStack: string;
 }
 
 const projects: Project[] = [
@@ -26,17 +26,20 @@ const projects: Project[] = [
   },
   {
     title: "CarePulse",
-    description: "A healthcare management platform with appointment scheduling and Twilio notifications.",
+    description:
+      "A healthcare management platform with appointment scheduling and Twilio notifications.",
     liveLink: "https://carepoint-carepulse.vercel.app/",
     githubLink: "https://github.com/sahyl/Carepoint",
     techStack: "Next.js, TypeScript, Appwrite, Zod, Twilio, Shadcn, Vercel",
   },
   {
     title: "OpenVoice",
-    description: "An anonymous Q&A platform with AI-powered question suggestions using Google Gemini AI.",
+    description:
+      "An anonymous Q&A platform with AI-powered question suggestions using Google Gemini AI.",
     liveLink: "https://opevoice.vercel.app/",
     githubLink: "https://github.com/sahyl/OpenVoice",
-    techStack: "TypeScript, Next.js, Vercel, NextAuth, Resend, Zod, Bcrypt, MongoDB, Google Gemini AI, Shadcn",
+    techStack:
+      "TypeScript, Next.js, Vercel, NextAuth, Resend, Zod, Bcrypt, MongoDB, Google Gemini AI, Shadcn",
   },
   {
     title: "YCD",
@@ -48,7 +51,8 @@ const projects: Project[] = [
   },
   {
     title: "Sync",
-    description: "SYNC is a Next.js-based video conferencing platform inspired by Zoom.",
+    description:
+      "SYNC is a Next.js-based video conferencing platform inspired by Zoom.",
     liveLink: "https://sync-videocall.vercel.app/sign-in",
     githubLink: "https://github.com/sahyl/sync",
     techStack: "Next.js, TypeScript, Clerk, Zod, StreamIO, Shadcn, Vercel",
@@ -59,9 +63,10 @@ const projects: Project[] = [
       "StoreIt is a modern file storage and management application built with Next.js and a variety of powerful React libraries.",
     liveLink: "https://storeit-storage-solutions.vercel.app/",
     githubLink: "https://github.com/sahyl/storeit",
-    techStack: "TypeScript, Next.js, Vercel, NextAuth, Zod, Appwrite, ReCharts, Shadcn",
+    techStack:
+      "TypeScript, Next.js, Vercel, NextAuth, Zod, Appwrite, ReCharts, Shadcn",
   },
-]
+];
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
@@ -82,7 +87,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           "absolute inset-0",
           "[background-size:20px_20px]",
           "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-          "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+          "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]"
         )}
       />
       {/* Radial gradient for the container to give a faded look */}
@@ -110,7 +115,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <p className="mb-4 text-sm font-mono leading-relaxed tracking-wide project-description">
           {project.description}
         </p>
-        <p className="mb-4 text-xs font-mono tracking-wide project-tech">{project.techStack}</p>
+        <p className="mb-4 text-xs font-mono tracking-wide project-tech">
+          {project.techStack}
+        </p>
       </div>
 
       <div className="flex space-x-4 mt-2 relative z-10">
@@ -121,7 +128,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           className="flex items-center space-x-1 text-sm font-mono transition-colors tracking-wide hover:opacity-80 text-bold"
           style={{ color: "var(--foreground)" }}
         >
-          <HiOutlineExternalLink className="w-4 h-4" style={{ strokeWidth: "2.5" }} />
+          <HiOutlineExternalLink
+            className="w-4 h-4"
+            style={{ strokeWidth: "2.5" }}
+          />
           <span>LIVE</span>
         </Link>
         <Link
@@ -136,7 +146,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </Link>
       </div>
     </motion.div>
-  )
+  );
 }
 
 export function Projects() {
@@ -152,5 +162,5 @@ export function Projects() {
         </div>
       </div>
     </section>
-  )
+  );
 }
