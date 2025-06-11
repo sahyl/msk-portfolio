@@ -16,6 +16,7 @@ import {
   SiPython,
 } from "react-icons/si"
 import { useTheme } from "./Theme-provider"
+import { SectionHeading } from "./SectionHeading"
 
 const skillsWithIcons = [
   { name: "JavaScript", icon: SiJavascript },
@@ -56,7 +57,7 @@ export function Skills() {
   return (
     <section id="skills" className="py-16 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <h2 className="section-heading">Skills</h2>
+<SectionHeading title="Skills" color="#00ffa0" /> 
 
         <motion.div
           variants={container}

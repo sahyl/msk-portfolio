@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { FiGithub, FiLinkedin } from "react-icons/fi"
 import { IoIosMail } from "react-icons/io"
 import { TbBrandLeetcode } from "react-icons/tb"
@@ -10,50 +10,54 @@ import { RiInstagramFill } from "react-icons/ri"
 import { motion, AnimatePresence } from "framer-motion"
 
 export function Navbar() {
+  const [visible, setVisible] = useState(false)
   const [isScrolling, setIsScrolling] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
-  const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null)
-  const [visible, setVisible] = useState(false)
 
-  // Handle scroll events
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
   useEffect(() => {
     const handleScroll = () => {
       setVisible(true)
       setIsScrolling(true)
 
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout)
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
       }
 
-      const timeout = setTimeout(() => {
+      scrollTimeoutRef.current = setTimeout(() => {
         setIsScrolling(false)
         if (!isHovering) {
           setVisible(false)
         }
       }, 2000)
-
-      setScrollTimeout(timeout)
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => {
       window.removeEventListener("scroll", handleScroll)
-      if (scrollTimeout) clearTimeout(scrollTimeout)
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current)
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current)
     }
-  }, [scrollTimeout, isHovering])
+  }, [isHovering])
 
   const handleMouseEnter = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current)
     setIsHovering(true)
     setVisible(true)
   }
 
   const handleMouseLeave = () => {
     setIsHovering(false)
+
+    // Delay hiding only if not scrolling
     if (!isScrolling) {
-      const timeout = setTimeout(() => {
-        setVisible(false)
+      hoverTimeoutRef.current = setTimeout(() => {
+        if (!isHovering && !isScrolling) {
+          setVisible(false)
+        }
       }, 1000)
-      setScrollTimeout(timeout)
     }
   }
 
@@ -66,7 +70,6 @@ export function Navbar() {
     { href: "https://instagram.com/saaahilkhaaan", icon: RiInstagramFill, label: "Instagram" },
   ]
 
-  // Enhanced blur effect during movement
   const navbarStyle = {
     backdropFilter: isScrolling ? "blur(30px)" : "blur(20px)",
     WebkitBackdropFilter: isScrolling ? "blur(30px)" : "blur(20px)",

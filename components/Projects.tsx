@@ -4,6 +4,8 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { FiGithub } from "react-icons/fi"
 import { HiOutlineExternalLink } from "react-icons/hi"
+import { SectionHeading } from "./SectionHeading"
+import { cn } from "@/lib/utils"
 
 interface Project {
   title: string
@@ -68,9 +70,26 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
       viewport={{ once: true, amount: 0.2 }}
-      className="glass-effect p-6 project-card flex flex-col justify-between group"
+      className="project-card flex flex-col justify-between group relative p-6 rounded-2xl overflow-hidden border-2"
+      style={{
+        backgroundColor: "var(--card)",
+        borderColor: "var(--border)",
+      }}
     >
-      <div>
+      {/* Dot Background */}
+      <div
+        className={cn(
+          "absolute inset-0",
+          "[background-size:20px_20px]",
+          "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
+          "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+        )}
+      />
+      {/* Radial gradient for the container to give a faded look */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50"></div>
+
+      {/* Content */}
+      <div className="relative z-10">
         {/* Title with underline - Using DM Serif */}
         <div className="mb-4">
           <h3
@@ -94,7 +113,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <p className="mb-4 text-xs font-mono tracking-wide project-tech">{project.techStack}</p>
       </div>
 
-      <div className="flex space-x-4 mt-2">
+      <div className="flex space-x-4 mt-2 relative z-10">
         <Link
           href={project.liveLink}
           target="_blank"
@@ -124,7 +143,7 @@ export function Projects() {
   return (
     <section id="projects" className="py-16 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <h2 className="section-heading">Projects</h2>
+        <SectionHeading title="PROJECTS" color="#9333EA" />
 
         <div className="grid md:grid-cols-2 gap-6 mt-8">
           {projects.map((project, index) => (

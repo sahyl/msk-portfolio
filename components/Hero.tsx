@@ -69,15 +69,19 @@ export function Hero() {
             SOFTWARE DEVELOPER • AI ENTHUSIAST • PROBLEM SOLVER
           </motion.p>
 
-          {/* Button */}
+          {/* Button with animated gradient border - no hover effect, intensified colors */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6, duration: 0.6 }}
+            className="relative"
           >
+            {/* Animated gradient border - intensified colors */}
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#8AFFC1] via-[#67D1FB] to-[#FF87D7] rounded-full opacity-100 blur-[2px] animate-gradient-x"></div>
+
             <Button
               asChild
-              className="font-mono px-6 py-3 rounded-full transition-all duration-300 tracking-wide text-bold hover:opacity-90"
+              className="font-mono px-6 py-3 rounded-full transition-all duration-300 tracking-wide text-bold hover:opacity-90 relative"
               style={buttonStyle}
             >
               <Link href="/Sahil_Khan_resume24.pdf" download>

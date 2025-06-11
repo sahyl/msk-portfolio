@@ -1,6 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { SectionHeading } from "./SectionHeading"
+import { cn } from "@/lib/utils"
 
 const education = [
   {
@@ -24,7 +26,7 @@ export function Education() {
   return (
     <section id="education" className="py-16 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <h2 className="section-heading">Education</h2>
+        <SectionHeading title="EDUCATION" color="#EF4444" />
 
         <div className="mt-8 relative">
           {/* Timeline line */}
@@ -52,24 +54,45 @@ export function Education() {
                   }}
                 ></div>
 
-                <div className="glass-effect p-5 education-card education-card-hover">
-                  <h3
-                    className="text-lg mb-1 education-text"
-                    style={{
-                      color: "var(--primary)",
-                      fontFamily: "var(--font-dm-serif-text)",
-                      letterSpacing: "0.02em",
-                    }}
-                  >
-                    {edu.degree}
-                  </h3>
-                  <p className="font-mono text-sm mb-1 tracking-wide education-institution">{edu.institution}</p>
-                  <p
-                    className="text-xs font-mono tracking-wider text-bold"
-                    style={{ color: "var(--muted-foreground)" }}
-                  >
-                    {edu.period}
-                  </p>
+                <div
+                  className="p-5 rounded-2xl education-card-hover relative overflow-hidden border-2"
+                  style={{
+                    backgroundColor: "var(--card)",
+                    borderColor: "var(--border)",
+                  }}
+                >
+                  {/* Dot Background */}
+                  <div
+                    className={cn(
+                      "absolute inset-0",
+                      "[background-size:20px_20px]",
+                      "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
+                      "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+                    )}
+                  />
+                  {/* Radial gradient for the container to give a faded look */}
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50"></div>
+
+                  {/* Content */}
+                  <div className="relative z-10">
+                    <h3
+                      className="text-lg mb-1 education-text"
+                      style={{
+                        color: "var(--primary)",
+                        fontFamily: "var(--font-dm-serif-text)",
+                        letterSpacing: "0.02em",
+                      }}
+                    >
+                      {edu.degree}
+                    </h3>
+                    <p className="font-mono text-sm mb-1 tracking-wide education-institution">{edu.institution}</p>
+                    <p
+                      className="text-xs font-mono tracking-wider text-bold"
+                      style={{ color: "var(--muted-foreground)" }}
+                    >
+                      {edu.period}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ))}
