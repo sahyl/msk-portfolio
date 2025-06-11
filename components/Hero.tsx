@@ -13,7 +13,7 @@ export function Hero() {
 
   // Button styling based on theme
   const buttonStyle = {
-    backgroundColor: theme === "dark" ? "var(--primary)" : "#000000",
+    backgroundColor: theme === "dark" ? "black" : "#000000",
     color: theme === "dark" ? "var(--primary-foreground)" : "#ffffff",
     border: `1px solid ${theme === "dark" ? "var(--border)" : "#000000"}`,
     fontWeight: "600",
