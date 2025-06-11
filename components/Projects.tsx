@@ -1,4 +1,6 @@
-'use server'
+"use client"
+
+import { motion } from "framer-motion"
 import Link from "next/link"
 import { FiGithub } from "react-icons/fi"
 import { HiOutlineExternalLink } from "react-icons/hi"
@@ -59,37 +61,76 @@ const projects: Project[] = [
   },
 ]
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md project-card flex flex-col justify-between border border-gray-200 print:border-0 print:shadow-none">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      viewport={{ once: true, amount: 0.2 }}
+      className="glass-effect p-6 project-card flex flex-col justify-between group"
+    >
       <div>
-        {/* Title with icons closely aligned */}
-        <div className="flex items-center space-x-3 mb-2">
-          <h3 className="text-xl font-dm-serif-text">{project.title}</h3> {/* ⬅️ Increased from text-lg to text-xl */}
-          <Link href={project.liveLink} target="_blank" rel="noopener noreferrer">
-            <HiOutlineExternalLink className="w-5 h-5 hover:text-gray-600 transition-colors" /> {/* ⬅️ was w-4 h-4 */}
-          </Link>
-          <Link href={project.githubLink} target="_blank" rel="noopener noreferrer">
-            <FiGithub className="w-5 h-5 hover:text-gray-600 transition-colors" />
-          </Link>
+        {/* Title with underline - Using DM Serif */}
+        <div className="mb-4">
+          <h3
+            className="text-xl mb-2 group-hover:text-primary transition-colors duration-300 project-text"
+            style={{
+              fontFamily: "var(--font-dm-serif-text)",
+              letterSpacing: "0.02em",
+            }}
+          >
+            {project.title}
+          </h3>
+          <div
+            className="h-px w-12 rounded-full group-hover:w-16 transition-all duration-300"
+            style={{ backgroundColor: `var(--primary)` }}
+          ></div>
         </div>
 
-        <p className="mb-2 text-sm">{project.description}</p> {/* ⬅️ was text-xs */}
-        <p className="mb-2 text-sm text-gray-600">{project.techStack}</p> {/* ⬅️ was text-xs */}
+        <p className="mb-4 text-sm font-mono leading-relaxed tracking-wide project-description">
+          {project.description}
+        </p>
+        <p className="mb-4 text-xs font-mono tracking-wide project-tech">{project.techStack}</p>
       </div>
-    </div>
+
+      <div className="flex space-x-4 mt-2">
+        <Link
+          href={project.liveLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-1 text-sm font-mono transition-colors tracking-wide hover:opacity-80 text-bold"
+          style={{ color: "var(--foreground)" }}
+        >
+          <HiOutlineExternalLink className="w-4 h-4" style={{ strokeWidth: "2.5" }} />
+          <span>LIVE</span>
+        </Link>
+        <Link
+          href={project.githubLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-1 text-sm font-mono transition-colors tracking-wide hover:opacity-80 text-bold"
+          style={{ color: "var(--foreground)" }}
+        >
+          <FiGithub className="w-4 h-4" style={{ strokeWidth: "2.5" }} />
+          <span>CODE</span>
+        </Link>
+      </div>
+    </motion.div>
   )
 }
 
-
-export async function Projects() {
+export function Projects() {
   return (
-    <section id="projects" className="dark py-8 px-4 sm:px-6 bg-white-50 print:bg-white print:py-4">
-      <h2 className="text-3xl font-dm-serif-text mb-6 text-center print:text-2xl">PROJECTS</h2>
-      <div className="space-y-4">
-        {projects.map((project, index) => (
-          <ProjectCard key={index} project={project} />
-        ))}
+    <section id="projects" className="py-16 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="section-heading">Projects</h2>
+
+        <div className="grid md:grid-cols-2 gap-6 mt-8">
+          {projects.map((project, index) => (
+            <ProjectCard key={index} project={project} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   )

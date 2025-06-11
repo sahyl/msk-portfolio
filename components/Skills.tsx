@@ -1,4 +1,6 @@
-'use server'
+"use client"
+
+import { motion } from "framer-motion"
 import {
   SiJavascript,
   SiTypescript,
@@ -13,6 +15,7 @@ import {
   SiGithub,
   SiPython,
 } from "react-icons/si"
+import { useTheme } from "./Theme-provider"
 
 const skillsWithIcons = [
   { name: "JavaScript", icon: SiJavascript },
@@ -29,24 +32,58 @@ const skillsWithIcons = [
   { name: "Python", icon: SiPython },
 ]
 
-export async function Skills() {
+export function Skills() {
+  const { theme } = useTheme()
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const item = {
+    hidden: { opacity: 0, scale: 0.8 },
+    show: { opacity: 1, scale: 1 },
+  }
+
+  // Determine icon color based on theme
+  const iconColor = theme === "dark" ? "#ffffff" : "#000000"
+
   return (
-    <section id="skills" className="dark py-8 px-4 sm:px-6 print:px-2 print:py-4">
-      <h2 className="text-3xl mb-6 text-center font-dm-serif-text print:text-2xl">SKILLS</h2>
-      <div className="flex flex-wrap justify-center gap-3 print:gap-1">
-        {skillsWithIcons.map((skill, index) => {
-          const IconComponent = skill.icon
-          return (
-            <div
-              key={index}
-              className="skill-item bg-gray-100 rounded-full px-4 py-2 font-roboto text-sm print:text-[10px] print:px-2 print:py-0.5 print:!opacity-100 print:!transform-none flex items-center gap-2"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <IconComponent className="w-4 h-4 print:w-2 print:h-2" />
-              <span>{skill.name}</span>
-            </div>
-          )
-        })}
+    <section id="skills" className="py-16 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="section-heading">Skills</h2>
+
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="flex flex-wrap justify-center gap-3 mt-8"
+        >
+          {skillsWithIcons.map((skill, index) => {
+            const IconComponent = skill.icon
+            return (
+              <motion.div
+                key={index}
+                variants={item}
+                className="glass-effect rounded-full px-4 py-2 font-mono text-sm flex items-center gap-2 skill-item transition-all duration-300"
+                style={{
+                  color: "var(--card-foreground)",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                }}
+              >
+                <IconComponent className="w-4 h-4" style={{ color: iconColor }} />
+                <span className="">{skill.name}</span>
+              </motion.div>
+            )
+          })}
+        </motion.div>
       </div>
     </section>
   )
