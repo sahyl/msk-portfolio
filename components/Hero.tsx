@@ -81,7 +81,7 @@ export function Hero() {
 
             <Button
               asChild
-              className="font-mono px-6 py-3 rounded-full transition-all duration-300 tracking-wide text-bold hover:opacity-90 relative"
+              className="font-mono px-6 py-3 rounded-full transition-all duration-300 tracking-wide text-bold relative"
               style={buttonStyle}
             >
               <Link href="/Sahil_Khan_resume24.pdf" download>
