@@ -77,7 +77,7 @@ export function Hero() {
             className="relative"
           >
             {/* Animated gradient border - intensified colors */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#8AFFC1] via-[#67D1FB] to-[#FF87D7] rounded-full opacity-100 blur-[2px] animate-gradient-x"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#8AFFC1] via-[#67D1FB] to-[#FF87D7] rounded-md opacity-100 blur-[2px] animate-gradient-x"></div>
 
             <Button
               asChild
