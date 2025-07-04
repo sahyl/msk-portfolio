@@ -77,11 +77,11 @@ export function Hero() {
             className="relative"
           >
             {/* Animated gradient border - intensified colors */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#8AFFC1] via-[#67D1FB] to-[#FF87D7] rounded-xl opacity-100 blur-[2px] animate-gradient-x"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#8AFFC1] via-[#67D1FB] to-[#FF87D7] rounded-lg opacity-100 blur-[2px] animate-gradient-x"></div>
 
             <Button
               asChild
-              className="font-mono px-6 py-3 rounded-xl transition-all duration-300 tracking-wide text-bold relative"
+              className="font-mono px-6 py-3 rounded-lg transition-all duration-300 tracking-wide text-bold relative"
               style={buttonStyle}
             >
               <Link href="/Sahil_Khan_resume24.pdf" download>
