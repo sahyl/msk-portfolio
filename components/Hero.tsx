@@ -84,7 +84,7 @@ export function Hero() {
               className="font-mono px-6 py-3 rounded-lg transition-all duration-300 tracking-wide text-bold relative"
               style={buttonStyle}
             >
-              <Link href="/Sahil_Khan_resume24.pdf" download>
+              <Link href="/resumePortfolio.pdf" download>
                 <PiReadCvLogoBold className="w-4 h-4 mr-2" />
                 DOWNLOAD RESUME
               </Link>
