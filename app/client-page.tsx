@@ -3,6 +3,7 @@
 import { Education } from "@/components/Education"
 import { Footer } from "@/components/Footer"
 import { Hero } from "@/components/Hero"
+import { OpenSourceContributions } from "@/components/openSourceContributions"
 import { Projects } from "@/components/Projects"
 import { Skills } from "@/components/Skills"
 import { useTheme } from "@/components/Theme-provider"
@@ -63,6 +64,7 @@ export default function ClientPage() {
           <Hero />
           <Skills />
           <Projects />
+          <OpenSourceContributions />
           <Education />
           <Footer />
         </div>

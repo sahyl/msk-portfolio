@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 export function Footer() {
   return (
@@ -13,11 +13,17 @@ export function Footer() {
       style={{ opacity: 0.5 }} // border removed
     >
       <div className="max-w-4xl mx-auto">
-        <div className="h-px w-16 mx-auto mb-6" style={{ backgroundColor: `var(--primary)` }}></div>
-        <p className="font-mono text-xl font-bold tracking-wider" style={{ color: "var(--muted-foreground)" }}>
-          © {new Date().getFullYear()}  SAHIL KHAN
+        <div
+          className="h-px w-16 mx-auto mb-6"
+          style={{ backgroundColor: `var(--primary)` }}
+        ></div>
+        <p
+          className="font-mono text-xl font-bold tracking-wider"
+          style={{ color: "var(--muted-foreground)" }}
+        >
+          © {new Date().getFullYear()} SAHIL KHAN
         </p>
       </div>
     </motion.footer>
-  )
+  );
 }
