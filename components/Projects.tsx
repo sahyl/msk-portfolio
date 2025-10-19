@@ -33,14 +33,12 @@ const projects: Project[] = [
     techStack: "Next.js, TypeScript, Appwrite, Zod, Twilio, Shadcn, Vercel",
   },
   {
-    title: "OpenVoice",
-    description:
-      "An anonymous Q&A platform with AI-powered question suggestions using Google Gemini AI.",
-    liveLink: "https://opevoice.vercel.app/",
-    githubLink: "https://github.com/sahyl/OpenVoice",
-    techStack:
-      "TypeScript, Next.js, Vercel, NextAuth, Resend, Zod, Bcrypt, MongoDB, Google Gemini AI, Shadcn",
-  },
+  "title": "ResumeIQ",
+  "description": "AI-powered resume analyzer that scores resumes against a job description, performs ATS compatibility checks, and returns prioritized, actionable improvement suggestions.",
+  "liveLink": "https://resume-analyser-resume-iq.vercel.app/",
+  "githubLink": "https://github.com/sahyl/resume_analyser",
+  "techStack": "TypeScript, React Router, Putter.js, Tailwind CSS, Zustand, pdfjs-dist (client)"
+},
   {
     title: "YCD",
     description:

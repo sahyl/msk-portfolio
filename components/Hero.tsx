@@ -77,14 +77,14 @@ export function Hero() {
             className="relative"
           >
             {/* Animated gradient border - intensified colors */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#8AFFC1] via-[#67D1FB] to-[#FF87D7] rounded-full opacity-100 blur-[2px] animate-gradient-x"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#8AFFC1] via-[#67D1FB] to-[#FF87D7] rounded-lg opacity-100 blur-[2px] animate-gradient-x"></div>
 
             <Button
               asChild
-              className="font-mono px-6 py-3 rounded-full transition-all duration-300 tracking-wide text-bold hover:opacity-90 relative"
+              className="font-mono px-6 py-3 rounded-lg transition-all duration-300 tracking-wide text-bold relative"
               style={buttonStyle}
             >
-              <Link href="/Sahil_Khan_resume24.pdf" download>
+              <Link href="/resumePortfolio.pdf" download>
                 <PiReadCvLogoBold className="w-4 h-4 mr-2" />
                 DOWNLOAD RESUME
               </Link>
