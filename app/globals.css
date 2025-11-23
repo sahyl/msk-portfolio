@@ -200,7 +200,7 @@ body {
 
 /* Light mode container shadow */
 .light-mode-shadow {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(0, 0, 0, 0.03);
 }
 
@@ -222,7 +222,7 @@ body {
 
 .project-card {
   transition: all 0.3s ease;
-  border-radius: 1rem;
+  
 }
 
 .project-card:hover {

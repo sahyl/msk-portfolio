@@ -6,7 +6,6 @@ import { PiReadCvLogoBold } from "react-icons/pi"
 import FlipImage from "./FlipImage"
 import { motion } from "framer-motion"
 import { useTheme } from "./Theme-provider"
-import { ThemeToggle } from "./Theme-toggle"
 
 export function Hero() {
   const { theme } = useTheme()

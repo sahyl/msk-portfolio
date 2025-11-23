@@ -1,24 +1,25 @@
-"use client"
+"use client";
 
-import { Education } from "@/components/Education"
-import { Footer } from "@/components/Footer"
-import { Hero } from "@/components/Hero"
-import { OpenSourceContributions } from "@/components/openSourceContributions"
-import { Projects } from "@/components/Projects"
-import { Skills } from "@/components/Skills"
-import { useTheme } from "@/components/Theme-provider"
-import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react"
+import { Education } from "@/components/Education";
+import { Footer } from "@/components/Footer";
+import { Hero } from "@/components/Hero";
+import { OpenSourceContributions } from "@/components/openSourceContributions";
+import { Projects } from "@/components/Projects";
+import { Skills } from "@/components/Skills";
+import { useTheme } from "@/components/Theme-provider";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 export default function ClientPage() {
-  const { theme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
-  const containerClass = mounted && theme === "light" ? "light-mode-shadow" : ""
+  const containerClass =
+    mounted && theme === "light" ? "light-mode-shadow" : "";
 
   return (
     <div
@@ -41,7 +42,7 @@ export default function ClientPage() {
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_35%,black)] blur-sm"></div>
 
       <main
-        className={`w-full max-w-4xl print-shadow-none overflow-hidden rounded-2xl ${containerClass} relative z-10`}
+        className={`w-full max-w-4xl print-shadow-none overflow-hidden border-b-slate-950 rounded-2xl ${containerClass} relative z-10`}
         style={{
           backgroundColor: "var(--background)",
           marginTop: "4rem",
@@ -52,7 +53,7 @@ export default function ClientPage() {
           className={cn(
             "absolute inset-0 rounded-2xl opacity-50",
             "[background-size:20px_20px]",
-            "[background-image:linear-gradient(to_right,#d4d4d4_1px,transparent_1px),linear-gradient(to_bottom,#d4d4d4_1px,transparent_1px)]",
+            "[background-image:linear-gradient(to_right,#d4d4d4_1.5px,transparent_1.5px),linear-gradient(to_bottom,#d4d4d4_1.5px,transparent_1.5px)]",
             "dark:[background-image:linear-gradient(to_right,#4b5563_1px,transparent_1px),linear-gradient(to_bottom,#4b5563_1px,transparent_1px)]"
           )}
         />
@@ -70,5 +71,5 @@ export default function ClientPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }
