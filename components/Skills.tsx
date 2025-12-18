@@ -55,7 +55,7 @@ export function Skills() {
   const iconColor = theme === "dark" ? "#ffffff" : "#000000"
 
   return (
-    <section id="skills" className="py-16 px-4 sm:px-6">
+    <section id="skills" className="py-4 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
 <SectionHeading title="Skills" color="#00ffa0" /> 
 

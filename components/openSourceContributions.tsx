@@ -136,7 +136,7 @@ function ContributionCard({
 
 export function OpenSourceContributions() {
   return (
-    <section id="contributions" className="py-16 px-4 sm:px-6">
+    <section id="contributions" className="py-6 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <SectionHeading title="OPEN-SOURCE CONTRIBUTIONS" color="#0EA5E9" />
 

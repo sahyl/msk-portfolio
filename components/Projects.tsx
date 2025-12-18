@@ -153,7 +153,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 export function Projects() {
   return (
-    <section id="projects" className="py-16 px-4 sm:px-6">
+    <section id="projects" className="py-4 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <SectionHeading title="PROJECTS" color="#9333EA" />
 

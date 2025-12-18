@@ -24,7 +24,7 @@ const education = [
 
 export function Education() {
   return (
-    <section id="education" className="py-16 px-4 sm:px-6">
+    <section id="education" className="py-6 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <SectionHeading title="EDUCATION" color="#EF4444" />
 

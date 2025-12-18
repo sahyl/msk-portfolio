@@ -2,6 +2,7 @@
 
 import { Education } from "@/components/Education";
 import { Footer } from "@/components/Footer";
+import GitHubGrid from "@/components/GitHubGrid";
 import { Hero } from "@/components/Hero";
 import { OpenSourceContributions } from "@/components/openSourceContributions";
 import { Projects } from "@/components/Projects";
@@ -63,6 +64,7 @@ export default function ClientPage() {
 
         <div className="p-0 relative z-10">
           <Hero />
+          <GitHubGrid />
           <Skills />
           <Projects />
           <OpenSourceContributions />
