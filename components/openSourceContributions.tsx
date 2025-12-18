@@ -63,7 +63,26 @@ function ContributionCard({
       />
 
       {/* Radial gradient mask */}
-      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50 transition-all duration-200 ease-out"></div>
+      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50 transition-all duration-200 ease-out" />
+
+      {/* ✨ Flashing light overlay */}
+      <motion.div
+        className="absolute inset-0 z-[1] rounded-2xl pointer-events-none overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+      >
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+          animate={{ x: ["-100%", "100%"] }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatDelay: 5,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.div>
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-between h-full">
@@ -80,7 +99,7 @@ function ContributionCard({
           <div
             className="h-px w-12 rounded-full group-hover:w-16 transition-all duration-200 ease-out"
             style={{ backgroundColor: `var(--primary)` }}
-          ></div>
+          />
         </div>
 
         <p className="mb-4 text-sm font-mono leading-relaxed tracking-wide contribution-description">
@@ -132,6 +151,7 @@ function ContributionCard({
     </motion.div>
   )
 }
+
 
 
 export function OpenSourceContributions() {

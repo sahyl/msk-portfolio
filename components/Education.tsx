@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { SectionHeading } from "./SectionHeading"
-import { cn } from "@/lib/utils"
+import { motion } from "framer-motion";
+import { SectionHeading } from "./SectionHeading";
+import { cn } from "@/lib/utils";
 
 const education = [
   {
@@ -20,7 +20,7 @@ const education = [
     institution: "International Indian School, Dammam, Kingdom of Saudi Arabia",
     period: "Mar 2016 - Mar 2017",
   },
-]
+];
 
 export function Education() {
   return (
@@ -67,11 +67,29 @@ export function Education() {
                       "absolute inset-0",
                       "[background-size:20px_20px]",
                       "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-                      "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+                      "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]"
                     )}
                   />
                   {/* Radial gradient for the container to give a faded look */}
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50"></div>
+                  {/* Flashing light overlay */}
+                  <motion.div
+                    className="absolute inset-0 z-[1] rounded-2xl pointer-events-none overflow-hidden"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                      animate={{ x: ["-100%", "100%"] }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatDelay: 5,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </motion.div>
 
                   {/* Content */}
                   <div className="relative z-10">
@@ -85,7 +103,9 @@ export function Education() {
                     >
                       {edu.degree}
                     </h3>
-                    <p className="font-mono text-sm mb-1 tracking-wide education-institution">{edu.institution}</p>
+                    <p className="font-mono text-sm mb-1 tracking-wide education-institution">
+                      {edu.institution}
+                    </p>
                     <p
                       className="text-xs font-mono tracking-wider text-bold"
                       style={{ color: "var(--muted-foreground)" }}
@@ -100,5 +120,5 @@ export function Education() {
         </div>
       </div>
     </section>
-  )
+  );
 }
