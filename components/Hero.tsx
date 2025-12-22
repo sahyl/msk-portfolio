@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "./ui/button"
-import { PiReadCvLogoBold } from "react-icons/pi"
-import FlipImage from "./FlipImage"
-import { motion } from "framer-motion"
-import { useTheme } from "./Theme-provider"
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { PiReadCvLogoBold } from "react-icons/pi";
+import FlipImage from "./FlipImage";
+import { motion } from "framer-motion";
+import { useTheme } from "./Theme-provider";
 
 export function Hero() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   // Button styling based on theme
   const buttonStyle = {
@@ -16,7 +16,7 @@ export function Hero() {
     color: theme === "dark" ? "var(--primary-foreground)" : "#ffffff",
     border: `1px solid ${theme === "dark" ? "var(--border)" : "#000000"}`,
     fontWeight: "600",
-  }
+  };
 
   return (
     <section className="py-4 px-4 relative overflow-hidden">
@@ -80,17 +80,47 @@ export function Hero() {
 
             <Button
               asChild
-              className="font-mono px-6 py-3 rounded-lg transition-all duration-300 tracking-wide text-bold relative"
+              className="
+    relative overflow-hidden
+    font-mono px-6 py-3 rounded-lg
+    tracking-wide font-bold
+  "
               style={buttonStyle}
             >
-              <Link href="/resumePortfolio.pdf" download>
-                <PiReadCvLogoBold className="w-4 h-4 mr-2" />
-                DOWNLOAD RESUME
+              <Link
+                href="/resumePortfolio.pdf"
+                download
+                className="relative flex items-center justify-center gap-2"
+              >
+                {/* SHIMMER LAYER */}
+                <motion.span
+                  className="
+        absolute inset-0
+        bg-gradient-to-r
+        from-transparent
+        via-white/20
+        to-transparent
+      "
+                  initial={{ x: "-100%" }}
+                  animate={{ x: "100%" }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    repeatDelay: 4,
+                    ease: "easeInOut",
+                  }}
+                />
+
+                {/* CONTENT LAYER */}
+                <span className="relative z-10 flex items-center gap-2">
+                  <PiReadCvLogoBold className="w-4 h-4" />
+                  DOWNLOAD RESUME
+                </span>
               </Link>
             </Button>
           </motion.div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
