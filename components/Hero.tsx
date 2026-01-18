@@ -88,7 +88,7 @@ export function Hero() {
               style={buttonStyle}
             >
               <Link
-                href="/resumePortfolio.pdf"
+                href="/Resume_26.pdf"
                 download
                 className="relative flex items-center justify-center gap-2"
               >
