@@ -100,10 +100,10 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         }}
       />
 
-      <div className="min-h-screen" style={{ backgroundColor: "var(--background)" }}>
+      <div className="min-h-screen" style={{ backgroundColor: "var(--card)" }}>
         <div
           className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16"
-          style={{ backgroundColor: "var(--background)" }}
+          style={{ backgroundColor: "var(--card)" }}
         >
           {/* Back Button */}
           <Link
