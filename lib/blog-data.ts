@@ -12,253 +12,507 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
-    slug: "getting-started-with-react",
-    title: "Getting Started with React",
-    date: "2024-01-15",
+    slug: "advanced-react-patterns-concurrent-features",
+    title: "Advanced React Patterns: Concurrent Features and Suspense",
+    date: "2024-03-15",
     excerpt:
-      "Learn the fundamentals of React and build your first interactive application.",
-    content: `
-# Getting Started with React
+      "Master React's concurrent rendering, Suspense boundaries, and advanced patterns for building scalable applications. Explore use cases and implementation strategies.",
+    content: `# Advanced React Patterns: Concurrent Features and Suspense
 
-React is a powerful JavaScript library for building user interfaces with reusable components. This guide will walk you through the essentials.
+React 18 introduced concurrent features that fundamentally changed how we build performant applications. This guide explores advanced patterns for leveraging concurrent rendering, Suspense, and transitions to create responsive user experiences at scale.
 
-## What is React?
+## Understanding Concurrent Rendering
 
-React allows you to create dynamic, interactive user interfaces by breaking them down into small, reusable pieces called components. Each component manages its own state and can be composed with other components to build complex UIs.
+Concurrent rendering allows React to interrupt long renders and prioritize user interactions. Unlike traditional synchronous rendering, React can pause, abort, or reuse work based on user priorities.
 
-## Key Concepts
+### The Problem with Blocking Renders
 
-### Components
-Components are the building blocks of React applications. They can be functional or class-based, though functional components with hooks are now the standard.
+Traditional rendering blocks the main thread, causing input lag and janky animations:
 
-### JSX
-JSX is a syntax extension that looks like HTML but gets compiled to JavaScript. It makes writing UI code more intuitive and readable.
+PLACEHOLDER_CODE_1
 
-### State and Props
-- **Props** are immutable data passed from parent to child components
-- **State** is mutable data that changes within a component
-
-### Hooks
-Hooks like \`useState\`, \`useEffect\`, and \`useContext\` allow you to use state and other React features in functional components.
-
-## Getting Started
-
-To create a new React application:
-
-\`\`\`bash
-npx create-react-app my-app
-cd my-app
-npm start
-\`\`\`
-
-Or with Vite for faster development:
-
-\`\`\`bash
-npm create vite@latest my-app -- --template react
-cd my-app
-npm install
-npm run dev
-\`\`\`
-
-## Your First Component
+### Concurrent Solution with useTransition
 
 \`\`\`jsx
-function Welcome() {
-  const [count, setCount] = useState(0);
+import { useState, useTransition } from 'react';
+
+function SearchUsers() {
+  const [query, setQuery] = useState('');
+  const [isPending, startTransition] = useTransition();
+  const [results, setResults] = useState([]);
+
+  const handleSearch = (value) => {
+    setQuery(value);
+    startTransition(async () => {
+      const data = await fetchUsers(value);
+      setResults(data);
+    });
+  };
 
   return (
     <div>
-      <h1>Welcome to React!</h1>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
+      <input
+        value={query}
+        onChange={(e) => handleSearch(e.target.value)}
+        placeholder="Search users..."
+      />
+      {isPending && <Spinner />}
+      <Results data={results} />
     </div>
   );
 }
 \`\`\`
 
-## Next Steps
+## Suspense: Declarative Data Fetching
 
-- Learn about component lifecycle
-- Master hooks and state management
-- Explore routing with React Router
-- Study performance optimization techniques
+Suspense allows you to defer rendering of components until they're ready, enabling clean data-fetching patterns without callback hell.
 
-React opens up endless possibilities for building interactive web applications. Start small, practice consistently, and build amazing things!
-    `,
-    author: "Mohammed Sahil Khan",
-    tags: ["React", "JavaScript", "Web Development"],
-  },
-  {
-    id: "2",
-    slug: "mastering-typescript",
-    title: "Mastering TypeScript",
-    date: "2024-01-22",
-    excerpt:
-      "Discover how TypeScript can improve your JavaScript code with static typing and better tooling.",
-    content: `
-# Mastering TypeScript
+### Suspense with Server Components
 
-TypeScript is a superset of JavaScript that adds static typing. It helps catch errors early and makes code more maintainable and self-documenting.
+\`\`\`jsx
+// app/products/page.tsx (Server Component)
+import { Suspense } from 'react';
+import { ProductList } from './products';
+import { ProductSkeleton } from './skeleton';
 
-## Why TypeScript?
-
-### Benefits
-- **Type Safety**: Catch errors before runtime
-- **Better IDE Support**: Enhanced autocomplete and refactoring
-- **Improved Documentation**: Types serve as inline documentation
-- **Scalability**: Easier to maintain large codebases
-
-## Basic Types
-
-TypeScript provides several basic types you should know:
-
-\`\`\`typescript
-let name: string = "John";
-let age: number = 25;
-let isDeveloper: boolean = true;
-let hobbies: string[] = ["coding", "gaming"];
-let data: any = "can be anything";
-\`\`\`
-
-## Interfaces
-
-Interfaces define contracts for objects:
-
-\`\`\`typescript
-interface User {
-  name: string;
-  age: number;
-  email?: string; // optional property
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<ProductSkeleton />}>
+      <ProductList />
+    </Suspense>
+  );
 }
 
-function greetUser(user: User) {
-  console.log(\`Hello, \${user.name}!\`);
+// This component actually fetches data
+async function ProductList() {
+  const products = await db.products.findAll();
+  return (
+    <div>
+      {products.map(p => (
+        <ProductCard key={p.id} product={p} />
+      ))}
+    </div>
+  );
 }
 \`\`\`
 
-## Generics
+## Advanced Suspense Patterns
 
-Generics allow you to write flexible, reusable code:
+### Selective Hydration
 
-\`\`\`typescript
-function getFirstElement<T>(arr: T[]): T {
-  return arr[0];
-}
-
-const firstNum = getFirstElement([1, 2, 3]);
-const firstStr = getFirstElement(["a", "b", "c"]);
-\`\`\`
-
-## Advanced Features
-
-### Union Types
-\`\`\`typescript
-type ID = string | number;
-\`\`\`
-
-### Type Guards
-\`\`\`typescript
-function processValue(value: string | number) {
-  if (typeof value === "string") {
-    console.log(value.toUpperCase());
-  }
+\`\`\`jsx
+export default function App() {
+  return (
+    <div>
+      <Header />
+      <Suspense fallback={<NavigationSkeleton />}>
+        <Navigation />
+      </Suspense>
+      <Suspense fallback={<MainSkeleton />}>
+        <Main />
+      </Suspense>
+    </div>
+  );
 }
 \`\`\`
 
-## Best Practices
+This allows non-critical sections to render independently without blocking the entire page.
 
-1. Use strict mode in tsconfig.json
-2. Enable "noImplicitAny" to catch untyped variables
-3. Use descriptive type names
-4. Leverage utility types like Partial, Record, and Pick
+### Nested Suspense Boundaries
 
-TypeScript transforms JavaScript development. Start using it today and experience more confident, maintainable code!
-    `,
-    author: "Mohammed Sahil Khan",
-    tags: ["TypeScript", "JavaScript", "Web Development"],
-  },
-  {
-    id: "3",
-    slug: "web-performance-optimization",
-    title: "Web Performance Optimization",
-    date: "2024-02-05",
-    excerpt:
-      "Essential techniques to make your web applications faster and provide a better user experience.",
-    content: `
-# Web Performance Optimization
+Proper boundary placement prevents premature fallback displays:
 
-Web performance is critical for user experience and SEO. Slow websites lead to higher bounce rates and lower conversion. Here's how to optimize your web applications.
-
-## Core Web Vitals
-
-Google's Core Web Vitals are three metrics that measure user experience:
-
-### LCP (Largest Contentful Paint)
-Time it takes for the largest content element to render. Target: < 2.5 seconds
-
-### FID (First Input Delay)
-Time from user interaction to response. Target: < 100ms
-
-### CLS (Cumulative Layout Shift)
-Measure of unexpected layout shifts. Target: < 0.1
-
-## Performance Optimization Strategies
-
-### 1. Image Optimization
-- Use modern formats like WebP
-- Implement lazy loading
-- Compress images appropriately
-- Use responsive images with srcset
-
-### 2. Code Splitting
-\`\`\`javascript
-// Instead of one large bundle
-const HeavyComponent = lazy(() => import('./HeavyComponent'));
-
-<Suspense fallback={<Loading />}>
-  <HeavyComponent />
+\`\`\`jsx
+<Suspense fallback={<PageSkeleton />}>
+  <Header />
+  <Suspense fallback={<ContentSkeleton />}>
+    <MainContent />
+  </Suspense>
+  <Suspense fallback={<SidebarSkeleton />}>
+    <Sidebar />
+  </Suspense>
 </Suspense>
 \`\`\`
 
-### 3. Caching Strategies
-- Browser caching with proper Cache-Control headers
-- Service workers for offline support
-- CDN for static assets
-- Database query caching
+## useDeferredValue for Optimistic Updates
 
-### 4. CSS and JavaScript Optimization
-- Minify and compress files
-- Remove unused CSS with tools like PurgeCSS
-- Defer non-critical JavaScript
-- Inline critical CSS
+\`\`\`jsx
+import { useDeferredValue } from 'react';
 
-### 5. Network Optimization
-- Enable Gzip compression
-- Use HTTP/2 or HTTP/3
-- Implement request batching
-- Minimize third-party scripts
+function FilteredList({ items, query }) {
+  const deferredQuery = useDeferredValue(query);
+  const filtered = items.filter(item =>
+    item.name.includes(deferredQuery)
+  );
 
-## Tools for Measurement
+  return (
+    <div>
+      <input value={query} onChange={handleChange} />
+      <ul>
+        {filtered.map(item => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+\`\`\`
 
-- **Lighthouse**: Google's performance audit tool
-- **WebPageTest**: Detailed performance analysis
-- **GTmetrix**: Performance monitoring and optimization
-- **Bundle Analyzer**: Analyze bundle size
+## Best Practices for Concurrent Features
 
-## Quick Wins
+1. **Granular Suspense Boundaries**: Create boundaries at meaningful semantic points
+2. **Avoid Waterfall Requests**: Parallel data fetching with Promise.all()
+3. **Error Boundaries Required**: Always pair Suspense with error boundaries
+4. **Strategic useTransition**: Use for non-critical, user-initiated updates
+5. **Monitor Performance**: Measure INP and time-to-interactive metrics
 
-1. Optimize images immediately
-2. Enable compression
-3. Defer JavaScript loading
-4. Implement lazy loading
-5. Use a CDN
+## Performance Considerations
 
-Performance optimization is a continuous process. Monitor metrics regularly and iterate on improvements!
+Concurrent features provide significant benefits but require careful planning. Monitor your Core Web Vitals and use React DevTools Profiler to identify bottlenecks. Understanding when to transition and how to structure Suspense boundaries is crucial for optimal performance.
+
+Mastering these patterns positions you to build modern, responsive React applications that handle complex data flows gracefully.
     `,
     author: "Mohammed Sahil Khan",
-    tags: ["Performance", "Optimization", "Web Development"],
+    tags: ["React", "Concurrency", "Performance", "Advanced"],
+  },
+  {
+    id: "2",
+    slug: "typescript-advanced-type-system-patterns",
+    title: "TypeScript Advanced Type System: Conditional Types & Inference",
+    date: "2024-03-08",
+    excerpt:
+      "Deep dive into TypeScript's advanced type system. Learn conditional types, type inference, mapped types, and distribution patterns to build type-safe, maintainable applications.",
+    content: `# TypeScript Advanced Type System: Conditional Types & Inference
+
+TypeScript's type system is more powerful than most developers realize. Beyond basic types and generics lie advanced patterns like conditional types, type inference, and mapped types that enable building robust, self-documenting APIs.
+
+## Conditional Types: Type-Level Logic
+
+Conditional types allow you to select types based on conditions, creating polymorphic type logic.
+
+### Basic Conditional Type
+
+\`\`\`typescript
+type IsString<T> = T extends string ? true : false;
+
+type A = IsString<"hello">; // true
+type B = IsString<42>; // false
+\`\`\`
+
+### Extracting Union Types
+
+\`\`\`typescript
+type Flatten<T> = T extends Array<infer U> ? U : T;
+
+type Str = Flatten<string[]>; // string
+type Num = Flatten<number>; // number
+\`\`\`
+
+## Type Inference with infer
+
+The `infer` keyword allows you to extract and infer types from complex structures.
+
+\`\`\`typescript
+// Extract function return type
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
+
+type MyFunc = (x: number) => string;
+type Result = ReturnType<MyFunc>; // string
+
+// Extract Promise resolved value
+type Unwrap<T> = T extends Promise<infer U> ? U : T;
+
+type PromiseString = Unwrap<Promise<string>>; // string
+type PlainNumber = Unwrap<number>; // number
+\`\`\`
+
+## Mapped Types for Transformations
+
+Mapped types iterate over object keys and transform their values.
+
+\`\`\`typescript
+// Make all properties readonly
+type Readonly<T> = {
+  readonly [K in keyof T]: T[K];
+};
+
+// Make all properties optional
+type Partial<T> = {
+  [K in keyof T]?: T[K];
+};
+
+// Convert all properties to getters
+type Getters<T> = {
+  [K in keyof T as \`get\${Capitalize<string & K>}\`]: () => T[K];
+};
+
+interface User {
+  name: string;
+  age: number;
+}
+
+type UserGetters = Getters<User>;
+// {
+//   getName: () => string;
+//   getAge: () => number;
+// }
+\`\`\`
+
+## Distribution in Conditional Types
+
+Conditional types distribute over union types automatically.
+
+\`\`\`typescript
+type ToArray<T> = T extends any ? T[] : never;
+
+type StrOrNum = ToArray<string | number>;
+// (string | number)[] - NOT string[] | number[]
+
+// To prevent distribution, wrap in tuples
+type ToArrayNoDistribute<T> = [T] extends [any] ? T[] : never;
+\`\`\`
+
+## Advanced Pattern: Deep Partial
+
+\`\`\`typescript
+type DeepPartial<T> = T extends object ? {
+  [P in keyof T]?: DeepPartial<T[P]>;
+} : T;
+
+interface Config {
+  app: {
+    name: string;
+    port: number;
+    database: {
+      host: string;
+      port: number;
+    };
+  };
+}
+
+type DeepPartialConfig = DeepPartial<Config>;
+\`\`\`
+
+## Building Type-Safe Builders
+
+\`\`\`typescript
+type Builder<T> = {
+  [K in keyof T]-?: (value: T[K]) => Builder<Omit<T, K>>;
+} & {
+  build(): T;
+};
+
+function createBuilder<T>(initial: T): Builder<T> {
+  // Implementation creates fluent API
+  return null as any;
+}
+
+const user = createBuilder({ name: '', email: '' })
+  .name('John')
+  .email('john@example.com')
+  .build();
+\`\`\`
+
+## Performance Implications
+
+Complex conditional types can impact compilation time. Use `type` aliases for recursive patterns sparingly and consider breaking complex type logic into smaller, reusable units.
+
+## SEO Keywords
+
+Advanced TypeScript patterns enable building scalable, type-safe applications. Master conditional types, type inference, mapped types, and distribution patterns to write maintainable code that scales with your project.
+
+Mastering TypeScript's advanced type system transforms how you build robust, self-documenting APIs and applications.
+    `,
+    author: "Mohammed Sahil Khan",
+    tags: ["TypeScript", "Type System", "Advanced Patterns"],
+  },
+  {
+    id: "3",
+    slug: "next-js-performance-optimization-rendering-strategies",
+    title: "Next.js Performance Optimization: Server vs Client Rendering Strategies",
+    date: "2024-02-28",
+    excerpt:
+      "Master rendering strategies in Next.js 14+. Learn when to use Server Components, Client Components, ISR, and edge functions to build optimal performance applications.",
+    content: `# Next.js Performance Optimization: Rendering Strategies Deep Dive
+
+Next.js 14 introduced the App Router with Server Components as default, fundamentally changing how we approach performance optimization. Understanding when and how to use different rendering strategies is critical for building fast, scalable applications.
+
+## Server Components vs Client Components
+
+Server Components execute only on the server, reducing client-side JavaScript and improving security.
+
+### Server Component Example
+
+\`\`\`jsx
+// app/dashboard/page.tsx (Server Component by default)
+import { db } from '@/lib/db';
+
+export default async function DashboardPage() {
+  const user = await db.user.findUnique({
+    where: { id: getCurrentUserId() }
+  });
+
+  return (
+    <div>
+      <h1>Welcome, {user.name}</h1>
+      <UserStats userId={user.id} />
+    </div>
+  );
+}
+\`\`\`
+
+### When Client Components Are Necessary
+
+\`\`\`jsx
+'use client';
+
+import { useState } from 'react';
+
+export function InteractiveChart({ data }) {
+  const [filter, setFilter] = useState('all');
+
+  return (
+    <div>
+      <button onClick={() => setFilter('week')}>
+        This Week
+      </button>
+      <ChartComponent data={data} filter={filter} />
+    </div>
+  );
+}
+\`\`\`
+
+## Incremental Static Regeneration (ISR)
+
+ISR combines static generation with dynamic updates at request time, providing the benefits of both.
+
+\`\`\`typescript
+// app/blog/[slug]/page.tsx
+import { cache } from 'react';
+
+const getBlogPost = cache(async (slug: string) => {
+  const post = await db.blogPost.findUnique({
+    where: { slug }
+  });
+  return post;
+});
+
+export async function generateStaticParams() {
+  const posts = await db.blogPost.findMany();
+  return posts.map(post => ({ slug: post.slug }));
+}
+
+export const revalidate = 3600; // Regenerate every hour
+
+export default async function BlogPostPage({
+  params: { slug }
+}: {
+  params: { slug: string };
+}) {
+  const post = await getBlogPost(slug);
+  return <BlogPost post={post} />;
+}
+\`\`\`
+
+## Dynamic Rendering with Force Dynamic
+
+\`\`\`typescript
+export const dynamic = 'force-dynamic'; // Disables caching
+
+// Or use noStore for granular control
+import { noStore } from 'next/cache';
+
+export default async function Page() {
+  noStore(); // This request won't be cached
+  const data = await fetch('https://api.example.com/data');
+  return <div>{data}</div>;
+}
+\`\`\`
+
+## Route Segment Configuration
+
+\`\`\`typescript
+// Combine multiple optimization strategies
+export const dynamic = 'auto';
+export const revalidate = 60;
+export const fetchCache = 'only-cache';
+export const runtime = 'edge'; // Use Edge Runtime
+
+export default function Page() {
+  // ...
+}
+\`\`\`
+
+## Edge Functions for Global Performance
+
+\`\`\`typescript
+// middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  // Runs on Edge - incredibly fast
+  const country = request.geo?.country || 'US';
+  
+  if (country === 'US') {
+    return NextResponse.rewrite(new URL('/us', request.url));
+  }
+  
+  return NextResponse.rewrite(new URL('/intl', request.url));
+}
+
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+};
+\`\`\`
+
+## Streaming for Progressive Rendering
+
+\`\`\`jsx
+import { Suspense } from 'react';
+import { User, Posts, Comments } from './components';
+
+export default function Dashboard() {
+  return (
+    <div>
+      <User userId="1" />
+      <Suspense fallback={<PostsSkeleton />}>
+        <Posts userId="1" />
+      </Suspense>
+      <Suspense fallback={<CommentsSkeleton />}>
+        <Comments userId="1" />
+      </Suspense>
+    </div>
+  );
+}
+\`\`\`
+
+## Image Optimization with next/image
+
+\`\`\`jsx
+import Image from 'next/image';
+import img from '@/public/hero.png';
+
+export default function Hero() {
+  return (
+    <Image
+      src={img}
+      alt="Hero"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      priority // LCP image
+      placeholder="blur"
+    />
+  );
+}
+\`\`\`
+
+## Monitoring and Measurement
+
+Use Next.js Analytics to monitor real user metrics. Combine with tools like Vercel Speed Insights for comprehensive performance visibility across your application.
+
+Understanding these rendering strategies and knowing when to apply each one is fundamental to building high-performance Next.js applications that scale.
+    `,
+    author: "Mohammed Sahil Khan",
+    tags: ["Next.js", "Performance", "Server Components", "Optimization"],
   },
 ];
 
