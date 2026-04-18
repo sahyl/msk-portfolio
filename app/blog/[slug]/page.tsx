@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getBlogPost, getAllBlogPosts } from "@/lib/blog-data";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import { cn } from "@/lib/utils";
 
 export async function generateStaticParams() {
   const posts = getAllBlogPosts();
@@ -115,7 +116,12 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         >
           {/* Inner Dotted Background */}
           <div
-            className="absolute inset-0 rounded-2xl opacity-40 [background-size:15px_15px] [background-image:radial-gradient(circle,#d4d4d4_1.5px,transparent_1.5px)] dark:[background-image:radial-gradient(circle,#4b5563_1px,transparent_1px)]"
+            className={cn(
+              "absolute inset-0 rounded-2xl",
+              "[background-size:20px_20px]",
+              "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
+              "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]"
+            )}
           />
 
           {/* Inner radial blur mask */}
