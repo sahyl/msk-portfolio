@@ -113,9 +113,9 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           className="w-full max-w-3xl rounded-2xl relative z-10 overflow-hidden"
           style={{ backgroundColor: "var(--background)" }}
         >
-          {/* Inner Grid Background */}
+          {/* Inner Dotted Background */}
           <div
-            className="absolute inset-0 rounded-2xl opacity-50 [background-size:20px_20px] [background-image:linear-gradient(to_right,#d4d4d4_1.5px,transparent_1.5px),linear-gradient(to_bottom,#d4d4d4_1.5px,transparent_1.5px)] dark:[background-image:linear-gradient(to_right,#4b5563_1px,transparent_1px),linear-gradient(to_bottom,#4b5563_1px,transparent_1px)]"
+            className="absolute inset-0 rounded-2xl opacity-40 [background-size:15px_15px] [background-image:radial-gradient(circle,#d4d4d4_1.5px,transparent_1.5px)] dark:[background-image:radial-gradient(circle,#4b5563_1px,transparent_1px)]"
           />
 
           {/* Inner radial blur mask */}
