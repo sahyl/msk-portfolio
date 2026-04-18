@@ -100,11 +100,30 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         }}
       />
 
-      <div className="min-h-screen" style={{ backgroundColor: "var(--card)" }}>
+      <div className="min-h-screen flex items-center justify-center p-4 relative" style={{ backgroundColor: "var(--card)" }}>
+        {/* Outer Grid Background - More pronounced lines */}
         <div
-          className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16"
-          style={{ backgroundColor: "var(--card)" }}
+          className="absolute inset-0 [background-size:40px_40px] [background-image:linear-gradient(to_right,#7e7e7e_1.5px,transparent_1px),linear-gradient(to_bottom,#7e7e7e_1.5px,transparent_1px)] dark:[background-image:linear-gradient(to_right,#5f5f5f_1.5px,transparent_1px),linear-gradient(to_bottom,#5f5f5f_1.5px,transparent_1px)]"
+        />
+
+        {/* Radial gradient mask with soft blur */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_35%,black)] blur-sm"></div>
+
+        <div
+          className="w-full max-w-3xl rounded-2xl relative z-10 overflow-hidden"
+          style={{ backgroundColor: "var(--background)" }}
         >
+          {/* Inner Grid Background */}
+          <div
+            className="absolute inset-0 rounded-2xl opacity-50 [background-size:20px_20px] [background-image:linear-gradient(to_right,#d4d4d4_1.5px,transparent_1.5px),linear-gradient(to_bottom,#d4d4d4_1.5px,transparent_1.5px)] dark:[background-image:linear-gradient(to_right,#4b5563_1px,transparent_1px),linear-gradient(to_bottom,#4b5563_1px,transparent_1px)]"
+          />
+
+          {/* Inner radial blur mask */}
+          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_55%,black)] opacity-70 blur-sm"></div>
+
+          <div
+            className="relative z-10 px-4 sm:px-6 py-12 md:py-16"
+          >
           {/* Back Button */}
           <Link
             href="/#blog"
@@ -219,24 +238,25 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             </div>
           </article>
 
-          {/* Footer Navigation */}
-          <div
-            className="h-px my-12"
-            style={{ backgroundColor: "var(--border)" }}
-          />
-          <div className="flex justify-center">
-            <Link
-              href="/#blog"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm transition-all duration-300 border"
-              style={{
-                backgroundColor: "var(--card)",
-                borderColor: "var(--border)",
-                color: "var(--primary)",
-              }}
-            >
-              <span>←</span>
-              <span>Back to Blog</span>
-            </Link>
+            {/* Footer Navigation */}
+            <div
+              className="h-px my-12"
+              style={{ backgroundColor: "var(--border)" }}
+            />
+            <div className="flex justify-center">
+              <Link
+                href="/#blog"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm transition-all duration-300 border"
+                style={{
+                  backgroundColor: "var(--card)",
+                  borderColor: "var(--border)",
+                  color: "var(--primary)",
+                }}
+              >
+                <span>←</span>
+                <span>Back to Blog</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
