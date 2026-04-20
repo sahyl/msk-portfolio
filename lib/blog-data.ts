@@ -241,7 +241,7 @@ type Partial<T> = {
 
 // Convert all properties to getters
 type Getters<T> = {
-  [K in keyof T as \\\`get\\\${Capitalize<string & K>}\\\`]: () => T[K];
+  [K in keyof T as \`get\${Capitalize<string & K>}\`]: () => T[K];
 };
 
 interface User {
@@ -313,7 +313,7 @@ const user = createBuilder({ name: '', email: '' })
 
 ## Performance Implications
 
-Complex conditional types can impact compilation time. Use `type` aliases for recursive patterns sparingly and consider breaking complex type logic into smaller, reusable units.
+Complex conditional types can impact compilation time. Use \`type\` aliases for recursive patterns sparingly and consider breaking complex type logic into smaller, reusable units.
 
 ## SEO Keywords
 
