@@ -21,7 +21,7 @@ export function Blog() {
   return (
     <section id="blog" className="py-6 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <SectionHeading title="BLOG" color="#EF4444" />
+        <SectionHeading title="BLOG" color="white" />
 
         <div className="mt-8 relative">
           {/* Timeline line */}
