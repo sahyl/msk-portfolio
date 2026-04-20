@@ -208,7 +208,7 @@ type Num = Flatten<number>; // number
 
 ## Type Inference with infer
 
-The `infer` keyword allows you to extract and infer types from complex structures.
+The \`infer\` keyword allows you to extract and infer types from complex structures.
 
 \`\`\`typescript
 // Extract function return type
@@ -241,7 +241,7 @@ type Partial<T> = {
 
 // Convert all properties to getters
 type Getters<T> = {
-  [K in keyof T as \`get\${Capitalize<string & K>}\`]: () => T[K];
+  [K in keyof T as \\\`get\\\${Capitalize<string & K>}\\\`]: () => T[K];
 };
 
 interface User {
