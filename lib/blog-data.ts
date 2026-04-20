@@ -241,7 +241,7 @@ type Partial<T> = {
 
 // Convert all properties to getters
 type Getters<T> = {
-  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K];
+  [K in keyof T as \`get\${Capitalize<string & K>}\`]: () => T[K];
 };
 
 interface User {
