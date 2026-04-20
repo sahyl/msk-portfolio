@@ -27,8 +27,8 @@ export function Blog() {
           {/* Timeline line */}
           <div
             className="absolute left-0 top-0 bottom-0 w-px ml-3 md:ml-4"
-            style={{ backgroundColor: `var(--primary)`, opacity: 0.3 }}
-          ></div>
+            style={{ backgroundColor: `var(--primary)`, opacity: 0.25 }}
+          />
 
           <div className="space-y-8">
             {blogPosts.map((post, index) => (
@@ -42,16 +42,16 @@ export function Blog() {
               >
                 {/* Timeline dot */}
                 <div
-                  className="absolute left-0 top-2 w-6 h-6 rounded-full ml-0.5 md:ml-1.5 z-10 border-2"
+                  className="absolute left-0 top-2 w-6 h-6 rounded-full ml-0.5 md:ml-1.5 z-10 border-2 transition-colors duration-200"
                   style={{
                     backgroundColor: "var(--card)",
                     borderColor: `var(--primary)`,
                   }}
-                ></div>
+                />
 
                 <Link href={`/blog/${post.slug}`} className="block group">
                   <div
-                    className="p-5 rounded-2xl education-card-hover relative overflow-hidden border-2 transition-all duration-300 cursor-pointer hover:shadow-lg"
+                    className="p-5 rounded-2xl relative overflow-hidden border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
                     style={{
                       backgroundColor: "var(--card)",
                       borderColor: "var(--border)",
@@ -60,14 +60,16 @@ export function Blog() {
                     {/* Dot Background */}
                     <div
                       className={cn(
-                        "absolute inset-0",
+                        "absolute inset-0 z-0",
                         "[background-size:20px_20px]",
                         "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
                         "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]"
                       )}
                     />
-                    {/* Radial gradient for the container */}
-                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50"></div>
+
+                    {/* Radial gradient mask */}
+                    <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-40" />
+
                     {/* Flashing light overlay */}
                     <motion.div
                       className="absolute inset-0 z-[1] rounded-2xl pointer-events-none overflow-hidden"
@@ -76,7 +78,7 @@ export function Blog() {
                       transition={{ delay: 0.6 }}
                     >
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-white/5"
                         animate={{ x: ["-100%", "100%"] }}
                         transition={{
                           duration: 3,
@@ -92,15 +94,14 @@ export function Blog() {
                       <div className="flex-1">
                         <div className="flex items-baseline gap-3 mb-2">
                           <span
-                            className="text-sm font-bold"
-                            style={{
-                              color: "var(--muted-foreground)",
-                            }}
+                            className="text-sm font-bold font-mono tracking-widest"
+                            style={{ color: "var(--muted-foreground)" }}
                           >
                             {String(index + 1).padStart(2, "0")}
                           </span>
+
                           <h3
-                            className="text-lg education-text group-hover:text-opacity-80 transition-all"
+                            className="text-lg transition-colors duration-200 group-hover:text-[var(--primary)]"
                             style={{
                               color: "var(--primary)",
                               fontFamily: "var(--font-dm-serif-text)",
@@ -110,10 +111,16 @@ export function Blog() {
                             {post.title}
                           </h3>
                         </div>
-                        <p className="font-mono text-sm mb-2 tracking-wide text-opacity-75 line-clamp-2">
+
+                        {/* Fixed excerpt - now properly uses variable */}
+                        <p
+                          className="font-mono text-sm leading-relaxed tracking-wide line-clamp-2"
+                          style={{ color: "var(--muted-foreground)" }}
+                        >
                           {post.excerpt}
                         </p>
                       </div>
+
                       <div className="flex-shrink-0 text-right">
                         <p
                           className="text-xs font-mono tracking-wider whitespace-nowrap"
