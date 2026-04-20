@@ -27,9 +27,7 @@ Concurrent rendering allows React to interrupt long renders and prioritize user 
 
 ### The Problem with Blocking Renders
 
-Traditional rendering blocks the main thread, causing input lag and janky animations:
-
-PLACEHOLDER_CODE_1
+Traditional rendering blocks the main thread, causing input lag and janky animations. Long render times prevent the browser from responding to user input, creating a frustrating experience.
 
 ### Concurrent Solution with useTransition
 

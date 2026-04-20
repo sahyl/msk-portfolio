@@ -3,7 +3,9 @@ import Link from "next/link";
 import { getBlogPost, getAllBlogPosts } from "@/lib/blog-data";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/utils";
+import { CodeBlock } from "@/components/CodeBlock";
 
 export async function generateStaticParams() {
   const posts = getAllBlogPosts();
@@ -191,57 +193,145 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           </header>
 
           {/* Blog Post Content */}
-          <article className="prose prose-invert max-w-none">
-            <div
-              className="prose-content text-base leading-relaxed"
-              style={{ color: "var(--foreground)" }}
+          <article className="max-w-none">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ node, ...props }) => (
+                  <h1
+                    {...props}
+                    className="text-3xl font-bold mt-8 mb-4"
+                    style={{
+                      color: "var(--foreground)",
+                      fontFamily: "var(--font-dm-serif-text)",
+                    }}
+                  />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2
+                    {...props}
+                    className="text-2xl font-bold mt-8 mb-4"
+                    style={{
+                      color: "var(--foreground)",
+                      fontFamily: "var(--font-dm-serif-text)",
+                    }}
+                  />
+                ),
+                h3: ({ node, ...props }) => (
+                  <h3
+                    {...props}
+                    className="text-xl font-semibold mt-6 mb-3"
+                    style={{
+                      color: "var(--foreground)",
+                      fontFamily: "var(--font-dm-serif-text)",
+                    }}
+                  />
+                ),
+                h4: ({ node, ...props }) => (
+                  <h4
+                    {...props}
+                    className="text-lg font-semibold mt-5 mb-2"
+                    style={{
+                      color: "var(--foreground)",
+                      fontFamily: "var(--font-dm-serif-text)",
+                    }}
+                  />
+                ),
+                p: ({ node, ...props }) => (
+                  <p
+                    {...props}
+                    className="mb-4 text-base leading-relaxed"
+                    style={{ color: "var(--foreground)" }}
+                  />
+                ),
+                strong: ({ node, ...props }) => (
+                  <strong
+                    {...props}
+                    className="font-semibold"
+                    style={{ color: "var(--foreground)" }}
+                  />
+                ),
+                em: ({ node, ...props }) => (
+                  <em
+                    {...props}
+                    className="italic"
+                    style={{ color: "var(--foreground)" }}
+                  />
+                ),
+                ul: ({ node, ...props }) => (
+                  <ul
+                    {...props}
+                    className="list-disc list-inside mb-4 space-y-2"
+                    style={{ color: "var(--foreground)" }}
+                  />
+                ),
+                ol: ({ node, ...props }) => (
+                  <ol
+                    {...props}
+                    className="list-decimal list-inside mb-4 space-y-2"
+                    style={{ color: "var(--foreground)" }}
+                  />
+                ),
+                li: ({ node, ...props }) => (
+                  <li
+                    {...props}
+                    className="mb-2"
+                    style={{ color: "var(--foreground)" }}
+                  />
+                ),
+                code: ({ node, inline, className, children, ...props }: any) => {
+                  const match = /language-(\w+)/.exec(className || "");
+                  const language = match ? match[1] : "javascript";
+
+                  if (inline) {
+                    return (
+                      <code
+                        {...props}
+                        className="px-2 py-1 rounded text-sm font-mono"
+                        style={{
+                          backgroundColor: "var(--card)",
+                          color: "var(--primary)",
+                        }}
+                      >
+                        {children}
+                      </code>
+                    );
+                  }
+
+                  return (
+                    <CodeBlock
+                      code={String(children).replace(/\n$/, "")}
+                      language={language}
+                    />
+                  );
+                },
+                pre: ({ node, ...props }) => (
+                  <pre
+                    {...props}
+                    className="mb-4"
+                  />
+                ),
+                a: ({ node, ...props }) => (
+                  <a
+                    {...props}
+                    className="underline transition-colors hover:opacity-70"
+                    style={{ color: "var(--primary)" }}
+                  />
+                ),
+                blockquote: ({ node, ...props }) => (
+                  <blockquote
+                    {...props}
+                    className="border-l-4 pl-4 py-2 my-4 italic"
+                    style={{
+                      borderColor: "var(--primary)",
+                      color: "var(--muted-foreground)",
+                    }}
+                  />
+                ),
+              }}
             >
-              {post.content.split("\n").map((line, idx) => {
-                if (line.startsWith("# ")) {
-                  return (
-                    <h2
-                      key={idx}
-                      className="text-2xl font-bold mt-8 mb-4"
-                      style={{
-                        color: "var(--foreground)",
-                        fontFamily: "var(--font-dm-serif-text)",
-                      }}
-                    >
-                      {line.replace("# ", "")}
-                    </h2>
-                  );
-                } else if (line.startsWith("## ")) {
-                  return (
-                    <h3
-                      key={idx}
-                      className="text-xl font-semibold mt-6 mb-3"
-                      style={{
-                        color: "var(--foreground)",
-                        fontFamily: "var(--font-dm-serif-text)",
-                      }}
-                    >
-                      {line.replace("## ", "")}
-                    </h3>
-                  );
-                } else if (line.startsWith("- ")) {
-                  return (
-                    <li key={idx} className="ml-6 mb-2">
-                      {line.replace("- ", "")}
-                    </li>
-                  );
-                } else if (line.startsWith("```")) {
-                  return null; // Handle code blocks separately
-                } else if (line.trim() === "") {
-                  return <div key={idx} className="h-4" />;
-                } else {
-                  return (
-                    <p key={idx} className="mb-4">
-                      {line}
-                    </p>
-                  );
-                }
-              })}
-            </div>
+              {post.content}
+            </ReactMarkdown>
           </article>
 
             {/* Footer Navigation */}
