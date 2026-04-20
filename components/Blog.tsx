@@ -21,7 +21,11 @@ export function Blog() {
   return (
     <section id="blog" className="py-6 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <SectionHeading title="BLOG" color="#EF4444" />
+        {/* Fixed Heading - Now properly changes color in dark/light mode */}
+        <SectionHeading
+          title="BLOG"
+          color="var(--foreground)"   // This makes it use black in light mode and white in dark mode
+        />
 
         <div className="mt-8 relative">
           {/* Timeline line */}
@@ -112,7 +116,6 @@ export function Blog() {
                           </h3>
                         </div>
 
-                        {/* Fixed excerpt - now properly uses variable */}
                         <p
                           className="font-mono text-sm leading-relaxed tracking-wide line-clamp-2"
                           style={{ color: "var(--muted-foreground)" }}
