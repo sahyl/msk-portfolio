@@ -132,16 +132,6 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           <div
             className="relative z-10 px-4 sm:px-6 py-12 md:py-16"
           >
-          {/* Back Button */}
-          <Link
-            href="/#blog"
-            className="inline-flex items-center gap-2 mb-8 text-sm font-mono transition-colors hover:opacity-70"
-            style={{ color: "var(--primary)" }}
-          >
-            <span>←</span>
-            <span>Back to Blog</span>
-          </Link>
-
           {/* Blog Post Header */}
           <header className="mb-12">
             <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
@@ -329,11 +319,10 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             <div className="flex justify-center">
               <Link
                 href="/#blog"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm transition-all duration-300 border"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm transition-all duration-300 border text-black dark:text-white"
                 style={{
                   backgroundColor: "var(--card)",
                   borderColor: "var(--border)",
-                  color: "var(--primary)",
                 }}
               >
                 <span>←</span>
