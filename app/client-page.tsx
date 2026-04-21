@@ -1,6 +1,6 @@
 "use client";
 
-import { Education } from "@/components/Education";
+import { Blog } from "@/components/Blog";
 import { Footer } from "@/components/Footer";
 import GitHubGrid from "@/components/GitHubGrid";
 import { Hero } from "@/components/Hero";
@@ -68,7 +68,7 @@ export default function ClientPage() {
           <Skills />
           <Projects />
           <OpenSourceContributions />
-          <Education />
+          <Blog />
           <Footer />
         </div>
       </main>
