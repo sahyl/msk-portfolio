@@ -147,9 +147,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
               <div>
                 <h1
-                  className="text-3xl md:text-4xl font-bold mb-2"
+                  className="text-3xl md:text-4xl font-bold mb-2 text-black dark:text-white"
                   style={{
-                    color: "var(--foreground)",
                     fontFamily: "var(--font-dm-serif-text)",
                   }}
                 >
@@ -160,10 +159,10 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-4">
-                <span className="text-sm font-mono" style={{ color: "var(--muted-foreground)" }}>
+                <span className="text-sm font-mono text-black dark:text-white">
                   By {post.author || "Mohammed Sahil Khan"}
                 </span>
-                <span className="text-sm font-mono" style={{ color: "var(--muted-foreground)" }}>
+                <span className="text-sm font-mono text-black dark:text-white">
                   {formatDate(post.date)}
                 </span>
               </div>
@@ -172,11 +171,10 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 text-xs font-mono rounded-full border"
+                      className="px-3 py-1 text-xs font-mono rounded-full border text-black dark:text-white"
                       style={{
                         backgroundColor: "var(--card)",
                         borderColor: "var(--border)",
-                        color: "var(--muted-foreground)",
                       }}
                     >
                       {tag}
@@ -200,9 +198,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 h1: ({ node, ...props }) => (
                   <h1
                     {...props}
-                    className="text-3xl font-bold mt-8 mb-4"
+                    className="text-3xl font-bold mt-8 mb-4 text-black dark:text-white"
                     style={{
-                      color: "var(--foreground)",
                       fontFamily: "var(--font-dm-serif-text)",
                     }}
                   />
@@ -210,9 +207,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 h2: ({ node, ...props }) => (
                   <h2
                     {...props}
-                    className="text-2xl font-bold mt-8 mb-4"
+                    className="text-2xl font-bold mt-8 mb-4 text-black dark:text-white"
                     style={{
-                      color: "var(--foreground)",
                       fontFamily: "var(--font-dm-serif-text)",
                     }}
                   />
@@ -220,9 +216,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 h3: ({ node, ...props }) => (
                   <h3
                     {...props}
-                    className="text-xl font-semibold mt-6 mb-3"
+                    className="text-xl font-semibold mt-6 mb-3 text-black dark:text-white"
                     style={{
-                      color: "var(--foreground)",
                       fontFamily: "var(--font-dm-serif-text)",
                     }}
                   />
@@ -230,9 +225,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 h4: ({ node, ...props }) => (
                   <h4
                     {...props}
-                    className="text-lg font-semibold mt-5 mb-2"
+                    className="text-lg font-semibold mt-5 mb-2 text-black dark:text-white"
                     style={{
-                      color: "var(--foreground)",
                       fontFamily: "var(--font-dm-serif-text)",
                     }}
                   />
@@ -240,43 +234,37 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 p: ({ node, ...props }) => (
                   <p
                     {...props}
-                    className="mb-4 text-base leading-relaxed"
-                    style={{ color: "var(--foreground)" }}
+                    className="mb-4 text-base leading-relaxed text-black dark:text-white"
                   />
                 ),
                 strong: ({ node, ...props }) => (
                   <strong
                     {...props}
-                    className="font-semibold"
-                    style={{ color: "var(--foreground)" }}
+                    className="font-semibold text-black dark:text-white"
                   />
                 ),
                 em: ({ node, ...props }) => (
                   <em
                     {...props}
-                    className="italic"
-                    style={{ color: "var(--foreground)" }}
+                    className="italic text-black dark:text-white"
                   />
                 ),
                 ul: ({ node, ...props }) => (
                   <ul
                     {...props}
-                    className="list-disc list-inside mb-4 space-y-2"
-                    style={{ color: "var(--foreground)" }}
+                    className="list-disc list-inside mb-4 space-y-2 text-black dark:text-white"
                   />
                 ),
                 ol: ({ node, ...props }) => (
                   <ol
                     {...props}
-                    className="list-decimal list-inside mb-4 space-y-2"
-                    style={{ color: "var(--foreground)" }}
+                    className="list-decimal list-inside mb-4 space-y-2 text-black dark:text-white"
                   />
                 ),
                 li: ({ node, ...props }) => (
                   <li
                     {...props}
-                    className="mb-2"
-                    style={{ color: "var(--foreground)" }}
+                    className="mb-2 text-black dark:text-white"
                   />
                 ),
                 code: ({ node, inline, className, children, ...props }: any) => {
@@ -321,10 +309,9 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 blockquote: ({ node, ...props }) => (
                   <blockquote
                     {...props}
-                    className="border-l-4 pl-4 py-2 my-4 italic"
+                    className="border-l-4 pl-4 py-2 my-4 italic text-black dark:text-white"
                     style={{
                       borderColor: "var(--primary)",
-                      color: "var(--muted-foreground)",
                     }}
                   />
                 ),
