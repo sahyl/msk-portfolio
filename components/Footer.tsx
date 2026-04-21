@@ -18,8 +18,7 @@ export function Footer() {
           style={{ backgroundColor: `var(--primary)` }}
         ></div>
         <p
-          className="font-mono text-xl font-bold tracking-wider"
-          style={{ color: "var(--muted-foreground)" }}
+          className="font-mono text-xl font-bold tracking-wider text-black dark:text-white"
         >
           © {new Date().getFullYear()} SAHIL KHAN
         </p>

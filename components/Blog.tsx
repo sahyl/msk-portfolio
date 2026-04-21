@@ -94,20 +94,18 @@ export function Blog() {
                     </motion.div>
 
                     {/* Content */}
-                    <div className="relative z-10 flex items-start justify-between gap-4">
+                    <div className="relative z-10 flex items-center justify-between gap-4">
                       <div className="flex-1">
-                        <div className="flex items-baseline gap-3 mb-2">
+                        <div className="flex items-baseline gap-3">
                           <span
-                            className="text-sm font-bold font-mono tracking-widest"
-                            style={{ color: "var(--muted-foreground)" }}
+                            className="text-sm font-bold font-mono tracking-widest text-black dark:text-white"
                           >
                             {String(index + 1).padStart(2, "0")}
                           </span>
 
                           <h3
-                            className="text-lg transition-colors duration-200 group-hover:text-[var(--primary)]"
+                            className="text-lg transition-colors duration-200 group-hover:text-[var(--primary)] text-black dark:text-white"
                             style={{
-                              color: "var(--primary)",
                               fontFamily: "var(--font-dm-serif-text)",
                               letterSpacing: "0.02em",
                             }}
@@ -115,19 +113,11 @@ export function Blog() {
                             {post.title}
                           </h3>
                         </div>
-
-                        <p
-                          className="font-mono text-sm leading-relaxed tracking-wide line-clamp-2"
-                          style={{ color: "var(--muted-foreground)" }}
-                        >
-                          {post.excerpt}
-                        </p>
                       </div>
 
                       <div className="flex-shrink-0 text-right">
                         <p
-                          className="text-xs font-mono tracking-wider whitespace-nowrap"
-                          style={{ color: "var(--muted-foreground)" }}
+                          className="text-xs font-mono tracking-wider whitespace-nowrap text-black dark:text-white"
                         >
                           {formatDate(post.date)}
                         </p>
