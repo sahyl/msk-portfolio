@@ -23,7 +23,7 @@ export function Blog() {
       <div className="max-w-4xl mx-auto">
         {/* Fixed Heading - Red squiggly line */}
         <SectionHeading
-          title="BLOG"
+          title="BLOGS"
           color="#ef4444"
         />
 
