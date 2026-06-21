@@ -51,7 +51,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="font-doto text-4xl sm:text-5xl md:text-6xl mt-8 mb-4 text-center hero-name"
+            className="font-doto font-bold text-5xl sm:text-6xl md:text-7xl mt-8 mb-4 text-center hero-name"
             style={{ color: "var(--foreground)" }}
           >
             SAHIL KHAN

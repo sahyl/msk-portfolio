@@ -88,7 +88,7 @@ function ContributionCard({
       <div className="relative z-10 flex flex-col justify-between h-full">
         <div className="mb-4">
           <h3
-            className="text-xl mb-2 group-hover:text-primary transition-colors duration-200 ease-out contribution-text"
+            className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-200 ease-out contribution-text"
             style={{
               fontFamily: "var(--font-doto)",
               letterSpacing: "0.02em",
