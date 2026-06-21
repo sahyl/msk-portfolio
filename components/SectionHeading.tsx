@@ -13,7 +13,7 @@ export function SectionHeading({ title, color = "var(--primary)" }: SectionHeadi
       <h2
         className="text-2xl font-bold text-center mb-2"
         style={{
-          fontFamily: "var(--font-dm-serif-text)",
+          fontFamily: "var(--font-doto)",
           color: "var(--foreground)",
           letterSpacing: "0.1em",
         }}
