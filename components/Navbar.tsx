@@ -8,7 +8,6 @@ import { TbBrandLeetcode } from "react-icons/tb";
 import { FaXTwitter } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "./Theme-toggle";
-import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [visible, setVisible] = useState(false);

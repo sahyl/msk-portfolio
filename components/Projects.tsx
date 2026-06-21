@@ -124,7 +124,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <h3
             className="text-xl mb-2 group-hover:text-primary transition-colors duration-200 ease-out project-text"
             style={{
-              fontFamily: "var(--font-dm-serif-text)",
+              fontFamily: "var(--font-doto)",
               letterSpacing: "0.02em",
             }}
           >
