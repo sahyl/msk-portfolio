@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Roboto, DM_Serif_Text } from "next/font/google"
+import { Roboto, Doto } from "next/font/google"
 import { Navbar } from "@/components/Navbar"
 import "./globals.css"
 import { ThemeProvider } from "@/components/Theme-provider"
@@ -13,11 +13,10 @@ const roboto = Roboto({
   display: "swap",
 })
 
-const dmSerifText = DM_Serif_Text({
+const doto = Doto({
   weight: ["400"],
-  style: ["normal", "italic"],
   subsets: ["latin"],
-  variable: "--font-dm-serif-text",
+  variable: "--font-doto",
   display: "swap",
 })
 
@@ -32,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${roboto.variable} ${dmSerifText.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${roboto.variable} ${doto.variable}`} suppressHydrationWarning>
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
