@@ -64,10 +64,10 @@ export default function ClientPage() {
 
         <div className="p-0 relative z-10">
           <Hero />
-          <GitHubGrid />
           <Skills />
           <Projects />
           <OpenSourceContributions />
+          <GitHubGrid />
           <Blog />
           <Footer />
         </div>

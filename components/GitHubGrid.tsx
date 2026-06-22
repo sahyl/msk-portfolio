@@ -20,7 +20,7 @@ export default function GitHubGrid() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="py-6 px-4 sm:px-6"
+      className="py-10 px-4 sm:px-6"
     >
       <AnimatePresence mode="wait">
         <motion.div
