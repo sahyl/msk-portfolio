@@ -113,7 +113,7 @@ export default function GitHubGrid() {
   function getLevelColor(level: number) {
     if (theme === "light") {
       switch (level) {
-        case 0: return "#ebedf0";
+        case 0: return "#161b22";
         case 1: return "#9be9a8";
         case 2: return "#40c463";
         case 3: return "#30a14e";
@@ -123,7 +123,7 @@ export default function GitHubGrid() {
     }
 
     switch (level) {
-      case 0: return "#161b22";
+      case 0: return "#ebedf0";
       case 1: return "#0e4429";
       case 2: return "#006d32";
       case 3: return "#26a641";
