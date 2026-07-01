@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { SectionHeading } from "./SectionHeading";
 import { useTheme } from "@/components/Theme-provider";
 
 interface ContributionDay {
@@ -177,123 +178,129 @@ export default function GitHubGrid() {
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="py-10 px-4 sm:px-6"
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={theme}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="flex justify-center overflow-hidden"
-        >
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="relative rounded-xl p-4 backdrop-blur-sm bg-card/50 shadow-xl min-w-max overflow-hidden"
-          >
-            <div
-              className={`absolute inset-0 z-0
-              [background-size:20px_20px]
-              ${
-                theme === "dark"
-                  ? "[background-image:radial-gradient(#404040_1px,transparent_1px)]"
-                  : "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]"
-              }`}
-            />
+      <div className="max-w-4xl mx-auto">
+        <SectionHeading title="GITHUB" color="#f97316" />
 
-            <div className="pointer-events-none absolute inset-0 bg-white dark:bg-black opacity-50 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
-
+        <div className="mt-8">
+          <AnimatePresence mode="wait">
             <motion.div
-              className="relative z-10"
+              key={theme}
               initial={{ opacity: 0 }}
-              animate={{ opacity: mounted ? 1 : 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex justify-center overflow-hidden"
             >
-              <div
-                ref={scrollContainerRef}
-                className="overflow-x-auto overflow-y-hidden"
-                style={{
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                }}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="relative rounded-xl p-4 backdrop-blur-sm bg-card/50 shadow-xl min-w-max overflow-hidden"
               >
-                <style jsx>{`
-                  div::-webkit-scrollbar {
-                    display: none;
-                  }
-                `}</style>
+                <div
+                  className={`absolute inset-0 z-0
+                  [background-size:20px_20px]
+                  ${
+                    theme === "dark"
+                      ? "[background-image:radial-gradient(#404040_1px,transparent_1px)]"
+                      : "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]"
+                  }`}
+                />
 
-                <div className="flex flex-col min-w-max">
-                  {/* Month Labels */}
-                  <div className="flex text-xs mb-2">
-                    {monthLabels.map((label) => (
-                      <div key={label.position} style={{ width: 52 }}>
-                        {label.month}
-                      </div>
-                    ))}
-                  </div>
+                <div className="pointer-events-none absolute inset-0 bg-white dark:bg-black opacity-50 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
 
-                  {/* Calendar */}
-                  <div className="flex gap-[3px]">
-                    {contributions.map((week, weekIndex) => (
-                      <div key={weekIndex} className="flex flex-col gap-[3px]">
-                        {week.days.map((day, dayIndex) => (
-                          <div
-                            key={dayIndex}
-                            onMouseEnter={(e) => handleMouseEnter(day, e)}
-                            onMouseLeave={handleMouseLeave}
-                            className="rounded-[2px] transition-all hover:scale-125 cursor-pointer"
-                            style={{
-                              width: 10,
-                              height: 10,
-                              background: getLevelColor(day.level),
-                            }}
-                          />
+                <motion.div
+                  className="relative z-10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: mounted ? 1 : 0 }}
+                >
+                  <div
+                    ref={scrollContainerRef}
+                    className="overflow-x-auto overflow-y-hidden"
+                    style={{
+                      scrollbarWidth: "none",
+                      msOverflowStyle: "none",
+                    }}
+                  >
+                    <style jsx>{`
+                      div::-webkit-scrollbar {
+                        display: none;
+                      }
+                    `}</style>
+
+                    <div className="flex flex-col min-w-max">
+                      {/* Month Labels */}
+                      <div className="flex text-xs mb-2">
+                        {monthLabels.map((label) => (
+                          <div key={label.position} style={{ width: 52 }}>
+                            {label.month}
+                          </div>
                         ))}
                       </div>
-                    ))}
-                  </div>
 
-                  <div className="flex justify-between mt-4 text-xs">
-                    <span>
-                      {totalContributions.toLocaleString()} contributions in{" "}
-                      {year}
-                    </span>
+                      {/* Calendar */}
+                      <div className="flex gap-[3px]">
+                        {contributions.map((week, weekIndex) => (
+                          <div key={weekIndex} className="flex flex-col gap-[3px]">
+                            {week.days.map((day, dayIndex) => (
+                              <div
+                                key={dayIndex}
+                                onMouseEnter={(e) => handleMouseEnter(day, e)}
+                                onMouseLeave={handleMouseLeave}
+                                className="rounded-[2px] transition-all hover:scale-125 cursor-pointer"
+                                style={{
+                                  width: 10,
+                                  height: 10,
+                                  background: getLevelColor(day.level),
+                                }}
+                              />
+                            ))}
+                          </div>
+                        ))}
+                      </div>
 
-                    <div className="flex items-center gap-1">
-                      <span>Less</span>
-                      {[0, 1, 2, 3, 4].map((level) => (
-                        <div
-                          key={level}
-                          style={{
-                            width: 10,
-                            height: 10,
-                            background: getLevelColor(level),
-                          }}
-                          className="rounded-[2px]"
-                        />
-                      ))}
-                      <span>More</span>
+                      <div className="flex justify-between mt-4 text-xs">
+                        <span>
+                          {totalContributions.toLocaleString()} contributions in{" "}
+                          {year}
+                        </span>
+
+                        <div className="flex items-center gap-1">
+                          <span>Less</span>
+                          {[0, 1, 2, 3, 4].map((level) => (
+                            <div
+                              key={level}
+                              style={{
+                                width: 10,
+                                height: 10,
+                                background: getLevelColor(level),
+                              }}
+                              className="rounded-[2px]"
+                            />
+                          ))}
+                          <span>More</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </motion.div>
+                </motion.div>
 
-            <motion.div className="absolute inset-0 rounded-xl pointer-events-none overflow-hidden">
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                animate={{ x: ["-100%", "100%"] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatDelay: 5,
-                }}
-              />
+                <motion.div className="absolute inset-0 rounded-xl pointer-events-none overflow-hidden">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                    animate={{ x: ["-100%", "100%"] }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      repeatDelay: 5,
+                    }}
+                  />
+                </motion.div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </motion.div>
-      </AnimatePresence>
+          </AnimatePresence>
+        </div>
+      </div>
 
       {tooltip}
     </motion.section>
