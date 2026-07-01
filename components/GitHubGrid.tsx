@@ -186,7 +186,7 @@ export default function GitHubGrid() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="flex justify-center overflow-x-auto"
+          className="flex justify-center overflow-hidden"
         >
           <motion.div
             whileHover={{ scale: 1.02 }}
@@ -211,7 +211,7 @@ export default function GitHubGrid() {
             >
               <div
                 ref={scrollContainerRef}
-                className="overflow-x-auto"
+                className="overflow-x-auto overflow-y-hidden"
                 style={{
                   scrollbarWidth: "none",
                   msOverflowStyle: "none",
@@ -227,25 +227,25 @@ export default function GitHubGrid() {
                   {/* Month Labels */}
                   <div className="flex text-xs mb-2">
                     {monthLabels.map((label) => (
-                      <div key={label.position} style={{ width: 48 }}>
+                      <div key={label.position} style={{ width: 52 }}>
                         {label.month}
                       </div>
                     ))}
                   </div>
 
                   {/* Calendar */}
-                  <div className="flex gap-[2px]">
+                  <div className="flex gap-[3px]">
                     {contributions.map((week, weekIndex) => (
-                      <div key={weekIndex} className="flex flex-col gap-[2px]">
+                      <div key={weekIndex} className="flex flex-col gap-[3px]">
                         {week.days.map((day, dayIndex) => (
                           <div
                             key={dayIndex}
                             onMouseEnter={(e) => handleMouseEnter(day, e)}
                             onMouseLeave={handleMouseLeave}
-                            className="rounded transition-all hover:scale-125 cursor-pointer"
+                            className="rounded-[2px] transition-all hover:scale-125 cursor-pointer"
                             style={{
-                              width: 9,
-                              height: 9,
+                              width: 10,
+                              height: 10,
                               background: getLevelColor(day.level),
                             }}
                           />
@@ -266,11 +266,11 @@ export default function GitHubGrid() {
                         <div
                           key={level}
                           style={{
-                            width: 9,
-                            height: 9,
+                            width: 10,
+                            height: 10,
                             background: getLevelColor(level),
                           }}
-                          className="rounded"
+                          className="rounded-[2px]"
                         />
                       ))}
                       <span>More</span>
