@@ -16,32 +16,18 @@ interface ContributionWeek {
 }
 
 const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
 export default function GitHubGrid() {
   const { theme } = useTheme();
-
   const username = "sahyl";
 
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
-
   const [year, setYear] = useState(new Date().getFullYear());
-
   const [totalContributions, setTotalContributions] = useState(0);
-
   const [contributions, setContributions] = useState<ContributionWeek[]>([]);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -69,37 +55,26 @@ export default function GitHubGrid() {
         const res = await fetch(
           `https://github-contributions-api.jogruber.de/v4/${username}?y=last`
         );
-
         const data = await res.json();
 
         const weeks: ContributionWeek[] = [];
-
         let currentWeek: ContributionDay[] = [];
-
         let total = 0;
 
         data.contributions.forEach((day: ContributionDay) => {
           total += day.count;
-
           currentWeek.push(day);
-
           if (currentWeek.length === 7) {
-            weeks.push({
-              days: currentWeek,
-            });
-
+            weeks.push({ days: currentWeek });
             currentWeek = [];
           }
         });
 
         if (currentWeek.length) {
-          weeks.push({
-            days: currentWeek,
-          });
+          weeks.push({ days: currentWeek });
         }
 
         setContributions(weeks);
-
         setTotalContributions(total);
 
         if (data.contributions.length) {
@@ -118,24 +93,15 @@ export default function GitHubGrid() {
   const monthLabels = useMemo(() => {
     if (!contributions.length) return [];
 
-    const labels: {
-      month: string;
-      position: number;
-    }[] = [];
-
+    const labels: { month: string; position: number }[] = [];
     let lastMonth = -1;
 
     contributions.forEach((week, index) => {
       const date = new Date(week.days[0].date);
-
       const month = date.getMonth();
 
       if (month !== lastMonth) {
-        labels.push({
-          month: MONTHS[month],
-          position: index,
-        });
-
+        labels.push({ month: MONTHS[month], position: index });
         lastMonth = month;
       }
     });
@@ -146,34 +112,22 @@ export default function GitHubGrid() {
   function getLevelColor(level: number) {
     if (theme === "light") {
       switch (level) {
-        case 0:
-          return "#ebedf0";
-        case 1:
-          return "#9be9a8";
-        case 2:
-          return "#40c463";
-        case 3:
-          return "#30a14e";
-        case 4:
-          return "#216e39";
-        default:
-          return "#ebedf0";
+        case 0: return "#ebedf0";
+        case 1: return "#9be9a8";
+        case 2: return "#40c463";
+        case 3: return "#30a14e";
+        case 4: return "#216e39";
+        default: return "#ebedf0";
       }
     }
 
     switch (level) {
-      case 0:
-        return "#161b22";
-      case 1:
-        return "#0e4429";
-      case 2:
-        return "#006d32";
-      case 3:
-        return "#26a641";
-      case 4:
-        return "#39d353";
-      default:
-        return "#161b22";
+      case 0: return "#161b22";
+      case 1: return "#0e4429";
+      case 2: return "#006d32";
+      case 3: return "#26a641";
+      case 4: return "#39d353";
+      default: return "#161b22";
     }
   }
 
@@ -182,7 +136,6 @@ export default function GitHubGrid() {
     e: React.MouseEvent<HTMLDivElement>
   ) {
     const rect = e.currentTarget.getBoundingClientRect();
-
     setHoveredDay({
       day,
       x: rect.left + rect.width / 2,
@@ -237,7 +190,7 @@ export default function GitHubGrid() {
         >
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="relative rounded-xl p-5 backdrop-blur-sm bg-card/50 shadow-xl min-w-max overflow-hidden"
+            className="relative rounded-xl p-4 backdrop-blur-sm bg-card/50 shadow-xl min-w-max overflow-hidden"
           >
             <div
               className={`absolute inset-0 z-0
@@ -258,44 +211,41 @@ export default function GitHubGrid() {
             >
               <div
                 ref={scrollContainerRef}
-                className="overflow-x-auto scrollbar-hide"
+                className="overflow-x-auto"
+                style={{
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                }}
               >
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+
                 <div className="flex flex-col min-w-max">
-
                   {/* Month Labels */}
-
                   <div className="flex text-xs mb-2">
                     {monthLabels.map((label) => (
-                      <div
-                        key={label.position}
-                        style={{
-                          width: 70,
-                        }}
-                      >
+                      <div key={label.position} style={{ width: 48 }}>
                         {label.month}
                       </div>
                     ))}
                   </div>
 
                   {/* Calendar */}
-
-                  <div className="flex gap-[3px]">
+                  <div className="flex gap-[2px]">
                     {contributions.map((week, weekIndex) => (
-                      <div
-                        key={weekIndex}
-                        className="flex flex-col gap-[3px]"
-                      >
+                      <div key={weekIndex} className="flex flex-col gap-[2px]">
                         {week.days.map((day, dayIndex) => (
                           <div
                             key={dayIndex}
-                            onMouseEnter={(e) =>
-                              handleMouseEnter(day, e)
-                            }
+                            onMouseEnter={(e) => handleMouseEnter(day, e)}
                             onMouseLeave={handleMouseLeave}
-                            className="rounded-sm transition-all hover:scale-125 cursor-pointer"
+                            className="rounded transition-all hover:scale-125 cursor-pointer"
                             style={{
-                              width: 13,
-                              height: 13,
+                              width: 9,
+                              height: 9,
                               background: getLevelColor(day.level),
                             }}
                           />
@@ -304,47 +254,36 @@ export default function GitHubGrid() {
                     ))}
                   </div>
 
-                  <div className="flex justify-between mt-5 text-xs">
-
+                  <div className="flex justify-between mt-4 text-xs">
                     <span>
                       {totalContributions.toLocaleString()} contributions in{" "}
                       {year}
                     </span>
 
                     <div className="flex items-center gap-1">
-
                       <span>Less</span>
-
-                      {[0,1,2,3,4].map(level=>(
+                      {[0, 1, 2, 3, 4].map((level) => (
                         <div
                           key={level}
                           style={{
-                            width:13,
-                            height:13,
-                            background:getLevelColor(level)
+                            width: 9,
+                            height: 9,
+                            background: getLevelColor(level),
                           }}
-                          className="rounded-sm"
+                          className="rounded"
                         />
                       ))}
-
                       <span>More</span>
-
                     </div>
-
                   </div>
-
                 </div>
               </div>
             </motion.div>
 
-            <motion.div
-              className="absolute inset-0 rounded-xl pointer-events-none overflow-hidden"
-            >
+            <motion.div className="absolute inset-0 rounded-xl pointer-events-none overflow-hidden">
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                animate={{
-                  x: ["-100%", "100%"],
-                }}
+                animate={{ x: ["-100%", "100%"] }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
