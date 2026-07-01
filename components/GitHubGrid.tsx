@@ -4,6 +4,7 @@ import { GitHubCalendar } from "react-github-calendar";
 import { useTheme } from "@/components/Theme-provider";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { SectionHeading } from "./SectionHeading";
 
 export default function GitHubGrid() {
   const { theme } = useTheme();
@@ -20,9 +21,12 @@ export default function GitHubGrid() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="py-10 px-4 sm:px-6"
+      className="py-4 px-4 sm:px-6"
     >
-      <AnimatePresence mode="wait">
+      <div className="max-w-4xl mx-auto">
+        <SectionHeading title="GITHUB" color="#f97316" />
+        <div className="mt-8">
+          <AnimatePresence mode="wait">
         <motion.div
           key={theme}
           initial={{ opacity: 0, scale: 0.95 }}
@@ -81,7 +85,7 @@ export default function GitHubGrid() {
                     "#26a641",
                     "#39d353",
                   ],
-                  dark: ["#ebedf0", "#0e4429", "#006d32", "#26a641", "#39d353"],
+                  dark: ["#ffffff", "#0e4429", "#006d32", "#26a641", "#39d353"],
                 }}
               />
             </motion.div>
@@ -107,6 +111,8 @@ export default function GitHubGrid() {
           </motion.div>
         </motion.div>
       </AnimatePresence>
+        </div>
+      </div>
     </motion.section>
   );
 }
