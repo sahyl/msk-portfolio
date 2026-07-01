@@ -318,7 +318,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             />
             <div className="flex justify-center">
               <Link
-                href="/#blog"
+                href="/"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm transition-all duration-300 border text-black dark:text-white"
                 style={{
                   backgroundColor: "var(--card)",
