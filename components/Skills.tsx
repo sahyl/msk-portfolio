@@ -27,8 +27,7 @@ const skillsWithIcons = [
   { name: "ReactJS", icon: SiReact },
   { name: "NodeJS", icon: SiNodedotjs },
   { name: "TailwindCSS", icon: SiTailwindcss },
-  { name: "Postgres", icon: SiPostgresql },
-  { name: "Git", icon: SiGit },
+  { name: "Postgres", icon: SiPostgresql }
   { name: "Github", icon: SiGithub },
   { name: "Python", icon: SiPython },
 ]
