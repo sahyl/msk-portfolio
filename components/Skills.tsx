@@ -57,7 +57,7 @@ export function Skills() {
   return (
     <section id="skills" className="py-4 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-<SectionHeading title="Skills" color="#00ffa0" /> 
+<SectionHeading title="SKILLS" color="#00ffa0" /> 
 
         <motion.div
           variants={container}
