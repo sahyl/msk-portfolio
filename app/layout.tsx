@@ -4,6 +4,7 @@ import { Roboto, Doto } from "next/font/google"
 import { Navbar } from "@/components/Navbar"
 import "./globals.css"
 import { ThemeProvider } from "@/components/Theme-provider"
+import { Analytics } from "@vercel/analytics/next"
 
 // Register fonts with CSS variable names
 const roboto = Roboto({
@@ -86,6 +87,7 @@ export default function RootLayout({
           <Navbar />
           <div style={{ backgroundColor: "var(--card)" }}>{children}</div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
