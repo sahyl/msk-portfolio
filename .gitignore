@@ -38,3 +38,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.workflow_plan.txt
+skills-lock.json
+
+
+/.agents/skills/
