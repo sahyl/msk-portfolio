@@ -2,16 +2,15 @@
 
 import { Blog } from "@/components/Blog";
 import { Footer } from "@/components/Footer";
-import GitHubGrid from "@/components/GitHubGrid";
 import { Hero } from "@/components/Hero";
 import { OpenSourceContributions } from "@/components/openSourceContributions";
 import { Projects } from "@/components/Projects";
 import { Skills } from "@/components/Skills";
 import { useTheme } from "@/components/Theme-provider";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 
-export default function ClientPage() {
+export default function ClientPage({ children }: { children: ReactNode }) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -29,7 +28,6 @@ export default function ClientPage() {
         backgroundColor: "var(--card)",
       }}
     >
-      {/* Outer Grid Background - More pronounced lines */}
       <div
         className={cn(
           "absolute inset-0",
@@ -39,7 +37,6 @@ export default function ClientPage() {
         )}
       />
 
-      {/* Radial gradient mask with soft blur */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_35%,black)] blur-sm"></div>
 
       <main
@@ -49,7 +46,6 @@ export default function ClientPage() {
           marginTop: "4rem",
         }}
       >
-        {/* Inner Grid Background - Slightly stronger */}
         <div
           className={cn(
             "absolute inset-0 rounded-2xl opacity-50",
@@ -59,7 +55,6 @@ export default function ClientPage() {
           )}
         />
 
-        {/* Inner radial blur mask with stronger spread */}
         <div className="pointer-events-none absolute inset-0 rounded-2xl bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_55%,black)] opacity-70 blur-sm"></div>
 
         <div className="p-0 relative z-10">
@@ -67,7 +62,7 @@ export default function ClientPage() {
           <Skills />
           <Projects />
           <OpenSourceContributions />
-          <GitHubGrid />
+          {children}
           <Blog />
           <Footer />
         </div>

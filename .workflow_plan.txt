@@ -1,0 +1,9 @@
+
+  Welcome to cave
+  Four quick questions. You can change anything later via /config.
+
+1) Theme
+  ● 1) auto-detect (recommended)
+  ○ 2) dark
+  ○ 3) light
+> [default: 1] 
