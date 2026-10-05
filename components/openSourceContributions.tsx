@@ -17,6 +17,13 @@ interface Contribution {
 
 const contributions: Contribution[] = [
   {
+    title: "turborepo#14366",
+    description: "Fixed empty task graphs for affected and tag-filtered package listings in Turbo CLI",
+    repository: "vercel/turborepo",
+    pullRequestLink: "https://github.com/vercel/turborepo/pull/14366",
+    tags: ["Rust", "Turborepo", "CLI", "Bug Fix"],
+  },
+  {
     title: "turborepo#10579",
     description: "Fixed broken Tailwind CSS styling in the 'with-tailwind' example",
     repository: "vercel/turborepo",
