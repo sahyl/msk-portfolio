@@ -3,4 +3,4 @@ Allow: /
 Allow: /blog/*
 Disallow: /api/
 
-Sitemap: https://msk-portfolio.vercel.app/sitemap.xml
+Sitemap: https://sahilkhan.dev/sitemap.xml

@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getAllBlogPosts } from "@/lib/blog-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://msk-portfolio.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://sahilkhan.dev";
   const blogPosts = getAllBlogPosts();
 
   const blogRoutes = blogPosts.map((post) => ({

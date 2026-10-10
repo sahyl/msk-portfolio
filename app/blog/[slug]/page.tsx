@@ -4,334 +4,85 @@ import { getBlogPost, getAllBlogPosts } from "@/lib/blog-data";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { cn } from "@/lib/utils";
 import { CodeBlock } from "@/components/CodeBlock";
 
-export async function generateStaticParams() {
-  const posts = getAllBlogPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+type Props = { params: Promise<{ slug: string }> };
+const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "https://sahilkhan.dev").replace(/\/$/, "");
+export function generateStaticParams() {
+  return getAllBlogPosts().map(({ slug }) => ({ slug }));
 }
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const post = getBlogPost(params.slug);
-
-  if (!post) {
-    return {
-      title: "Blog Post Not Found",
-    };
-  }
-
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://msk-portfolio.vercel.app";
-  const imageUrl = `${baseUrl}/og-image.jpg`;
-
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const post = getBlogPost((await params).slug);
+  if (!post) return { title: "Article not found", robots: { index: false } };
+  const url = `${baseUrl}/blog/${post.slug}`;
   return {
-    title: `${post.title} | Mohammed Sahil Khan`,
-    description: post.excerpt,
-    authors: [{ name: post.author || "Mohammed Sahil Khan" }],
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: post.excerpt,
-      url: `${baseUrl}/blog/${post.slug}`,
-      siteName: "Mohammed Sahil Khan",
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
-      publishedTime: post.date,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
-      images: [imageUrl],
-    },
-    keywords: post.tags || [],
+    title: `${post.title} | Sahil Khan`, description: post.excerpt,
+    authors: [{ name: post.author, url: baseUrl }],
+    alternates: { canonical: url },
+    openGraph: { type: "article", title: post.title, description: post.excerpt,
+      url, siteName: "Sahil Khan", publishedTime: post.date, authors: [post.author], images: [] },
+    twitter: { card: "summary", title: post.title, description: post.excerpt, images: [] },
   };
 }
-
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = getBlogPost(params.slug);
-
-  if (!post) {
-    notFound();
-  }
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://msk-portfolio.vercel.app";
-
-  return (
-    <>
-      {/* Structured Data - JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.title,
-            description: post.excerpt,
-            image: `${baseUrl}/og-image.jpg`,
-            datePublished: post.date,
-            author: {
-              "@type": "Person",
-              name: post.author || "Mohammed Sahil Khan",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "Mohammed Sahil Khan",
-            },
-          }),
-        }}
-      />
-
-      <div className="min-h-screen flex items-center justify-center p-4 relative" style={{ backgroundColor: "var(--card)" }}>
-        {/* Outer Grid Background - More pronounced lines */}
-        <div
-          className="absolute inset-0 [background-size:40px_40px] [background-image:linear-gradient(to_right,#7e7e7e_1.5px,transparent_1px),linear-gradient(to_bottom,#7e7e7e_1.5px,transparent_1px)] dark:[background-image:linear-gradient(to_right,#5f5f5f_1.5px,transparent_1px),linear-gradient(to_bottom,#5f5f5f_1.5px,transparent_1px)]"
-        />
-
-        {/* Radial gradient mask with soft blur */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_35%,black)] blur-sm"></div>
-
-        <div
-          className="w-full max-w-3xl rounded-2xl relative z-10 overflow-hidden"
-          style={{ backgroundColor: "var(--background)" }}
-        >
-          {/* Inner Dotted Background */}
-          <div
-            className={cn(
-              "absolute inset-0 rounded-2xl",
-              "[background-size:20px_20px]",
-              "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-              "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]"
-            )}
-          />
-
-          {/* Inner radial blur mask */}
-          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_55%,black)] opacity-70 blur-sm"></div>
-
-          <div
-            className="relative z-10 px-4 sm:px-6 py-12 md:py-16"
-          >
-          {/* Blog Post Header */}
-          <header className="mb-12">
-            <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
-              <div>
-                <h1
-                  className="text-3xl md:text-4xl font-bold mb-2 text-black dark:text-white"
-                  style={{
-                    fontFamily: "var(--font-dm-serif-text)",
-                  }}
-                >
-                  {post.title}
-                </h1>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between flex-wrap gap-4">
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-mono text-black dark:text-white">
-                  By {post.author || "Mohammed Sahil Khan"}
-                </span>
-                <span className="text-sm font-mono text-black dark:text-white">
-                  {formatDate(post.date)}
-                </span>
-              </div>
-              {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 text-xs font-mono rounded-full border text-black dark:text-white"
-                      style={{
-                        backgroundColor: "var(--card)",
-                        borderColor: "var(--border)",
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div
-              className="h-px my-6"
-              style={{ backgroundColor: "var(--border)" }}
-            />
-          </header>
-
-          {/* Blog Post Content */}
-          <article className="max-w-none">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                h1: ({ node, ...props }) => (
-                  <h1
-                    {...props}
-                    className="text-3xl font-bold mt-8 mb-4 text-black dark:text-white"
-                    style={{
-                      fontFamily: "var(--font-dm-serif-text)",
-                    }}
-                  />
-                ),
-                h2: ({ node, ...props }) => (
-                  <h2
-                    {...props}
-                    className="text-2xl font-bold mt-8 mb-4 text-black dark:text-white"
-                    style={{
-                      fontFamily: "var(--font-dm-serif-text)",
-                    }}
-                  />
-                ),
-                h3: ({ node, ...props }) => (
-                  <h3
-                    {...props}
-                    className="text-xl font-semibold mt-6 mb-3 text-black dark:text-white"
-                    style={{
-                      fontFamily: "var(--font-dm-serif-text)",
-                    }}
-                  />
-                ),
-                h4: ({ node, ...props }) => (
-                  <h4
-                    {...props}
-                    className="text-lg font-semibold mt-5 mb-2 text-black dark:text-white"
-                    style={{
-                      fontFamily: "var(--font-dm-serif-text)",
-                    }}
-                  />
-                ),
-                p: ({ node, ...props }) => (
-                  <p
-                    {...props}
-                    className="mb-4 text-base leading-relaxed text-black dark:text-white"
-                  />
-                ),
-                strong: ({ node, ...props }) => (
-                  <strong
-                    {...props}
-                    className="font-semibold text-black dark:text-white"
-                  />
-                ),
-                em: ({ node, ...props }) => (
-                  <em
-                    {...props}
-                    className="italic text-black dark:text-white"
-                  />
-                ),
-                ul: ({ node, ...props }) => (
-                  <ul
-                    {...props}
-                    className="list-disc list-inside mb-4 space-y-2 text-black dark:text-white"
-                  />
-                ),
-                ol: ({ node, ...props }) => (
-                  <ol
-                    {...props}
-                    className="list-decimal list-inside mb-4 space-y-2 text-black dark:text-white"
-                  />
-                ),
-                li: ({ node, ...props }) => (
-                  <li
-                    {...props}
-                    className="mb-2 text-black dark:text-white"
-                  />
-                ),
-                code: ({ node, inline, className, children, ...props }: any) => {
-                  const match = /language-(\w+)/.exec(className || "");
-                  const language = match ? match[1] : "javascript";
-
-                  if (inline) {
-                    return (
-                      <code
-                        {...props}
-                        className="px-2 py-1 rounded text-sm font-mono"
-                        style={{
-                          backgroundColor: "var(--card)",
-                          color: "var(--primary)",
-                        }}
-                      >
-                        {children}
-                      </code>
-                    );
-                  }
-
-                  return (
-                    <CodeBlock
-                      code={String(children).replace(/\n$/, "")}
-                      language={language}
-                    />
-                  );
-                },
-                pre: ({ node, ...props }) => (
-                  <pre
-                    {...props}
-                    className="mb-4"
-                  />
-                ),
-                a: ({ node, ...props }) => (
-                  <a
-                    {...props}
-                    className="underline transition-colors hover:opacity-70"
-                    style={{ color: "var(--primary)" }}
-                  />
-                ),
-                blockquote: ({ node, ...props }) => (
-                  <blockquote
-                    {...props}
-                    className="border-l-4 pl-4 py-2 my-4 italic text-black dark:text-white"
-                    style={{
-                      borderColor: "var(--primary)",
-                    }}
-                  />
-                ),
-              }}
-            >
-              {post.content}
-            </ReactMarkdown>
-          </article>
-
-            {/* Footer Navigation */}
-            <div
-              className="h-px my-12"
-              style={{ backgroundColor: "var(--border)" }}
-            />
-            <div className="flex justify-center">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm transition-all duration-300 border text-black dark:text-white"
-                style={{
-                  backgroundColor: "var(--card)",
-                  borderColor: "var(--border)",
-                }}
-              >
-                <span>←</span>
-                <span>Back to Blog</span>
-              </Link>
-            </div>
+function Diagram({ text }: { text: string }) {
+  const [title, ...steps] = text.trim().split("\n");
+  return <figure className="my-8 rounded-xl border p-4 sm:p-6" style={{ background: "var(--card)", borderColor: "var(--border)" }}>
+    <figcaption className="font-semibold mb-5 text-center">{title}</figcaption>
+    <ol className="list-none m-0 p-0 flex flex-col items-center">
+      {steps.map((step, index) => {
+        const [label, detail] = step.split("|").map(s => s.trim());
+        return <li key={step} className="w-full max-w-md text-center">
+          {index > 0 && <div className="py-2 text-xl" aria-hidden="true">↓</div>}
+          <div className="rounded-lg border px-4 py-3" style={{ borderColor: "var(--primary)", background: "var(--background)" }}>
+            <span className="block text-sm font-semibold">{label}</span>
+            <span className="block text-sm mt-1 opacity-80">{detail}</span>
           </div>
-        </div>
-      </div>
-    </>
-  );
+        </li>;
+      })}
+    </ol>
+  </figure>;
+}
+export default async function BlogPost({ params }: Props) {
+  const post = getBlogPost((await params).slug);
+  if (!post) notFound();
+  const url = `${baseUrl}/blog/${post.slug}`;
+  const related = getAllBlogPosts().filter(p => p.slug !== post.slug);
+  const schema = { "@context": "https://schema.org", "@type": "BlogPosting",
+    headline: post.title, description: post.excerpt, datePublished: post.date,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url }, url,
+    author: { "@type": "Person", name: post.author, url: baseUrl }, inLanguage: "en" };
+  return <main className="min-h-screen px-4 pt-28 pb-12" style={{ color: "var(--foreground)", background: "var(--background)" }}>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
+    <div className="max-w-3xl mx-auto">
+      <Link href="/#blog" className="text-sm underline underline-offset-4">← All posts</Link>
+      <header className="mt-8 mb-10 border-b pb-8" style={{ borderColor: "var(--border)" }}>
+        <h1 className="text-3xl sm:text-4xl font-bold leading-tight break-words">{post.title}</h1>
+        <p className="mt-5 text-base leading-7 opacity-80">{post.excerpt}</p>
+        <p className="mt-5 text-sm">By {post.author} · <time dateTime={post.date}>{new Date(post.date + "T00:00:00Z").toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })}</time></p>
+        <div className="flex flex-wrap gap-2 mt-4">{post.tags.map(tag => <span key={tag} className="text-xs border rounded-full px-3 py-1" style={{ borderColor: "var(--border)" }}>{tag}</span>)}</div>
+      </header>
+      <article className="min-w-0 text-base leading-7 [overflow-wrap:anywhere]">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
+          h2: ({ children }) => <h2 className="text-2xl font-semibold mt-10 mb-4 leading-snug">{children}</h2>,
+          h3: ({ children }) => <h3 className="text-xl font-semibold mt-8 mb-3">{children}</h3>,
+          p: ({ children }) => <p className="mb-5">{children}</p>,
+          ul: ({ children }) => <ul className="list-disc pl-6 mb-6 space-y-2">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal pl-6 mb-6 space-y-2">{children}</ol>,
+          a: ({ children, href }) => <a href={href} className="underline underline-offset-4 hover:opacity-75">{children}</a>,
+          pre: ({ children }) => <div className="min-w-0">{children}</div>,
+          code: ({ className, children }) => {
+            const language = /language-(\w+)/.exec(className || "")?.[1];
+            const text = String(children).replace(/\n$/, "");
+            if (language === "diagram") return <Diagram text={text} />;
+            if (language) return <CodeBlock code={text} language={language} />;
+            return <code className="rounded px-1.5 py-0.5 text-sm" style={{ background: "var(--card)" }}>{children}</code>;
+          },
+        }}>{post.content}</ReactMarkdown>
+      </article>
+      <aside className="mt-12 border-t pt-8" style={{ borderColor: "var(--border)" }} aria-label="Related articles">
+        <h2 className="text-xl font-semibold mb-4">Keep reading</h2>
+        <ul className="space-y-3">{related.map(p => <li key={p.slug}><Link className="underline underline-offset-4" href={`/blog/${p.slug}`}>{p.title}</Link></li>)}</ul>
+      </aside>
+    </div>
+  </main>;
 }

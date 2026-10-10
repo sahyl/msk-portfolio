@@ -1,28 +1,10 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 export function Footer() {
   return (
-    <motion.footer
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="py-8 px-4 text-center mt-8"
-      style={{ opacity: 0.5 }} // border removed
-    >
-      <div className="max-w-4xl mx-auto">
-        <div
-          className="h-px w-16 mx-auto mb-6"
-          style={{ backgroundColor: `var(--primary)` }}
-        ></div>
-        <p
-          className="font-doto text-xl font-bold tracking-wider text-black dark:text-white"
-        >
-          © {new Date().getFullYear()} SAHIL KHAN
-        </p>
-      </div>
-    </motion.footer>
+    <footer className="py-8 px-4 text-center mt-8">
+      <div className="h-px w-16 mx-auto mb-6" style={{ backgroundColor: "var(--primary)" }} aria-hidden="true" />
+      <p className="font-doto text-xl font-bold tracking-wider text-black dark:text-white">
+        {new Date().getFullYear()} Sahil Khan
+      </p>
+    </footer>
   );
 }

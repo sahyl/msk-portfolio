@@ -1,0 +1,111 @@
+{
+  "name": "Sahil Khan",
+  "headline": "Software Developer | Backend & Applied AI",
+  "summary": "2023 B.Tech Computer Science graduate focused on backend development and applied AI. Merged contributor to Turborepo.",
+  "contacts": [
+    [
+      "mohammedsahilkhan.msk@gmail.com",
+      "mailto:mohammedsahilkhan.msk@gmail.com"
+    ],
+    [
+      "github.com/sahyl",
+      "https://github.com/sahyl"
+    ],
+    [
+      "linkedin.com/in/saaahil",
+      "https://linkedin.com/in/saaahil"
+    ],
+    [
+      "sahilkhan.dev",
+      "https://sahilkhan.dev"
+    ]
+  ],
+  "projects": [
+    {
+      "name": "SIS Migration Engine",
+      "repo": "sis-migration-engine",
+      "stack": "TypeScript, Node.js, Express, GraphQL, PostgreSQL, Knex, BullMQ, Redis",
+      "bullets": [
+        "Built a staged CSV import workflow with Zod schemas, student-to-class reference checks, duplicate detection, and a GraphQL review flow for edits and conflict resolution.",
+        "Queued approved records with BullMQ and Redis; used per-row PostgreSQL transactions to isolate failures and record failed rows while continuing the batch."
+      ]
+    },
+    {
+      "name": "AmazonHelp Support Agent",
+      "repo": "hiver-support-agent",
+      "stack": "Python, Gemini API, sentence-transformers, scikit-learn, pandas",
+      "bullets": [
+        "Built a single-turn pipeline with few-shot intent classification, semantic retrieval of historical customer/reply pairs, TF-IDF fallback, and grounded reply generation.",
+        "Added deterministic support links and escalation rules, labelled classifier datasets, an LLM rubric, blind human-scoring tools, and weighted-kappa agreement analysis."
+      ]
+    },
+    {
+      "name": "CodebaseToSpec",
+      "repo": "CodebaseToSpec",
+      "stack": "Python, AST, MongoDB, Pydantic, Gemini API",
+      "bullets": [
+        "Indexed Python files, symbols, and imports in MongoDB using AST parsing; built a bounded ReAct tool loop that produces structured plans and records tool-call traces.",
+        "Verified cited files and indexed symbols, returning reference errors for up to three planning attempts; separated rate-limit retries from logical re-planning."
+      ]
+    }
+  ],
+  "contributions": [
+    {
+      "title": "Turborepo - Rust CLI fix (merged October 2026)",
+      "url": "https://github.com/vercel/turborepo/pull/14366",
+      "label": "PR #14366",
+      "text": "Fixed empty task graphs in affected and tag-filtered package listings; added regression tests for task-input changes, dependency filters, and tag selectors."
+    },
+    {
+      "title": "Turborepo - example fix (merged June 2025)",
+      "url": "https://github.com/vercel/turborepo/pull/10579",
+      "label": "PR #10579",
+      "text": "Restored shared-component styling in the with-tailwind example by adding the missing Tailwind import."
+    }
+  ],
+  "skills": [
+    [
+      "Languages",
+      "TypeScript, JavaScript, Python, SQL"
+    ],
+    [
+      "Backend & data",
+      "Node.js, Express, GraphQL, PostgreSQL, MongoDB, Redis, BullMQ, Knex, Zod"
+    ],
+    [
+      "Applied AI",
+      "Gemini API, retrieval-augmented generation, sentence-transformers, TF-IDF, Pydantic"
+    ],
+    [
+      "Web & tools",
+      "React, Next.js, Git, Docker"
+    ]
+  ],
+  "education": {
+    "institution": "Dr. A.P.J. Abdul Kalam Technical University",
+    "degree": "Bachelor of Technology, Computer Science and Engineering",
+    "period": "2019 - 2023"
+  },
+  "additional_projects": [
+    {
+      "name": "ResumeIQ",
+      "repo": "resume_analyser",
+      "text": "React, TypeScript, Zustand, Puter.js. Uploaded resumes and job context for AI feedback; displayed structured scores and suggestions."
+    },
+    {
+      "name": "DocsSphere",
+      "repo": "DocSphere",
+      "text": "Next.js, Clerk, Liveblocks. Integrated collaborative document editing, presence, and room-level view/edit permissions."
+    },
+    {
+      "name": "CarePulse",
+      "repo": "Carepoint",
+      "text": "Next.js, Appwrite, Zod. Built patient registration and appointment scheduling/cancellation flows with SMS notifications."
+    },
+    {
+      "name": "StoreIt",
+      "repo": "storeit",
+      "text": "Next.js, Appwrite. Implemented file upload, search, rename, sharing, and deletion; cleaned up stored files if metadata creation failed."
+    }
+  ]
+}

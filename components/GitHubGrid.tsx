@@ -164,6 +164,17 @@ export default function GitHubGrid({ initialContributions }: GitHubGridProps) {
     );
   }
 
+  if (initialContributions.length === 0) {
+    return (
+      <section className="py-6 px-4 sm:px-6">
+        <SectionHeading title="GITHUB" color="#f97316" />
+        <p className="mt-6 text-center text-sm">
+          Activity data is unavailable. <a className="underline" href="https://github.com/sahyl">View my GitHub profile</a>.
+        </p>
+      </section>
+    );
+  }
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -185,7 +196,7 @@ export default function GitHubGrid({ initialContributions }: GitHubGridProps) {
             >
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="relative rounded-xl p-4 backdrop-blur-sm bg-card/50 shadow-xl min-w-max overflow-hidden"
+                className="relative rounded-xl p-4 backdrop-blur-sm bg-card/50 shadow-xl min-w-0 max-w-full overflow-hidden"
               >
                 <div
                   className={`absolute inset-0 z-0
@@ -206,7 +217,10 @@ export default function GitHubGrid({ initialContributions }: GitHubGridProps) {
                 >
                   <div
                     ref={scrollContainerRef}
-                    className="overflow-x-auto overflow-y-hidden"
+                    className="github-calendar-scroll overflow-x-auto overflow-y-hidden"
+                    tabIndex={0}
+                    role="region"
+                    aria-label="GitHub contributions; scroll horizontally to view the year"
                     style={{
                       scrollbarWidth: "none",
                       msOverflowStyle: "none",

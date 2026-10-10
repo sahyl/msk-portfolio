@@ -4,10 +4,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { SectionHeading } from "./SectionHeading";
 import { cn } from "@/lib/utils";
-import { getAllBlogPosts } from "@/lib/blog-data";
+import type { BlogPost } from "@/lib/blog-data";
 
-export function Blog() {
-  const blogPosts = getAllBlogPosts();
+export function Blog({ blogPosts }: { blogPosts: Pick<BlogPost, "id" | "slug" | "title" | "date">[] }) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -94,8 +93,8 @@ export function Blog() {
                     </motion.div>
 
                     {/* Content */}
-                    <div className="relative z-10 flex items-center justify-between gap-4">
-                      <div className="flex-1">
+                    <div className="relative z-10 flex flex-col items-start sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex-1 min-w-0">
                         <div className="flex items-baseline gap-3">
                           <span
                             className="text-sm font-bold font-mono tracking-widest text-black dark:text-white"
@@ -104,7 +103,7 @@ export function Blog() {
                           </span>
 
                           <h3
-                            className="text-lg transition-colors duration-200 group-hover:text-[var(--primary)] text-black dark:text-white"
+                            className="text-lg break-words transition-colors duration-200 group-hover:text-[var(--primary)] text-black dark:text-white"
                             style={{
                               fontFamily: "var(--font-dm-serif-text)",
                               letterSpacing: "0.02em",
