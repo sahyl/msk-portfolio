@@ -10,12 +10,33 @@ import { cn } from "@/lib/utils";
 interface Project {
   title: string;
   description: string;
-  liveLink: string;
+  liveLink?: string;
   githubLink: string;
   techStack: string;
 }
 
 const projects: Project[] = [
+  {
+    "title": "SIS Migration Engine",
+    "description": "A student data import tool with validation, duplicate detection, review workflows, and queued PostgreSQL writes.",
+    "githubLink": "https://github.com/sahyl/sis-migration-engine",
+    "techStack": "TypeScript, Node.js, Express, GraphQL, PostgreSQL, Knex, BullMQ, Redis",
+  },
+  {
+    "title": "AmazonHelp Support Agent",
+    "description": "An AI support agent that retrieves past replies, drafts responses, and flags questions for human follow-up.",
+    "githubLink": "https://github.com/sahyl/hiver-support-agent",
+    "techStack": "Python, Gemini API, sentence-transformers, scikit-learn, pandas",
+  },
+  {
+    "title": "CodebaseToSpec",
+    "description": "A Python codebase planner that indexes symbols, generates implementation plans, and checks references to files and code.",
+    "githubLink": "https://github.com/sahyl/CodebaseToSpec",
+    "techStack": "Python, AST, MongoDB, Pydantic, Gemini API",
+  }
+];
+
+const additionalProjects: Project[] = [
   {
     title: "DocsSphere",
     description:
@@ -34,15 +55,15 @@ const projects: Project[] = [
   },
   {
   "title": "ResumeIQ",
-  "description": "AI-powered resume analyzer that scores resumes against a job description, performs ATS compatibility checks, and returns prioritized, actionable improvement suggestions.",
+  "description": "AI-powered resume analyzer with job-specific feedback, ATS checks, and suggestions for improvement.",
   "liveLink": "https://resume-analyser-resume-iq.vercel.app/",
   "githubLink": "https://github.com/sahyl/resume_analyser",
-  "techStack": "TypeScript, React Router, Putter.js, Tailwind CSS, Zustand, pdfjs-dist (client)"
+  "techStack": "TypeScript, React Router, Puter.js, Tailwind CSS, Zustand, pdfjs-dist (client)"
 },
   {
     title: "YCD",
     description:
-      "YCD is a comprehensive directory designed for entrepreneurs to showcase their startups, facilitating collaboration with potential investors and providing global visibility for innovative ideas.",
+      "A startup directory where entrepreneurs can share ideas, showcase projects, and discover other founders.",
     liveLink: "https://ycd.vercel.app/",
     githubLink: "https://github.com/sahyl/YCDirectory",
     techStack: "Next.js, TypeScript, NextAuth, Sanity, Vercel, Shadcn",
@@ -50,7 +71,7 @@ const projects: Project[] = [
   {
     title: "Sync",
     description:
-      "SYNC is a Next.js-based video conferencing platform inspired by Zoom.",
+      "A Zoom-inspired video conferencing app with authentication and video calls powered by StreamIO.",
     liveLink: "https://sync-videocall.vercel.app/sign-in",
     githubLink: "https://github.com/sahyl/sync",
     techStack: "Next.js, TypeScript, Clerk, Zod, StreamIO, Shadcn, Vercel",
@@ -58,7 +79,7 @@ const projects: Project[] = [
   {
     title: "StoreIt",
     description:
-      "StoreIt is a modern file storage and management application built with Next.js and a variety of powerful React libraries.",
+      "A file storage app for uploading, organizing, searching, and sharing documents and media.",
     liveLink: "https://storeit-storage-solutions.vercel.app/",
     githubLink: "https://github.com/sahyl/storeit",
     techStack:
@@ -143,8 +164,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {project.techStack}
         </p>
 
-        <div className="flex space-x-4 mt-2">
-          <Link
+        <div className="flex flex-wrap gap-4 mt-2">
+          {project.liveLink && <Link
             href={project.liveLink}
             target="_blank"
             rel="noopener noreferrer"
@@ -153,7 +174,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           >
             <HiOutlineExternalLink className="w-4 h-4" style={{ strokeWidth: "2.5" }} />
             <span>LIVE</span>
-          </Link>
+          </Link>}
           <Link
             href={project.githubLink}
             target="_blank"
@@ -177,8 +198,8 @@ export function Projects() {
         <SectionHeading title="PROJECTS" color="#9333EA" />
 
         <div className="grid md:grid-cols-2 gap-6 mt-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
+          {[...projects, ...additionalProjects].map((project, index) => (
+            <ProjectCard key={project.githubLink} project={project} index={index} />
           ))}
         </div>
       </div>

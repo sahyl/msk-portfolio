@@ -1,63 +1,61 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode, type PointerEvent, type FocusEvent } from "react";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { IoIosMail } from "react-icons/io";
 import { TbBrandLeetcode } from "react-icons/tb";
 import { FaXTwitter } from "react-icons/fa6";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring, useReducedMotion, type MotionValue } from "framer-motion";
 import { ThemeToggle } from "./Theme-toggle";
 
+function ForceFieldItem({ children, pointerX }: { children: ReactNode; pointerX: MotionValue<number> }) {
+  const slot = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const distance = useTransform(pointerX, (x) => {
+    if (!slot.current || !Number.isFinite(x) || reduceMotion) return Infinity;
+    const bounds = slot.current.getBoundingClientRect();
+    return bounds.left + bounds.width / 2 - x;
+  });
+  const offset = useTransform(distance, (d) => Number.isFinite(d) ? d * Math.exp(-(d * d) / (2 * 48 * 48)) * 0.42 : 0);
+  const lift = useTransform(distance, (d) => Number.isFinite(d) ? -5 * Math.exp(-(d * d) / (2 * 22 * 22)) : 0);
+  const size = useTransform(distance, (d) => Number.isFinite(d) ? 1 + 0.3 * Math.exp(-(d * d) / (2 * 22 * 22)) : 1);
+  const spring = { stiffness: 320, damping: 24, mass: 0.55 };
+  const x = useSpring(offset, spring);
+  const y = useSpring(lift, spring);
+  const scale = useSpring(size, spring);
+  return <div ref={slot} className="flex items-center justify-center" data-force-field-slot>
+    <motion.div style={{ x, y, scale }} className="flex items-center justify-center" data-force-field-item>
+      {children}
+    </motion.div>
+  </div>;
+}
+
 export function Navbar() {
-  const [visible, setVisible] = useState(false);
+  const pointerX = useMotionValue(Infinity);
+  const reduceMotion = useReducedMotion();
   const [isScrolling, setIsScrolling] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const visible = isScrolling || isHovering || isFocused;
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setVisible(true);
       setIsScrolling(true);
-
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-
-      scrollTimeoutRef.current = setTimeout(() => {
-        setIsScrolling(false);
-        if (!isHovering) {
-          setVisible(false);
-        }
-      }, 2000);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 1200);
     };
-
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     };
-  }, [isHovering]);
-
-  const handleMouseEnter = () => {
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    setIsHovering(true);
-    setVisible(true);
-  };
+  }, []);
 
   const handleMouseLeave = () => {
+    pointerX.set(Infinity);
     setIsHovering(false);
-
-    if (!isScrolling) {
-      hoverTimeoutRef.current = setTimeout(() => {
-        if (!isHovering && !isScrolling) {
-          setVisible(false);
-        }
-      }, 1000);
-    }
   };
 
   const socialLinks = [
@@ -88,55 +86,52 @@ export function Navbar() {
 
   return (
     <div className="fixed top-4 left-0 right-0 flex justify-center z-30 print:hidden">
-      <AnimatePresence>
-        {(visible || isHovering) && (
-          // inside motion.nav (updated classes and styles)
           <motion.nav
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            initial={{ opacity: 0, y: reduceMotion ? 0 : -20, scale: reduceMotion ? 1 : 0.95 }}
+            animate={{ opacity: visible ? 1 : 0, y: visible || reduceMotion ? 0 : -20, scale: visible || reduceMotion ? 1 : 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="liquid-glass rounded-full overflow-hidden"
+            className="liquid-glass rounded-full"
             style={{
               ...navbarStyle,
-              paddingLeft: isHovering ? "3rem" : "1.5rem", // expands smoothly
-              paddingRight: isHovering ? "3rem" : "1.5rem",
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
               paddingTop: "0.75rem",
               paddingBottom: "0.75rem",
-              transition: "all 0.4s ease-in-out", // ensures smooth animation
+              transition: "backdrop-filter 0.4s ease-in-out",
+              pointerEvents: visible ? "auto" : "none",
             }}
-            onMouseEnter={handleMouseEnter}
+            aria-label="Social links and appearance"
+            onPointerMove={(event: PointerEvent<HTMLElement>) => { if (event.pointerType === "mouse") pointerX.set(reduceMotion ? Infinity : event.clientX); }}
+            onPointerLeave={() => pointerX.set(Infinity)}
+            onMouseEnter={() => setIsHovering(true)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={(event: FocusEvent<HTMLElement>) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false); }}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="flex space-x-6 items-center transition-all duration-300">
-              {socialLinks.map((link, index) => {
+            <div className="flex gap-4 sm:gap-6 items-center transition-all duration-300">
+              {socialLinks.map((link) => {
                 const Icon = link.icon;
                 return (
+                  <ForceFieldItem key={link.label} pointerX={pointerX}>
                   <Link
-                    key={index}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="social-icon-link"
                     aria-label={link.label}
                   >
-                    <motion.div
-                      whileHover={{ scale: 1.25 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
+
                       <Icon
                         className="w-5 h-5 transition-all duration-300"
                         style={{ color: "var(--foreground)", opacity: 0.8 }}
                       />
-                    </motion.div>
                   </Link>
+                  </ForceFieldItem>
                 );
               })}
-              <ThemeToggle />
+              <ForceFieldItem pointerX={pointerX}><ThemeToggle /></ForceFieldItem>
             </div>
           </motion.nav>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

@@ -11,52 +11,41 @@ type ThemeProviderProps = {
 }
 
 type ThemeProviderState = {
-  theme: Theme
+  theme: "dark" | "light"
   setTheme: (theme: Theme) => void
 }
 
-const initialState: ThemeProviderState = {
-  theme: "system",
-  setTheme: () => null,
-}
-
-const ThemeProviderContext = React.createContext<ThemeProviderState>(initialState)
+const ThemeProviderContext = React.createContext<ThemeProviderState | undefined>(undefined)
 
 export function ThemeProvider({
   children,
   defaultTheme = "system",
   storageKey = "portfolio-theme",
 }: ThemeProviderProps) {
-  const [theme, setTheme] = React.useState<Theme>(defaultTheme)
+  const [preference, setPreference] = React.useState<Theme>(defaultTheme)
 
-  // Set theme from localStorage once on client
+  const [systemTheme, setSystemTheme] = React.useState<"dark" | "light">("light")
   React.useEffect(() => {
-    const storedTheme = localStorage.getItem(storageKey) as Theme | null
-    if (storedTheme) {
-      setTheme(storedTheme)
-    }
+    try {
+      const stored = localStorage.getItem(storageKey)
+      if (stored === "dark" || stored === "light" || stored === "system") setPreference(stored)
+    } catch { /* The in-memory theme works when storage is blocked. */ }
+    const media = window.matchMedia("(prefers-color-scheme: dark)")
+    const update = () => setSystemTheme(media.matches ? "dark" : "light")
+    update()
+    media.addEventListener("change", update)
+    return () => media.removeEventListener("change", update)
   }, [storageKey])
-
-  // Apply theme to document
+  const theme = preference === "system" ? systemTheme : preference
   React.useEffect(() => {
-    const root = window.document.documentElement
-    root.classList.remove("light", "dark")
-
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-      root.classList.add(systemTheme)
-    } else {
-      root.classList.add(theme)
-    }
+    document.documentElement.classList.remove("light", "dark")
+    document.documentElement.classList.add(theme)
   }, [theme])
-
-  const value = {
-    theme,
-    setTheme: (newTheme: Theme) => {
-      localStorage.setItem(storageKey, newTheme)
-      setTheme(newTheme)
-    },
-  }
+  const setTheme = React.useCallback((newTheme: Theme) => {
+    setPreference(newTheme)
+    try { localStorage.setItem(storageKey, newTheme) } catch { /* Keep the selection in memory. */ }
+  }, [storageKey])
+  const value = React.useMemo(() => ({ theme, setTheme }), [theme, setTheme])
 
   return (
     <ThemeProviderContext.Provider value={value}>

@@ -6,19 +6,9 @@ import { cn } from "@/lib/utils";
 
 const education = [
   {
-    degree: "B.Tech, Computer Science Engineering",
-    institution: "Allenhouse Institute of Technology, Rooma, Kanpur",
-    period: "Jul 2019 - Jul 2023",
-  },
-  {
-    degree: "High School",
-    institution: "International Indian School, Dammam, Kingdom of Saudi Arabia",
-    period: "Mar 2018 - Mar 2019",
-  },
-  {
-    degree: "Secondary School",
-    institution: "International Indian School, Dammam, Kingdom of Saudi Arabia",
-    period: "Mar 2016 - Mar 2017",
+    degree: "B.Tech, Computer Science and Engineering",
+    institution: "Dr. A.P.J. Abdul Kalam Technical University",
+    period: "2019 - 2023",
   },
 ];
 

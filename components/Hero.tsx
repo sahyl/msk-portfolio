@@ -20,11 +20,6 @@ export function Hero() {
 
   return (
     <section className="py-4 px-4 relative overflow-hidden">
-      {/* Theme toggle positioned in top right
-      <div className="absolute top-4 right-4 z-20">
-        <ThemeToggle />
-      </div> */}
-
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -57,16 +52,9 @@ export function Hero() {
             SAHIL KHAN
           </motion.h1>
 
-          {/* Subtitle with increased weight */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-lg mb-6 max-w-xl text-center font-mono tracking-wide text-bold"
-            style={{ color: "var(--muted-foreground)" }}
-          >
-            SOFTWARE DEVELOPER • AI ENTHUSIAST • PROBLEM SOLVER
-          </motion.p>
+          <p className="max-w-xl text-center text-sm sm:text-base leading-relaxed mb-6" style={{ color: "var(--foreground)" }}>
+            I build backend and applied AI systems and tools, learned by hacking around on the internet.
+          </p>
 
           {/* Button with animated gradient border - no hover effect, intensified colors */}
           <motion.div
@@ -88,7 +76,7 @@ export function Hero() {
               style={buttonStyle}
             >
               <Link
-                href="/Resume_26.pdf"
+                href="/Sahil_Khan_Resume.pdf"
                 download
                 className="relative flex items-center justify-center gap-2"
               >

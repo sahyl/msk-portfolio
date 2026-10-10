@@ -1,6 +1,8 @@
 "use client";
 
+import type { BlogPost } from "@/lib/blog-data";
 import { Blog } from "@/components/Blog";
+import { Education } from "@/components/Education";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { OpenSourceContributions } from "@/components/openSourceContributions";
@@ -10,7 +12,7 @@ import { useTheme } from "@/components/Theme-provider";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, ReactNode } from "react";
 
-export default function ClientPage({ children }: { children: ReactNode }) {
+export default function ClientPage({ children, blogPosts }: { children: ReactNode; blogPosts: Pick<BlogPost, "id" | "slug" | "title" | "date">[] }) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -59,11 +61,12 @@ export default function ClientPage({ children }: { children: ReactNode }) {
 
         <div className="p-0 relative z-10">
           <Hero />
-          <Skills />
           <Projects />
           <OpenSourceContributions />
+          <Skills />
+          <Education />
           {children}
-          <Blog />
+          <Blog blogPosts={blogPosts} />
           <Footer />
         </div>
       </main>

@@ -18,14 +18,14 @@ interface Contribution {
 const contributions: Contribution[] = [
   {
     title: "turborepo#14366",
-    description: "Fixed empty task graphs for affected and tag-filtered package listings in Turbo CLI",
+    description: "Merged October 2026. Fixed empty task graphs in affected and tag-filtered package listings in the Rust CLI. Added regression coverage for task inputs, dependency filters, and tag selectors.",
     repository: "vercel/turborepo",
     pullRequestLink: "https://github.com/vercel/turborepo/pull/14366",
     tags: ["Rust", "Turborepo", "CLI", "Bug Fix"],
   },
   {
     title: "turborepo#10579",
-    description: "Fixed broken Tailwind CSS styling in the 'with-tailwind' example",
+    description: "Merged June 2025. Added the missing Tailwind import in shared UI styles, restoring component styling in the with-tailwind example.",
     repository: "vercel/turborepo",
     pullRequestLink: "https://github.com/vercel/turborepo/pull/10579",
     tags: ["Tailwind CSS", "Bug Fix", "Example"],
@@ -72,7 +72,7 @@ function ContributionCard({
       {/* Radial gradient mask */}
       <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] opacity-50 transition-all duration-200 ease-out" />
 
-      {/* ✨ Flashing light overlay */}
+      {/* âœ¨ Flashing light overlay */}
       <motion.div
         className="absolute inset-0 z-[1] rounded-2xl pointer-events-none overflow-hidden"
         initial={{ opacity: 0 }}

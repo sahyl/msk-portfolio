@@ -22,21 +22,21 @@ const doto = Doto({
 })
 
 export const metadata: Metadata = {
-  title: "Mohammed Sahil Khan - Software Developer Portfolio",
-  description: "Explore Mohammed Sahil Khan's portfolio featuring software development projects, technical skills, and insightful blog posts on web development, React, TypeScript, and performance optimization.",
-  keywords: ["Mohammed Sahil Khan", "Software Developer", "Web Development", "React", "TypeScript", "Full Stack Developer"],
+  title: "Sahil Khan | Backend & Applied AI",
+  description: "Sahil Khan: software developer focused on backend workflows, data migration, retrieval-grounded AI, and codebase analysis. Seeking a first software engineering role.",
+  keywords: ["Mohammed Sahil Khan", "Software Developer", "Web Development", "React", "TypeScript", "Backend Developer", "Applied AI", "Python", "PostgreSQL"],
   authors: [{ name: "Mohammed Sahil Khan" }],
   creator: "Mohammed Sahil Khan",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://msk-portfolio.vercel.app",
+    url: "https://sahilkhan.dev",
     siteName: "Mohammed Sahil Khan",
-    title: "Mohammed Sahil Khan - Software Developer Portfolio",
-    description: "Explore Mohammed Sahil Khan's portfolio featuring software development projects, technical skills, and insightful blog posts.",
+    title: "Sahil Khan | Backend & Applied AI",
+    description: "Backend and applied AI projects, merged Turborepo contributions, and contact information for Sahil Khan.",
     images: [
       {
-        url: "https://msk-portfolio.vercel.app/og-image.jpg",
+        url: "https://sahilkhan.dev/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Mohammed Sahil Khan Portfolio",
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohammed Sahil Khan - Software Developer Portfolio",
-    description: "Explore Mohammed Sahil Khan's portfolio featuring software development projects and technical skills.",
-    images: ["https://msk-portfolio.vercel.app/og-image.jpg"],
+    title: "Sahil Khan | Backend & Applied AI",
+    description: "Backend and applied AI projects by Sahil Khan.",
+    images: ["https://sahilkhan.dev/og-image.jpg"],
   },
 }
 
@@ -70,12 +70,12 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Mohammed Sahil Khan",
-              url: "https://msk-portfolio.vercel.app",
-              image: "https://msk-portfolio.vercel.app/og-image.jpg",
-              description: "Software Developer specializing in web development, React, and TypeScript",
+              url: "https://sahilkhan.dev",
+              image: "https://sahilkhan.dev/og-image.jpg",
+              description: "Software developer focused on backend development and applied AI",
               sameAs: [
                 "https://github.com/sahyl",
-                "https://linkedin.com",
+                "https://linkedin.com/in/saaahil",
               ],
               jobTitle: "Software Developer",
             }),

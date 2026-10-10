@@ -5,513 +5,53 @@ export interface BlogPost {
   date: string;
   excerpt: string;
   content: string;
-  author?: string;
-  tags?: string[];
+  author: string;
+  tags: string[];
 }
 
 export const blogPosts: BlogPost[] = [
   {
-    id: "1",
-    slug: "advanced-react-patterns-concurrent-features",
-    title: "Advanced React Patterns: Concurrent Features and Suspense",
-    date: "2024-03-15",
-    excerpt:
-      "Master React's concurrent rendering, Suspense boundaries, and advanced patterns for building scalable applications. Explore use cases and implementation strategies.",
-    content: `# Advanced React Patterns: Concurrent Features and Suspense
-
-React 18 introduced concurrent features that fundamentally changed how we build performant applications. This guide explores advanced patterns for leveraging concurrent rendering, Suspense, and transitions to create responsive user experiences at scale.
-
-## Understanding Concurrent Rendering
-
-Concurrent rendering allows React to interrupt long renders and prioritize user interactions. Unlike traditional synchronous rendering, React can pause, abort, or reuse work based on user priorities.
-
-### The Problem with Blocking Renders
-
-Traditional rendering blocks the main thread, causing input lag and janky animations. Long render times prevent the browser from responding to user input, creating a frustrating experience.
-
-### Concurrent Solution with useTransition
-
-\`\`\`jsx
-import { useState, useTransition } from 'react';
-
-function SearchUsers() {
-  const [query, setQuery] = useState('');
-  const [isPending, startTransition] = useTransition();
-  const [results, setResults] = useState([]);
-
-  const handleSearch = (value) => {
-    setQuery(value);
-    startTransition(async () => {
-      const data = await fetchUsers(value);
-      setResults(data);
-    });
-  };
-
-  return (
-    <div>
-      <input
-        value={query}
-        onChange={(e) => handleSearch(e.target.value)}
-        placeholder="Search users..."
-      />
-      {isPending && <Spinner />}
-      <Results data={results} />
-    </div>
-  );
-}
-\`\`\`
-
-## Suspense: Declarative Data Fetching
-
-Suspense allows you to defer rendering of components until they're ready, enabling clean data-fetching patterns without callback hell.
-
-### Suspense with Server Components
-
-\`\`\`jsx
-// app/products/page.tsx (Server Component)
-import { Suspense } from 'react';
-import { ProductList } from './products';
-import { ProductSkeleton } from './skeleton';
-
-export default function ProductsPage() {
-  return (
-    <Suspense fallback={<ProductSkeleton />}>
-      <ProductList />
-    </Suspense>
-  );
-}
-
-// This component actually fetches data
-async function ProductList() {
-  const products = await db.products.findAll();
-  return (
-    <div>
-      {products.map(p => (
-        <ProductCard key={p.id} product={p} />
-      ))}
-    </div>
-  );
-}
-\`\`\`
-
-## Advanced Suspense Patterns
-
-### Selective Hydration
-
-\`\`\`jsx
-export default function App() {
-  return (
-    <div>
-      <Header />
-      <Suspense fallback={<NavigationSkeleton />}>
-        <Navigation />
-      </Suspense>
-      <Suspense fallback={<MainSkeleton />}>
-        <Main />
-      </Suspense>
-    </div>
-  );
-}
-\`\`\`
-
-This allows non-critical sections to render independently without blocking the entire page.
-
-### Nested Suspense Boundaries
-
-Proper boundary placement prevents premature fallback displays:
-
-\`\`\`jsx
-<Suspense fallback={<PageSkeleton />}>
-  <Header />
-  <Suspense fallback={<ContentSkeleton />}>
-    <MainContent />
-  </Suspense>
-  <Suspense fallback={<SidebarSkeleton />}>
-    <Sidebar />
-  </Suspense>
-</Suspense>
-\`\`\`
-
-## useDeferredValue for Optimistic Updates
-
-\`\`\`jsx
-import { useDeferredValue } from 'react';
-
-function FilteredList({ items, query }) {
-  const deferredQuery = useDeferredValue(query);
-  const filtered = items.filter(item =>
-    item.name.includes(deferredQuery)
-  );
-
-  return (
-    <div>
-      <input value={query} onChange={handleChange} />
-      <ul>
-        {filtered.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-\`\`\`
-
-## Best Practices for Concurrent Features
-
-1. **Granular Suspense Boundaries**: Create boundaries at meaningful semantic points
-2. **Avoid Waterfall Requests**: Parallel data fetching with Promise.all()
-3. **Error Boundaries Required**: Always pair Suspense with error boundaries
-4. **Strategic useTransition**: Use for non-critical, user-initiated updates
-5. **Monitor Performance**: Measure INP and time-to-interactive metrics
-
-## Performance Considerations
-
-Concurrent features provide significant benefits but require careful planning. Monitor your Core Web Vitals and use React DevTools Profiler to identify bottlenecks. Understanding when to transition and how to structure Suspense boundaries is crucial for optimal performance.
-
-Mastering these patterns positions you to build modern, responsive React applications that handle complex data flows gracefully.
-    `,
-    author: "Mohammed Sahil Khan",
-    tags: ["React", "Concurrency", "Performance", "Advanced"],
+    "id": "1",
+    "slug": "building-ai-support-agent-retrieval-human-handoff",
+    "title": "Building an AI Support Agent: Retrieval, Fallbacks, and Human Handoff",
+    "date": "2026-09-12",
+    "excerpt": "A practical walkthrough of an AI support agent: finding relevant replies, handling retrieval failures, and knowing when a person should take over.",
+    "author": "Sahil Khan",
+    "tags": [
+      "Applied AI",
+      "Python",
+      "Retrieval"
+    ],
+    "content": "Someone writes: “My order says delivered, but there’s nothing at my door.” A fluent answer is easy to generate. A useful answer needs more: relevant context, the right next step, and some honesty about what the system cannot check.\n\nThat is the problem behind my [AmazonHelp Support Agent](https://github.com/sahyl/hiver-support-agent). It is a single-turn support prototype, not an integration with a live customer support team. Here is how its pieces fit together, without pretending a chatbot can magically look up an order.\n\n## Start with the message, not the model\n\nI think of the system as a small assembly line. Each stage has one job. Intent classification identifies the kind of request. Retrieval finds similar historical customer/reply pairs. Generation uses those examples to draft a response. Escalation logic decides whether human follow-up is needed.\n\n```diagram\nThe support pipeline\nCustomer message | “Where is my order?”\nClassify intent | Identify the kind of problem\nRetrieve examples | Find relevant past replies\nDraft a response | Use examples as context\nChoose a route | Self-service or human follow-up\n```\n\nA retrieved reply is an example of how an issue was handled. It is not proof that the same policy still applies, or that this customer qualifies for a refund. That distinction matters more than making the answer sound confident.\n\n## Retrieval gives the draft something to work with\n\nInstead of asking the model to answer from an empty page, the pipeline supplies related messages and replies. The model can use them to understand phrasing and likely next steps.\n\n```diagram\nWhat goes into the draft\nCurrent message | The problem to answer\nRelevant examples | Similar questions and past replies\nInstructions | Tone, boundaries, and response format\nDraft | A proposed reply, not a completed action\n```\n\nThe project prefers a sentence-transformer index and falls back to TF-IDF if building the embedding index fails. That fallback is about keeping retrieval available. It does not mean both methods find equally useful examples. I go into that tradeoff in [TF-IDF vs Embeddings for Support Search](/blog/tfidf-vs-embeddings-support-search).\n\nThis small sketch shows the separation of responsibilities. It is explanatory pseudocode, not a copy of the project's entry point:\n\n```python\nexamples = retriever.retrieve(message, k=3)\nintent = classify_intent(message)\ndraft = generate_reply(message, examples)\nroute = decide_follow_up(message, intent, examples)\n\nresult = {\"draft\": draft, \"route\": route}\n```\n\nReturning a draft and a route separately makes the output easier to inspect. “Here is a reply” and “this needs a person” can both be true.\n\n## A fallback should change the decision too\n\nA common trap is swapping the search method while keeping every downstream assumption unchanged. The support project has retriever-specific similarity thresholds because the scores from its two retrieval methods are not interchangeable.\n\nEven with a threshold, similarity is not a probability that an answer is correct. A familiar-looking message can still require account access or involve details missing from the corpus.\n\n```diagram\nWhen a person should take over\nRead the request | Does it need account-specific action?\nCheck the evidence | Are the retrieved examples useful?\nCheck the next step | Is there a verified self-service route?\nReturn a decision | Offer a route or request human follow-up\n```\n\n## Keep links and actions boring\n\nThe project uses a curated support-link map rather than asking the model to invent destinations. Its reply handling replaces link placeholders and handles missing routes. Those links still need review before real use; a stored URL can become stale.\n\nThe agent does not actually refund an order, change an account, or remember a previous conversation. Keeping that boundary visible makes the output easier to trust and debug.\n\n## What I would check before real use\n\nI would review examples where a confident draft is wrong, where retrieval finds nothing useful, and where a person is needed but not requested. I would also check the links independently. The repository contains labelled data and agreement tooling, but that is not evidence of production reliability.\n\nFor me, the useful part of this project is the plumbing around the model: context in, a bounded draft out, and a clear path when it cannot finish the job. For systems that choose their own tools, the next question is [when to stop the loop](/blog/why-ai-agents-need-bounded-tool-loops).\n\n## Code and further reading\n\n- [Project source and pipeline](https://github.com/sahyl/hiver-support-agent/tree/main/src/pipeline)\n- [Sentence Transformers: semantic search](https://www.sbert.net/examples/sentence_transformer/applications/semantic-search/README.html)"
   },
   {
-    id: "2",
-    slug: "typescript-advanced-type-system-patterns",
-    title: "TypeScript Advanced Type System: Conditional Types & Inference",
-    date: "2024-03-08",
-    excerpt:
-      "Deep dive into TypeScript's advanced type system. Learn conditional types, type inference, mapped types, and distribution patterns to build type-safe, maintainable applications.",
-    content: `# TypeScript Advanced Type System: Conditional Types & Inference
-
-TypeScript's type system is more powerful than most developers realize. Beyond basic types and generics lie advanced patterns like conditional types, type inference, and mapped types that enable building robust, self-documenting APIs.
-
-## Conditional Types: Type-Level Logic
-
-Conditional types allow you to select types based on conditions, creating polymorphic type logic.
-
-### Basic Conditional Type
-
-\`\`\`typescript
-type IsString<T> = T extends string ? true : false;
-
-type A = IsString<"hello">; // true
-type B = IsString<42>; // false
-\`\`\`
-
-### Extracting Union Types
-
-\`\`\`typescript
-type Flatten<T> = T extends Array<infer U> ? U : T;
-
-type Str = Flatten<string[]>; // string
-type Num = Flatten<number>; // number
-\`\`\`
-
-## Type Inference with infer
-
-The infer keyword allows you to extract and infer types from complex structures.
-
-\`\`\`typescript
-// Extract function return type
-type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
-
-type MyFunc = (x: number) => string;
-type Result = ReturnType<MyFunc>; // string
-
-// Extract Promise resolved value
-type Unwrap<T> = T extends Promise<infer U> ? U : T;
-
-type PromiseString = Unwrap<Promise<string>>; // string
-type PlainNumber = Unwrap<number>; // number
-\`\`\`
-
-## Mapped Types for Transformations
-
-Mapped types iterate over object keys and transform their values.
-
-\`\`\`typescript
-// Make all properties readonly
-type Readonly<T> = {
-  readonly [K in keyof T]: T[K];
-};
-
-// Make all properties optional
-type Partial<T> = {
-  [K in keyof T]?: T[K];
-};
-
-// Convert all properties to getters
-type Getters<T> = {
-  [K in keyof T as \`get\${Capitalize<string & K>}\`]: () => T[K];
-};
-
-interface User {
-  name: string;
-  age: number;
-}
-
-type UserGetters = Getters<User>;
-// {
-//   getName: () => string;
-//   getAge: () => number;
-// }
-\`\`\`
-
-## Distribution in Conditional Types
-
-Conditional types distribute over union types automatically.
-
-\`\`\`typescript
-type ToArray<T> = T extends any ? T[] : never;
-
-type StrOrNum = ToArray<string | number>;
-// (string | number)[] - NOT string[] | number[]
-
-// To prevent distribution, wrap in tuples
-type ToArrayNoDistribute<T> = [T] extends [any] ? T[] : never;
-\`\`\`
-
-## Advanced Pattern: Deep Partial
-
-\`\`\`typescript
-type DeepPartial<T> = T extends object ? {
-  [P in keyof T]?: DeepPartial<T[P]>;
-} : T;
-
-interface Config {
-  app: {
-    name: string;
-    port: number;
-    database: {
-      host: string;
-      port: number;
-    };
-  };
-}
-
-type DeepPartialConfig = DeepPartial<Config>;
-\`\`\`
-
-## Building Type-Safe Builders
-
-\`\`\`typescript
-type Builder<T> = {
-  [K in keyof T]-?: (value: T[K]) => Builder<Omit<T, K>>;
-} & {
-  build(): T;
-};
-
-function createBuilder<T>(initial: T): Builder<T> {
-  // Implementation creates fluent API
-  return null as any;
-}
-
-const user = createBuilder({ name: '', email: '' })
-  .name('John')
-  .email('john@example.com')
-  .build();
-\`\`\`
-
-## Performance Implications
-
-Complex conditional types can impact compilation time. Use type aliases for recursive patterns sparingly and consider breaking complex type logic into smaller, reusable units.
-
-## SEO Keywords
-
-Advanced TypeScript patterns enable building scalable, type-safe applications. Master conditional types, type inference, mapped types, and distribution patterns to write maintainable code that scales with your project.
-
-Mastering TypeScript's advanced type system transforms how you build robust, self-documenting APIs and applications.
-    `,
-    author: "Mohammed Sahil Khan",
-    tags: ["TypeScript", "Type System", "Advanced Patterns"],
+    "id": "2",
+    "slug": "tfidf-vs-embeddings-support-search",
+    "title": "TF-IDF vs Embeddings for Support Search",
+    "date": "2026-09-26",
+    "excerpt": "TF-IDF matches words; embeddings can connect related phrasing. A practical comparison with Python examples and a support-agent fallback design.",
+    "author": "Sahil Khan",
+    "tags": [
+      "Retrieval",
+      "scikit-learn",
+      "Embeddings"
+    ],
+    "content": "“Where is my refund?” and “The money hasn’t come back yet” may describe the same problem. They share very few useful words. That is a good starting point for understanding the difference between keyword-based search and embedding search.\n\nIn my [support-agent project](https://github.com/sahyl/hiver-support-agent), both approaches exist. Embeddings are the preferred path; TF-IDF is the fallback when the embedding index cannot be built. This is a comparison of how they work, not a claim that I have measured a winning model.\n\n## TF-IDF: give distinctive words more weight\n\nTF-IDF turns documents into vectors based on their words. A word that is useful for distinguishing one document from others gets more weight than a word that appears everywhere. Search compares the query vector with the stored document vectors.\n\n```diagram\nThe TF-IDF path\nPast messages | Build a vocabulary from their words\nTF-IDF vectors | Weight the words in each message\nNew query | Transform using the same vocabulary\nSimilarity ranking | Return the closest stored messages\n```\n\nHere is a runnable toy example. Install scikit-learn, then run the snippet in Python. These are invented messages for explaining the method, not customer data:\n\n```python\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.metrics.pairwise import cosine_similarity\n\nmessages = [\n    \"Track a missing package\",\n    \"Check the status of a refund\",\n    \"Cancel a subscription\",\n]\nvectorizer = TfidfVectorizer(ngram_range=(1, 2))\nindex = vectorizer.fit_transform(messages)\nquery = vectorizer.transform([\"Where is my refund?\"])\nscores = cosine_similarity(query, index)[0]\nprint(messages[int(scores.argmax())])\n```\n\nThe result is “Check the status of a refund”. That is a useful baseline with very little machinery. But a query made entirely of unseen words produces no useful vocabulary overlap. A highest-ranked result can still have a score of zero, so always look at the score as well as the position.\n\nThe project's index uses unigrams and bigrams, an English stop-word list, and a minimum document frequency. Those choices affect which terms survive. In a tiny example corpus, copying a minimum frequency of two could throw away the very words you care about.\n\n## Embeddings: compare learned representations\n\nAn embedding model converts text into a dense list of numbers. A model trained for semantic similarity can place related phrases near each other even when the wording differs. “Refund” and “money back” may therefore connect more easily.\n\n```diagram\nThe embedding path\nPast messages | Encode them with a trained model\nStored embeddings | Keep the vectors alongside their messages\nNew query | Encode with the compatible query setup\nSimilarity ranking | Compare vectors and return candidates\n```\n\nHere is an illustrative counterpart using sentence-transformers. The first run downloads a model; it is not an offline-only example:\n\n```python\nfrom sentence_transformers import SentenceTransformer, util\n\nmodel = SentenceTransformer(\"all-MiniLM-L6-v2\")\nmessages = [\"Check refund status\", \"Track a parcel\"]\nindex = model.encode(messages, convert_to_tensor=True)\nquery = model.encode(\"Has my money come back?\",\n                     convert_to_tensor=True)\nscores = util.cos_sim(query, index)[0]\nprint(messages[int(scores.argmax())])\n```\n\nThis demonstrates the API, not a benchmark. A short list with an obvious answer says little about performance on ambiguous support requests. Embeddings can also retrieve something that sounds related while missing an important detail, such as a cancelled order versus a cancelled subscription.\n\n## Why keep both?\n\nTF-IDF does not need a downloaded embedding model. Once its Python dependencies and corpus are available, it is straightforward to build locally. Embeddings add model files, startup work, and another dependency to manage.\n\n```diagram\nThe project's fallback\nTry semantic retrieval | Reuse or build an embedding index\nIf index building fails | Record the failure\nUse TF-IDF | Reuse or build the lexical index\nKeep the method visible | Apply the matching decision threshold\n```\n\nThis is failover, not hybrid search. The current implementation does not merge rankings from both methods. Likewise, the TF-IDF snippet above is a simplified example; the repository persists its vectorizer and matrix for reuse.\n\n## How I would compare them properly\n\nI would collect representative queries, mark which stored examples are useful, and run both retrievers on the same set. Then I would inspect the top few results, including paraphrases, short messages, and requests with no good match. I would keep those test queries separate from examples used to tune thresholds.\n\nThe important question is whether useful evidence reaches the next stage. A higher cosine score from one method does not establish that it is better than the other, and neither score proves the final reply is correct.\n\nFor the surrounding workflow, see [Building an AI Support Agent](/blog/building-ai-support-agent-retrieval-human-handoff).\n\n## Code and further reading\n\n- [Project TF-IDF implementation](https://github.com/sahyl/hiver-support-agent/blob/main/src/pipeline/build_tfidf_retrieval.py)\n- [scikit-learn: text feature extraction](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction)\n- [scikit-learn: cosine similarity](https://scikit-learn.org/stable/modules/metrics.html#cosine-similarity)\n- [Sentence Transformers: semantic search](https://www.sbert.net/examples/sentence_transformer/applications/semantic-search/README.html)"
   },
   {
-    id: "3",
-    slug: "next-js-performance-optimization-rendering-strategies",
-    title: "Next.js Performance Optimization: Server vs Client Rendering Strategies",
-    date: "2024-02-28",
-    excerpt:
-      "Master rendering strategies in Next.js 14+. Learn when to use Server Components, Client Components, ISR, and edge functions to build optimal performance applications.",
-    content: `# Next.js Performance Optimization: Rendering Strategies Deep Dive
-
-Next.js 14 introduced the App Router with Server Components as default, fundamentally changing how we approach performance optimization. Understanding when and how to use different rendering strategies is critical for building fast, scalable applications.
-
-## Server Components vs Client Components
-
-Server Components execute only on the server, reducing client-side JavaScript and improving security.
-
-### Server Component Example
-
-\`\`\`jsx
-// app/dashboard/page.tsx (Server Component by default)
-import { db } from '@/lib/db';
-
-export default async function DashboardPage() {
-  const user = await db.user.findUnique({
-    where: { id: getCurrentUserId() }
-  });
-
-  return (
-    <div>
-      <h1>Welcome, {user.name}</h1>
-      <UserStats userId={user.id} />
-    </div>
-  );
-}
-\`\`\`
-
-### When Client Components Are Necessary
-
-\`\`\`jsx
-'use client';
-
-import { useState } from 'react';
-
-export function InteractiveChart({ data }) {
-  const [filter, setFilter] = useState('all');
-
-  return (
-    <div>
-      <button onClick={() => setFilter('week')}>
-        This Week
-      </button>
-      <ChartComponent data={data} filter={filter} />
-    </div>
-  );
-}
-\`\`\`
-
-## Incremental Static Regeneration (ISR)
-
-ISR combines static generation with dynamic updates at request time, providing the benefits of both.
-
-\`\`\`typescript
-// app/blog/[slug]/page.tsx
-import { cache } from 'react';
-
-const getBlogPost = cache(async (slug: string) => {
-  const post = await db.blogPost.findUnique({
-    where: { slug }
-  });
-  return post;
-});
-
-export async function generateStaticParams() {
-  const posts = await db.blogPost.findMany();
-  return posts.map(post => ({ slug: post.slug }));
-}
-
-export const revalidate = 3600; // Regenerate every hour
-
-export default async function BlogPostPage({
-  params: { slug }
-}: {
-  params: { slug: string };
-}) {
-  const post = await getBlogPost(slug);
-  return <BlogPost post={post} />;
-}
-\`\`\`
-
-## Dynamic Rendering with Force Dynamic
-
-\`\`\`typescript
-export const dynamic = 'force-dynamic'; // Disables caching
-
-// Or use noStore for granular control
-import { noStore } from 'next/cache';
-
-export default async function Page() {
-  noStore(); // This request won't be cached
-  const data = await fetch('https://api.example.com/data');
-  return <div>{data}</div>;
-}
-\`\`\`
-
-## Route Segment Configuration
-
-\`\`\`typescript
-// Combine multiple optimization strategies
-export const dynamic = 'auto';
-export const revalidate = 60;
-export const fetchCache = 'only-cache';
-export const runtime = 'edge'; // Use Edge Runtime
-
-export default function Page() {
-  // ...
-}
-\`\`\`
-
-## Edge Functions for Global Performance
-
-\`\`\`typescript
-// middleware.ts
-import { NextRequest, NextResponse } from 'next/server';
-
-export function middleware(request: NextRequest) {
-  // Runs on Edge - incredibly fast
-  const country = request.geo?.country || 'US';
-  
-  if (country === 'US') {
-    return NextResponse.rewrite(new URL('/us', request.url));
+    "id": "3",
+    "slug": "why-ai-agents-need-bounded-tool-loops",
+    "title": "Why AI Agents Need Bounded Tool Loops",
+    "date": "2026-10-10",
+    "excerpt": "An approachable guide to tool-calling loops: step budgets, allowed tools, verification, and returning a clear failure instead of searching forever.",
+    "author": "Sahil Khan",
+    "tags": [
+      "AI Agents",
+      "Python",
+      "Tool Calling"
+    ],
+    "content": "Imagine asking an assistant to find where a feature belongs in a codebase. It searches for a symbol, reads the result, searches again, and then searches again. Each action looks reasonable on its own. Ten minutes later, you still have no plan.\n\nGiving a model tools introduces a new backend problem: who decides when the work is finished? My [CodebaseToSpec project](https://github.com/sahyl/CodebaseToSpec) uses a bounded planning loop. It can inspect indexed Python code and produce a structured implementation plan. It does not execute that plan or edit the repository.\n\n## A tool loop is just a conversation with extra steps\n\nThe model asks for an action. Application code runs the tool and sends the result back. The model then chooses another action or returns an answer. The tool does the actual lookup; the model only requests it.\n\n```diagram\nOne trip around the loop\nRequest | “Find where authentication is handled”\nModel | Ask to search indexed symbols\nApplication | Validate and run the allowed tool\nObservation | Return the matching symbols\nModel | Request more evidence or propose a plan\n```\n\nThe [Gemini function-calling documentation](https://ai.google.dev/gemini-api/docs/function-calling) explains the same division between a requested function and its execution. CodebaseToSpec implements its own text protocol using ACTION and PLAN prefixes, rather than the native function-calling interface.\n\n## Put the stop condition in code\n\nA prompt saying “please do not loop forever” is not a hard limit. A loop counter is. In the project, the planner iterates up to MAX_STEPS and raises an error if it never produces a plan.\n\nThis is a simplified sketch, with an arbitrary example budget:\n\n```python\ndef plan(request, model, tools, max_steps=6):\n    messages = [request]\n    for _ in range(max_steps):\n        reply = model(messages)\n        if reply.kind == \"plan\":\n            return reply.plan\n        if reply.tool not in tools:\n            raise ValueError(\"Unknown tool\")\n        result = tools[reply.tool](**reply.args)\n        messages.append({\"observation\": result})\n    raise RuntimeError(\"Step budget exhausted\")\n```\n\nHere model and tools are supplied by the application, and reply is an already-parsed object. Real code also needs to validate arguments and handle failures. The point is where the boundary lives: the application stops the run even if the model wants another turn.\n\n```diagram\nThree possible exits\nValid plan | Continue to verification\nUnknown tool or invalid input | Reject the request\nStep budget exhausted | Stop with a clear failure\n```\n\n## A step budget is only one budget\n\nSix steps can still take too long if one network request hangs. A useful design also considers request timeouts, maximum tool-output size, and limits on repeated attempts. These are separate controls, not properties you automatically get from a for loop.\n\nCodebaseToSpec has a planner step cap, bounded outer re-planning, and bounded transport retries. That does not establish a complete wall-clock or monetary budget. Those are further controls I would review before treating a tool-using system as a service.\n\nKeeping read-only tools is another useful boundary. The planner's tool map contains symbol search, per-file symbol lookup, and dependency-neighbor lookup. A proposed shell command does not become executable just because the model prints one.\n\n## Verification is a separate job\n\nA well-formed plan can still name a file that does not exist. The project checks references against the indexed repository and sends reference errors back into a limited re-planning attempt.\n\n```diagram\nAfter the planner stops\nStructured plan | Parse the expected fields\nReference verifier | Check cited files and symbols\nIf checks fail | Send concrete errors into a bounded retry\nFinal result | Return a plan or report failure\n```\n\nThat verifier answers a narrow question: do the referenced things exist? It does not prove the proposed change solves the request, is secure, or will pass tests. That still needs engineering review.\n\n## Leave a trail you can read\n\nWhen a run fails, I want to see which tool was requested, its inputs, the returned observation, and the time spent. CodebaseToSpec records action and observation steps with timing information. A trace makes it possible to distinguish bad search results from repeated model requests or a parsing problem.\n\nFor a real service, I would also redact sensitive content and avoid logging entire repositories indiscriminately. That is a design consideration, not a claim about an implemented observability platform.\n\nA useful agent does not have to keep trying until it produces something. Sometimes the correct result is a short, inspectable failure: “I used the available steps and could not verify a plan.” That is much easier to work with than a process that quietly keeps spending time.\n\nFor a simpler pipeline that does not let the model choose an open-ended sequence of tools, see my [support-agent walkthrough](/blog/building-ai-support-agent-retrieval-human-handoff).\n\n## Code and further reading\n\n- [CodebaseToSpec planner source](https://github.com/sahyl/CodebaseToSpec/blob/main/agents/planner.py)\n- [Gemini API: function calling](https://ai.google.dev/gemini-api/docs/function-calling)"
   }
-  
-  return NextResponse.rewrite(new URL('/intl', request.url));
-}
-
-export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
-};
-\`\`\`
-
-## Streaming for Progressive Rendering
-
-\`\`\`jsx
-import { Suspense } from 'react';
-import { User, Posts, Comments } from './components';
-
-export default function Dashboard() {
-  return (
-    <div>
-      <User userId="1" />
-      <Suspense fallback={<PostsSkeleton />}>
-        <Posts userId="1" />
-      </Suspense>
-      <Suspense fallback={<CommentsSkeleton />}>
-        <Comments userId="1" />
-      </Suspense>
-    </div>
-  );
-}
-\`\`\`
-
-## Image Optimization with next/image
-
-\`\`\`jsx
-import Image from 'next/image';
-import img from '@/public/hero.png';
-
-export default function Hero() {
-  return (
-    <Image
-      src={img}
-      alt="Hero"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-      priority // LCP image
-      placeholder="blur"
-    />
-  );
-}
-\`\`\`
-
-## Monitoring and Measurement
-
-Use Next.js Analytics to monitor real user metrics. Combine with tools like Vercel Speed Insights for comprehensive performance visibility across your application.
-
-Understanding these rendering strategies and knowing when to apply each one is fundamental to building high-performance Next.js applications that scale.
-    `,
-    author: "Mohammed Sahil Khan",
-    tags: ["Next.js", "Performance", "Server Components", "Optimization"],
-  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
@@ -519,7 +59,5 @@ export function getBlogPost(slug: string): BlogPost | undefined {
 }
 
 export function getAllBlogPosts(): BlogPost[] {
-  return blogPosts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  return [...blogPosts].sort((a, b) => b.date.localeCompare(a.date));
 }

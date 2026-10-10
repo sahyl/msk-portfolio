@@ -3,11 +3,8 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { useTheme } from "@/components/Theme-provider";
 
 export default function NotFound() {
-  const { theme } = useTheme();
-
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4 relative"
@@ -114,7 +111,7 @@ export default function NotFound() {
             >
               <Link
                 href="/"
-                className="px-6 py-3 rounded-lg font-mono text-sm font-bold transition-all duration-300 border text-black dark:text-white hover:shadow-lg"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-mono text-sm font-bold transition-all duration-300 border text-black dark:text-white hover:shadow-lg"
                 style={{
                   backgroundColor: "var(--card)",
                   borderColor: "var(--border)",
@@ -132,7 +129,7 @@ export default function NotFound() {
             >
               <Link
                 href="/#blog"
-                className="px-6 py-3 rounded-lg font-mono text-sm font-bold transition-all duration-300 border text-black dark:text-white hover:shadow-lg"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-mono text-sm font-bold transition-all duration-300 border text-black dark:text-white hover:shadow-lg"
                 style={{
                   backgroundColor: "var(--card)",
                   borderColor: "var(--border)",
