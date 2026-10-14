@@ -18,7 +18,7 @@ interface Contribution {
 const contributions: Contribution[] = [
   {
     title: "turborepo#14794",
-    description: "Merged October 2026. Restored JSX support in JavaScript files when checking boundaries and tracing file dependencies, while preserving TypeScript parsing. Added regression coverage for supported extensions, CommonJS imports, boundary violations, and ignore comments.",
+    description: "Merged October 2026. Restored JSX support in JavaScript files when checking boundaries and tracing file dependencies.Added regression coverage for supported extensions, CommonJS imports, boundary violations, and ignore comments.",
     repository: "vercel/turborepo",
     pullRequestLink: "https://github.com/vercel/turborepo/pull/14794",
     tags: ["Rust", "JSX", "Turborepo", "Bug Fix"],
