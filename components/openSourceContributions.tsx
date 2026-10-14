@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils"
 interface Contribution {
   title: string
   description: string
+  mergedDate: string
+  mergedDateLabel: string
   repository: string
   pullRequestLink: string
   tags: string[]
@@ -18,21 +20,27 @@ interface Contribution {
 const contributions: Contribution[] = [
   {
     title: "turborepo#14794",
-    description: "Merged October 2026. Restored JSX support in JavaScript files when checking boundaries and tracing file dependencies.Added regression coverage for supported extensions, CommonJS imports, boundary violations, and ignore comments.",
+    description: "Restored JSX support in JavaScript files when checking boundaries and tracing file dependencies. Added regression coverage for supported extensions, CommonJS imports, boundary violations, and ignore comments.",
+    mergedDate: "2026-10-14",
+    mergedDateLabel: "14 Oct'26",
     repository: "vercel/turborepo",
     pullRequestLink: "https://github.com/vercel/turborepo/pull/14794",
     tags: ["Rust", "JSX", "Turborepo", "Bug Fix"],
   },
   {
     title: "turborepo#14366",
-    description: "Merged October 2026. Fixed empty task graphs in affected and tag-filtered package listings in the Rust CLI. Added regression coverage for task inputs, dependency filters, and tag selectors.",
+    description: "Fixed empty task graphs in affected and tag-filtered package listings in the Rust CLI. Added regression coverage for task inputs, dependency filters, and tag selectors.",
+    mergedDate: "2026-10-05",
+    mergedDateLabel: "05 Oct'26",
     repository: "vercel/turborepo",
     pullRequestLink: "https://github.com/vercel/turborepo/pull/14366",
     tags: ["Rust", "Turborepo", "CLI", "Bug Fix"],
   },
   {
     title: "turborepo#10579",
-    description: "Merged June 2025. Added the missing Tailwind import in shared UI styles, restoring component styling in the with-tailwind example.",
+    description: "Added the missing Tailwind import in shared UI styles, restoring component styling in the with-tailwind example.",
+    mergedDate: "2025-06-19",
+    mergedDateLabel: "19 Jun'25",
     repository: "vercel/turborepo",
     pullRequestLink: "https://github.com/vercel/turborepo/pull/10579",
     tags: ["Tailwind CSS", "Bug Fix", "Example"],
@@ -100,7 +108,20 @@ function ContributionCard({
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-between h-full">
-        <div className="mb-4">
+        <div className="relative mb-4 pr-24">
+          <time
+            dateTime={contribution.mergedDate}
+            aria-label={`Merged on ${contribution.mergedDateLabel}`}
+            title={`Merged on ${contribution.mergedDateLabel}`}
+            className="absolute right-0 top-0 rounded-full border px-2.5 py-1 text-xs font-mono font-semibold whitespace-nowrap"
+            style={{
+              backgroundColor: "var(--muted)",
+              borderColor: "var(--border)",
+              color: "var(--foreground)",
+            }}
+          >
+            {contribution.mergedDateLabel}
+          </time>
           <h3
             className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-200 ease-out contribution-text"
             style={{
