@@ -20,7 +20,7 @@ interface Contribution {
 const contributions: Contribution[] = [
   {
     title: "turborepo#14793",
-    description: "Updated the multi-language guide with a JavaScript package, a C# application, and a shared library. Documented how workspace dependencies and package scripts let Turborepo build .NET projects in order and cache their outputs.",
+    description: "Updated the multi-language guide with a JavaScript package, C# app and shared library, showing how workspace dependencies and package scripts let Turborepo build .NET projects in order and cache outputs.",
     mergedDate: "2026-10-16",
     mergedDateLabel: "16 Oct'26",
     repository: "vercel/turborepo",
