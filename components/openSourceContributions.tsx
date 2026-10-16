@@ -19,6 +19,15 @@ interface Contribution {
 
 const contributions: Contribution[] = [
   {
+    title: "turborepo#14814",
+    description: "Fixed root tasks incorrectly rejecting scripts that print turbo or run inspection commands. Preserved recursion protection for task execution, with regression coverage for quoted commands, compound scripts, and package-manager wrappers.",
+    mergedDate: "2026-10-16",
+    mergedDateLabel: "16 Oct'26",
+    repository: "vercel/turborepo",
+    pullRequestLink: "https://github.com/vercel/turborepo/pull/14814",
+    tags: ["Rust", "Turborepo", "CLI", "Bug Fix"],
+  },
+  {
     title: "turborepo#14793",
     description: "Updated the multi-language guide with a JavaScript package, C# app and shared library, showing how workspace dependencies and package scripts let Turborepo build .NET projects in order and cache outputs.",
     mergedDate: "2026-10-16",
