@@ -19,6 +19,15 @@ interface Contribution {
 
 const contributions: Contribution[] = [
   {
+    title: "turborepo#14793",
+    description: "Updated the multi-language guide with a JavaScript package, a C# application, and a shared library. Documented how workspace dependencies and package scripts let Turborepo build .NET projects in order and cache their outputs.",
+    mergedDate: "2026-10-16",
+    mergedDateLabel: "16 Oct'26",
+    repository: "vercel/turborepo",
+    pullRequestLink: "https://github.com/vercel/turborepo/pull/14793",
+    tags: [".NET", "C#", "Turborepo", "Documentation"],
+  },
+  {
     title: "turborepo#14794",
     description: "Restored JSX support in JavaScript files when checking boundaries and tracing file dependencies. Added regression coverage for supported extensions, CommonJS imports, boundary violations, and ignore comments.",
     mergedDate: "2026-10-14",
