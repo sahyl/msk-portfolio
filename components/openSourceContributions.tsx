@@ -19,6 +19,15 @@ interface Contribution {
 
 const contributions: Contribution[] = [
   {
+    title: "turborepo#14819",
+    description: "Fixed Windows shutdown hangs by running native pnpm launchers directly when npm shims match exactly. Preserved Corepack version selection and added regression coverage for shim detection and command selection.",
+    mergedDate: "2026-10-16",
+    mergedDateLabel: "16 Oct'26",
+    repository: "vercel/turborepo",
+    pullRequestLink: "https://github.com/vercel/turborepo/pull/14819",
+    tags: ["Rust", "Windows", "pnpm", "Bug Fix"],
+  },
+  {
     title: "turborepo#14814",
     description: "Fixed root tasks incorrectly rejecting scripts that print turbo or run inspection commands. Preserved recursion protection for task execution, with regression coverage for quoted commands, compound scripts, and package-manager wrappers.",
     mergedDate: "2026-10-16",
