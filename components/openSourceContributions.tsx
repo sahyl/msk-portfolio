@@ -19,6 +19,15 @@ interface Contribution {
 
 const contributions: Contribution[] = [
   {
+    title: "turborepo#14855",
+    description: "Fixed affected runs skipping source packages and dependents after staged file moves. Included both rename paths in Git queries and added regression coverage for CLI selectors and nested roots.",
+    mergedDate: "2026-10-21",
+    mergedDateLabel: "21 Oct'26",
+    repository: "vercel/turborepo",
+    pullRequestLink: "https://github.com/vercel/turborepo/pull/14855",
+    tags: ["Rust", "Git", "Turborepo", "Bug Fix"],
+  },
+  {
     title: "turborepo#14819",
     description: "Fixed Windows shutdown hangs by running native pnpm launchers directly when npm shims match exactly. Preserved Corepack version selection and added regression coverage for shim detection and command selection.",
     mergedDate: "2026-10-16",
