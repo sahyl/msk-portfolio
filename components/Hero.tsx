@@ -23,7 +23,7 @@ export function Hero() {
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
-          className="fixed inset-0 -z-10"
+          className="pointer-events-none fixed inset-0 -z-10"
           style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, var(--primary) 1px, transparent 0)`,
             backgroundSize: "20px 20px",

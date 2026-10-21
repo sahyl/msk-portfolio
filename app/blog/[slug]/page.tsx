@@ -54,7 +54,7 @@ export default async function BlogPost({ params }: Props) {
   return <main className="min-h-screen px-4 pt-28 pb-12" style={{ color: "var(--foreground)", background: "var(--background)" }}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
     <div className="max-w-3xl mx-auto">
-      <Link href="/#blog" className="text-sm underline underline-offset-4">← All posts</Link>
+      <Link href="/blog" className="text-sm underline underline-offset-4">← All posts</Link>
       <header className="mt-8 mb-10 border-b pb-8" style={{ borderColor: "var(--border)" }}>
         <h1 className="text-3xl sm:text-4xl font-bold leading-tight break-words">{post.title}</h1>
         <p className="mt-5 text-base leading-7 opacity-80">{post.excerpt}</p>

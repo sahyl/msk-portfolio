@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode, type PointerEvent, type FocusEvent } from "react";
-import { FiGithub, FiLinkedin } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiHome } from "react-icons/fi";
 import { IoIosMail } from "react-icons/io";
 import { TbBrandLeetcode } from "react-icons/tb";
 import { FaXTwitter } from "react-icons/fa6";
@@ -32,6 +33,8 @@ function ForceFieldItem({ children, pointerX }: { children: ReactNode; pointerX:
 }
 
 export function Navbar() {
+  const pathname = usePathname();
+  const showHome = ["/projects", "/opensource", "/blog"].includes(pathname);
   const pointerX = useMotionValue(Infinity);
   const reduceMotion = useReducedMotion();
   const [isScrolling, setIsScrolling] = useState(false);
@@ -108,7 +111,12 @@ export function Navbar() {
             onBlur={(event: FocusEvent<HTMLElement>) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false); }}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="flex gap-4 sm:gap-6 items-center transition-all duration-300">
+            <div className={`flex ${showHome ? "gap-0.5" : "gap-4"} sm:gap-6 items-center transition-all duration-300`}>
+              {showHome && <ForceFieldItem pointerX={pointerX}>
+                <Link href="/" className="social-icon-link" aria-label="Home">
+                  <FiHome aria-hidden="true" className="w-5 h-5 transition-all duration-300" style={{ color: "var(--foreground)", opacity: 0.8 }} />
+                </Link>
+              </ForceFieldItem>}
               {socialLinks.map((link) => {
                 const Icon = link.icon;
                 return (
