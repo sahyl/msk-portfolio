@@ -39,7 +39,7 @@ test("homepage limits preserve collection order and full pages include every ite
   const collections = [
     { route: "/projects", id: "projects", limit: 4, label: "View all projects", pattern: /^https:\/\/github.com\//, expected: entries("components/Projects.tsx", ["projects", "additionalProjects"]).map(item => item.githubLink) },
     { route: "/opensource", id: "contributions", limit: 4, label: "View all contributions", pattern: /\/pull\//, expected: entries("components/openSourceContributions.tsx", ["contributions"]).map(item => item.pullRequestLink) },
-    { route: "/blog", id: "blog", limit: 3, label: "View all posts", pattern: /^\/blog\//, expected: posts.map(item => `/blog/${item.slug}`) },
+    { route: "/blog", id: "blog", limit: 3, label: "View all blogs", pattern: /^\/blog\//, expected: posts.map(item => `/blog/${item.slug}`) },
   ];
   assert.doesNotMatch(home, /aria-label="Home"/);
   for (const collection of collections) {

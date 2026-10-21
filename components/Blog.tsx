@@ -129,7 +129,7 @@ export function Blog({ blogPosts, limit }: { limit?: number; blogPosts: Pick<Blo
             ))}
           </div>
         </div>
-        {limit !== undefined && <CollectionLink href="/blog">View all posts</CollectionLink>}
+        {limit !== undefined && <CollectionLink href="/blog">View all blogs</CollectionLink>}
       </div>
     </section>
   );
