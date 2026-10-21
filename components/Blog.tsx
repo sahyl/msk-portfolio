@@ -2,11 +2,12 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { CollectionLink } from "./CollectionLink";
 import { SectionHeading } from "./SectionHeading";
 import { cn } from "@/lib/utils";
 import type { BlogPost } from "@/lib/blog-data";
 
-export function Blog({ blogPosts }: { blogPosts: Pick<BlogPost, "id" | "slug" | "title" | "date">[] }) {
+export function Blog({ blogPosts, limit }: { limit?: number; blogPosts: Pick<BlogPost, "id" | "slug" | "title" | "date">[] }) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -34,7 +35,7 @@ export function Blog({ blogPosts }: { blogPosts: Pick<BlogPost, "id" | "slug" | 
           />
 
           <div className="space-y-8">
-            {blogPosts.map((post, index) => (
+            {blogPosts.slice(0, limit).map((post, index) => (
               <motion.div
                 key={post.id}
                 initial={{ opacity: 0, x: -20 }}
@@ -128,6 +129,7 @@ export function Blog({ blogPosts }: { blogPosts: Pick<BlogPost, "id" | "slug" | 
             ))}
           </div>
         </div>
+        {limit !== undefined && <CollectionLink href="/blog">View all blogs</CollectionLink>}
       </div>
     </section>
   );

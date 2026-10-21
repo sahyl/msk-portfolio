@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { FiGithub } from "react-icons/fi";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { CollectionLink } from "./CollectionLink";
 import { SectionHeading } from "./SectionHeading";
 import { cn } from "@/lib/utils";
 
@@ -191,17 +192,18 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
-export function Projects() {
+export function Projects({ limit }: { limit?: number } = {}) {
   return (
     <section id="projects" className="py-4 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <SectionHeading title="PROJECTS" color="#9333EA" />
 
         <div className="grid md:grid-cols-2 gap-6 mt-8">
-          {[...projects, ...additionalProjects].map((project, index) => (
+          {[...projects, ...additionalProjects].slice(0, limit).map((project, index) => (
             <ProjectCard key={project.githubLink} project={project} index={index} />
           ))}
         </div>
+        {limit !== undefined && <CollectionLink href="/projects">View all projects</CollectionLink>}
       </div>
     </section>
   );

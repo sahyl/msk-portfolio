@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { FiGithub } from "react-icons/fi"
 import { HiOutlineExternalLink } from "react-icons/hi"
+import { CollectionLink } from "./CollectionLink"
 import { SectionHeading } from "./SectionHeading"
 import { cn } from "@/lib/utils"
 
@@ -225,17 +226,18 @@ function ContributionCard({
 
 
 
-export function OpenSourceContributions() {
+export function OpenSourceContributions({ limit }: { limit?: number } = {}) {
   return (
     <section id="contributions" className="py-6 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <SectionHeading title="OPEN-SOURCE CONTRIBUTIONS" color="#0EA5E9" />
 
         <div className={`grid gap-6 mt-8 ${contributions.length === 1 ? 'grid-cols-1' : 'md:grid-cols-2'}`}>
-          {contributions.map((contribution, index) => (
+          {contributions.slice(0, limit).map((contribution, index) => (
             <ContributionCard key={index} contribution={contribution} index={index} />
           ))}
         </div>
+        {limit !== undefined && <CollectionLink href="/opensource">View all contributions</CollectionLink>}
       </div>
     </section>
   )

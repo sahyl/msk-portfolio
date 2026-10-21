@@ -61,12 +61,12 @@ export default function ClientPage({ children, blogPosts }: { children: ReactNod
 
         <div className="p-0 relative z-10">
           <Hero />
-          <Projects />
-          <OpenSourceContributions />
+          <Projects limit={4} />
+          <OpenSourceContributions limit={4} />
           <Skills />
           <Education />
           {children}
-          <Blog blogPosts={blogPosts} />
+          <Blog blogPosts={blogPosts} limit={3} />
           <Footer />
         </div>
       </main>
