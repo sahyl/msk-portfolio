@@ -9,16 +9,17 @@ interface ContributionDay {
 interface GraphQLDay {
   date: string;
   contributionCount: number;
-  color: string;
+  contributionLevel: keyof typeof CONTRIBUTION_LEVELS;
 }
 
 const GITHUB_USERNAME = "sahyl";
-const PALETTE = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
-
-function levelFromColor(color: string): number {
-  const idx = PALETTE.indexOf(color.toLowerCase());
-  return idx === -1 ? 0 : idx;
-}
+const CONTRIBUTION_LEVELS = {
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4,
+};
 
 async function getContributions(): Promise<ContributionDay[]> {
   const query = `
@@ -30,7 +31,7 @@ async function getContributions(): Promise<ContributionDay[]> {
               contributionDays {
                 date
                 contributionCount
-                color
+                contributionLevel
               }
             }
           }
@@ -70,7 +71,7 @@ async function getContributions(): Promise<ContributionDay[]> {
         week.contributionDays.map((day) => ({
           date: day.date,
           count: day.contributionCount,
-          level: levelFromColor(day.color),
+          level: CONTRIBUTION_LEVELS[day.contributionLevel] ?? 0,
         }))
       );
     } catch (err) {
