@@ -20,6 +20,15 @@ interface Contribution {
 
 const contributions: Contribution[] = [
   {
+    title: "turborepo#14915",
+    description: "Restored shell completion by handling suggestion requests before normal parsing and repository discovery. Preserved local-version handoff and Elvish requests, with regression coverage for six shell formats and forwarded arguments.",
+    mergedDate: "2026-11-02",
+    mergedDateLabel: "02 Nov'26",
+    repository: "vercel/turborepo",
+    pullRequestLink: "https://github.com/vercel/turborepo/pull/14915",
+    tags: ["Rust", "CLI", "Shell Completion", "Bug Fix"],
+  },
+  {
     title: "turborepo#14855",
     description: "Fixed affected runs skipping source packages and dependents after staged file moves. Included both rename paths in Git queries and added regression coverage for CLI selectors and nested roots.",
     mergedDate: "2026-10-21",
