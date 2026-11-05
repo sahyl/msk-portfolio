@@ -20,6 +20,15 @@ interface Contribution {
 
 const contributions: Contribution[] = [
   {
+  title: "turborepo#14918",
+  description: "Fixed affected detection by reading lockfiles and head manifests from Git, not the checkout. Preserved the all-packages fallback, added a head fast path, fixed nested Windows git show paths.",
+  mergedDate: "2026-11-04",
+  mergedDateLabel: "04 Nov'26",
+  repository: "vercel/turborepo",
+  pullRequestLink: "https://github.com/vercel/turborepo/pull/14918",
+  tags: ["Rust", "Git", "Lockfiles", "Bug Fix"],
+},
+  {
     title: "turborepo#14915",
     description: "Restored shell completion by handling suggestion requests before normal parsing and repository discovery. Preserved local-version handoff and Elvish requests, with regression coverage for six shell formats and forwarded arguments.",
     mergedDate: "2026-11-02",
