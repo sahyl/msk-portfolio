@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import {
   SiTypescript, SiPython, SiNodedotjs, SiExpress, SiGraphql,
   SiPostgresql, SiMongodb, SiRedis, SiZod, SiReact, SiNextdotjs, SiGit,
-  SiDocker, SiGooglegemini, SiScikitlearn, SiPydantic,
+  SiDocker, SiGooglegemini,
 } from "react-icons/si";
 import { SectionHeading } from "./SectionHeading";
 
@@ -23,8 +23,6 @@ const skills = [
   { name: "Git", icon: SiGit },
   { name: "Docker", icon: SiDocker },
   { name: "Gemini API", icon: SiGooglegemini },
-  { name: "scikit-learn", icon: SiScikitlearn },
-  { name: "Pydantic", icon: SiPydantic },
 ];
 
 export function Skills() {
