@@ -83,7 +83,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-mono">
-        <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+        <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
           <Navbar />
           <div style={{ backgroundColor: "var(--card)" }}>{children}</div>
         </ThemeProvider>
