@@ -20,6 +20,15 @@ interface Contribution {
 
 const contributions: Contribution[] = [
   {
+    title: "turborepo#14860",
+    description: "Fixed tasks excluded with extends: false still executing when reached through topological dependencies (^build) or explicit task graphs. Preserved dependency graph edges and runnable configurations while honoring command opt-outs, with regression test coverage across both dependency types and package chains.",
+    mergedDate: "2026-11-10",
+    mergedDateLabel: "10 Nov'26",
+    repository: "vercel/turborepo",
+    pullRequestLink: "https://github.com/vercel/turborepo/pull/14860",
+    tags: ["Rust", "Turborepo", "Task Graph", "Bug Fix"],
+  },
+  {
   title: "turborepo#14918",
   description: "Fixed affected detection by reading lockfiles and head manifests from Git, not the checkout. Preserved the all-packages fallback, added a head fast path, fixed nested Windows git show paths.",
   mergedDate: "2026-11-04",
